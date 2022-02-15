@@ -1,13 +1,11 @@
-package com.pklproject.checkincheckout.ui.auth.signup
+package com.pklproject.checkincheckout
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.pklproject.checkincheckout.R
 
-class SignUp : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
-
+        setContentView(R.layout.activity_splash_screen)
     }
 }
