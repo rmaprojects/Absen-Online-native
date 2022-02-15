@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.auth.login.LoginActivity">
 
     <ImageView
@@ -12,82 +12,82 @@
         android:layout_height="62dp"
         android:layout_gravity="center"
         android:layout_marginTop="32dp"
-        android:src="@drawable/ic_chat"
+        android:src="@drawable/login"
         app:tint="?colorPrimary" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
         android:text="Welcome"
         android:textColor="@color/material_on_surface_emphasis_high_type"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:layout_marginTop="24dp"/>
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="@color/material_on_surface_emphasis_medium"
         android:layout_marginTop="10dp"
-        android:text="Enter Your account here"/>
+        android:text="Login to your Account"
+        android:textColor="@color/material_on_surface_emphasis_medium" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="16dp"
-        android:textColor="@color/material_on_surface_emphasis_medium"/>
+        android:layout_marginTop="40dp"
+        android:text="Email"
+        android:textColor="@color/material_on_surface_emphasis_medium" />
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginHorizontal="16dp"
-        app:hintEnabled="false"
-        app:startIconDrawable="@drawable/ic_baseline_email"
-        app:boxCornerRadiusTopStart="8dp"
+        android:layout_marginTop="4dp"
+        app:boxBackgroundColor="?colorSurface"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
-        app:boxBackgroundColor="?colorSurface">
+        app:boxCornerRadiusTopStart="8dp"
+        app:hintEnabled="false"
+        app:startIconDrawable="@drawable/ic_baseline_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password"
-        android:layout_marginTop="7dp"
         android:layout_marginStart="16dp"
-        android:textColor="@color/material_on_surface_emphasis_medium"/>
+        android:layout_marginTop="7dp"
+        android:text="Password"
+        android:textColor="@color/material_on_surface_emphasis_medium" />
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginHorizontal="16dp"
-        app:passwordToggleEnabled="true"
-        app:hintEnabled="false"
-        app:endIconMode="password_toggle"
-        app:startIconDrawable="@drawable/ic_baseline_lock"
-        app:boxCornerRadiusTopStart="8dp"
+        android:layout_marginTop="4dp"
+        app:boxBackgroundColor="?colorSurface"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
-        app:boxBackgroundColor="?colorSurface">
+        app:boxCornerRadiusTopStart="8dp"
+        app:endIconMode="password_toggle"
+        app:hintEnabled="false"
+        app:passwordToggleEnabled="true"
+        app:startIconDrawable="@drawable/ic_baseline_lock">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,16 +95,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:padding="8dp"
         android:layout_marginEnd="16dp"
-        android:textColor="?colorPrimary"
-        android:text="Forgot Password?"/>
+        android:padding="8dp"
+        android:text="Forgot Password?"
+        android:textColor="?colorPrimary" />
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="66dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:text="Sign in"
-        android:textAllCaps="true"
-        android:layout_marginHorizontal="16dp"/>
+        android:textAllCaps="true" />
 </LinearLayout>
