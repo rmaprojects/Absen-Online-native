@@ -111,7 +111,7 @@
             android:layout_weight="1"
             android:layout_marginHorizontal="6dp"
             android:layout_marginTop="8dp"
-            android:text="Sign in"
+            android:text="Sign up"
             android:textAllCaps="true" />
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
