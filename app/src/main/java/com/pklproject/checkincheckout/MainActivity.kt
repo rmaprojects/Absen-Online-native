@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
+        setSupportActionBar(binding.toolBar)
 
         val navView: BottomNavigationView = binding.navView
 
