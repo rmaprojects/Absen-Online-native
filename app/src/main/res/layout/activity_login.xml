@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <ImageView
+        android:contentDescription="Logo"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
@@ -31,7 +32,7 @@
         android:text="Silahkan login untuk melanjutkan"
         android:textSize="15sp"/>
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -41,17 +42,17 @@
         app:boxCornerRadiusBottomStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
         app:boxCornerRadiusTopStart="15dp"
-        app:hintEnabled="false">
+        app:hintEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
+            android:hint="Username"
             android:layout_height="match_parent"
-            android:text="UserName"
             android:textSize="20sp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -62,13 +63,13 @@
         app:boxCornerRadiusTopEnd="15dp"
         app:boxCornerRadiusTopStart="15dp"
         app:endIconMode="password_toggle"
-        app:hintEnabled="false"
+        app:hintEnabled="true"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Password"
+            android:hint="Password"
             android:textSize="20sp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
