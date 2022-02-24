@@ -25,12 +25,17 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="232" />
-                            <option name="y" value="16" />
+                            <option name="x" value="192" />
+                            <option name="y" value="49" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_navigation_dashboard_to_absenFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_navigation_dashboard_to_navigation_profile">
                               <value>
                                 <LayoutPositions />
@@ -48,6 +53,18 @@
                           <Point>
                             <option name="x" value="528" />
                             <option name="y" value="16" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="settingsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="566" />
+                            <option name="y" value="-327" />
                           </Point>
                         </option>
                       </LayoutPositions>
