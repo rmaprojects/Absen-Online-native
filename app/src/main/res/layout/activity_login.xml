@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.auth.login.LoginActivity">
+    android:orientation="vertical">
 
     <ImageView
-        android:layout_width="62dp"
-        android:layout_height="62dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginTop="32dp"
         android:src="@drawable/login"
@@ -20,9 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
-        android:text="Welcome"
-        android:textColor="@color/material_on_surface_emphasis_high_type"
-        android:textSize="20sp"
+        android:text="Selamat Datang"
+        android:textSize="35sp"
         android:textStyle="bold" />
 
     <TextView
@@ -30,64 +28,48 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="Login to your Account"
-        android:textColor="@color/material_on_surface_emphasis_medium" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:text="Email"
-        android:textColor="@color/material_on_surface_emphasis_medium" />
-
+        android:text="Silahkan login untuk melanjutkan"
+        android:textSize="15sp"/>
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="50dp"
         app:boxBackgroundColor="?colorSurface"
-        app:boxCornerRadiusBottomEnd="8dp"
-        app:boxCornerRadiusBottomStart="8dp"
-        app:boxCornerRadiusTopEnd="8dp"
-        app:boxCornerRadiusTopStart="8dp"
-        app:hintEnabled="false"
-        app:startIconDrawable="@drawable/ic_baseline_email">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="7dp"
-        android:text="Password"
-        android:textColor="@color/material_on_surface_emphasis_medium" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="4dp"
-        app:boxBackgroundColor="?colorSurface"
-        app:boxCornerRadiusBottomEnd="8dp"
-        app:boxCornerRadiusBottomStart="8dp"
-        app:boxCornerRadiusTopEnd="8dp"
-        app:boxCornerRadiusTopStart="8dp"
-        app:endIconMode="password_toggle"
-        app:hintEnabled="false"
-        app:passwordToggleEnabled="true"
-        app:startIconDrawable="@drawable/ic_baseline_lock">
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp"
+        app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textPassword" />
+            android:text="UserName"
+            android:textSize="20sp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        app:boxBackgroundColor="?colorSurface"
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp"
+        app:endIconMode="password_toggle"
+        app:hintEnabled="false"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Password"
+            android:textSize="20sp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,31 +77,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:padding="8dp"
-        android:text="Forgot Password?"
-        android:textColor="?colorPrimary" />
+        android:text="Forgot Password?"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
-            android:layout_height="66dp"
-            style="@style/Widget.Material3.Button.ElevatedButton"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="6dp"
-            android:layout_marginTop="8dp"
-            android:text="Sign up"
-            android:textAllCaps="true" />
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="66dp"
-            android:layout_marginHorizontal="6dp"
-            android:layout_marginTop="8dp"
-            android:text="Sign in"
-            android:textAllCaps="true" />
-    </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="115dp"
+        android:layout_height="66dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="35dp"
+        app:cornerRadius="100dp"
+        android:text="Sign in"
+        android:textAllCaps="true" />
 </LinearLayout>
