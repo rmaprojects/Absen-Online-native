@@ -31,24 +31,23 @@
         android:layout_marginTop="10dp"
         android:text="Silahkan login untuk melanjutkan"
         android:textSize="15sp"/>
+
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="50dp"
-        app:boxBackgroundColor="?colorSurface"
-        app:boxCornerRadiusBottomEnd="15dp"
-        app:boxCornerRadiusBottomStart="15dp"
-        app:boxCornerRadiusTopEnd="15dp"
-        app:boxCornerRadiusTopStart="15dp"
-        app:hintEnabled="true">
+        android:layout_marginTop="16dp"
+        app:endIconMode="clear_text"
+        app:hintEnabled="true"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:hint="Username"
             android:layout_height="match_parent"
+            android:hint="Username"
             android:textSize="20sp"/>
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -56,12 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp"
-        app:boxBackgroundColor="?colorSurface"
-        app:boxCornerRadiusBottomEnd="15dp"
-        app:boxCornerRadiusBottomStart="15dp"
-        app:boxCornerRadiusTopEnd="15dp"
-        app:boxCornerRadiusTopStart="15dp"
+        android:layout_marginTop="16dp"
         app:endIconMode="password_toggle"
         app:hintEnabled="true"
         app:passwordToggleEnabled="true">
@@ -84,12 +78,12 @@
         android:text="Forgot Password?"/>
 
     <com.google.android.material.button.MaterialButton
-        android:layout_width="115dp"
-        android:layout_height="66dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginStart="150dp"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="35dp"
-        app:cornerRadius="100dp"
+        app:cornerRadius="16dp"
         android:text="Sign in"
-        android:textAllCaps="true" />
+        android:textAllCaps="false" />
+
 </LinearLayout>
