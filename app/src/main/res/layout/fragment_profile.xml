@@ -42,22 +42,21 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginStart="10dp"
+                            android:layout_margin="6dp"
                             android:text="Nama: "
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            />
 
-                        <EditText
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_margin="6dp"
                             android:text="Fulan"
-                            android:textSize="20sp"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -68,19 +67,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_margin="6dp"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                             android:text="Jabatan: "
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
+                            />
 
-                        <EditText
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_margin="6dp"
                             android:text="Manager"
-                            android:textSize="20sp"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                             android:textStyle="bold"/>
                     </LinearLayout>
 
@@ -88,22 +85,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_margin="6dp"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                             android:text="Departemen: "
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
+                            />
 
-                        <EditText
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
                             android:text="IT"
-                            android:textSize="20sp"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:layout_margin="6dp"
                             android:textStyle="bold"/>
                     </LinearLayout>
 
@@ -111,22 +106,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_margin="6dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                             android:text="Bisnis Unit: "
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
+                            />
 
-                        <EditText
+                        <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_margin="6dp"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                             android:text="OMG"
-                            android:textSize="20sp"
                             android:textStyle="bold"/>
                     </LinearLayout>
 
