@@ -9,11 +9,22 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.pklproject.checkincheckout.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_absenFragment"
+            app:destination="@id/absenFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.pklproject.checkincheckout.ui.profile.ProfileFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/absenFragment"
+        android:name="com.pklproject.checkincheckout.ui.dashboard.absen.AbsenFragment"
+        android:label="AbsenFragment" />
 </navigation>
