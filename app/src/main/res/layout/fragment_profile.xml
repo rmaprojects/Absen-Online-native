@@ -122,8 +122,7 @@
             android:layout_marginTop="12dp"
             app:iconSize="24dp"
             app:icon="@drawable/ic_baseline_settings_24"
-            android:textAllCaps="false"
-            app:cornerRadius="15dp" />
+            android:textAllCaps="false"/>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
@@ -135,8 +134,7 @@
             app:iconSize="24dp"
             style="@style/Widget.Material3.Button.TonalButton.Icon"
             android:text="Ubah Password"
-            android:textAllCaps="false"
-            app:cornerRadius="15dp" />
+            android:textAllCaps="false" />
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
@@ -148,8 +146,7 @@
             app:iconGravity="textStart"
             android:layout_marginHorizontal="16dp"
             android:text="Keluar"
-            android:textAllCaps="false"
-            app:cornerRadius="10dp" />
+            android:textAllCaps="false"/>
     </LinearLayout>
 
 </LinearLayout>
