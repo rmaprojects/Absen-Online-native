@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="186dp"
         android:layout_height="186dp"
-        android:src="@drawable/profil"
         android:layout_gravity="center"
         android:layout_marginTop="35dp"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"/>
+        android:src="@drawable/profil"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -36,13 +36,14 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <EditText
+
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="150dp"
                         android:layout_marginTop="5dp"
                         android:text="Fulan"
-                        android:textSize="20sp"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -50,68 +51,67 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="100dp"
                         android:layout_marginTop="5dp"
                         android:text="Jabatan: "
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
-                    <EditText
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:text="Manager"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="100dp"
                         android:layout_marginTop="5dp"
                         android:text="Departemen: "
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
-                    <EditText
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="5dp"
                         android:text="IT"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
-                </LinearLayout><LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Bisnis Unit: "
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content">
 
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:text="OMG Indonesia"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
-            </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Bisnis Unit: "
+                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="OMG Indonesia"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -122,9 +122,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_marginTop="10dp"
-            app:cornerRadius="10dp"
             android:text="Penganturan"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            app:cornerRadius="10dp" />
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
@@ -140,9 +140,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_marginTop="10dp"
-            app:cornerRadius="10dp"
             android:text="Keluar"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            app:cornerRadius="10dp" />
     </LinearLayout>
 
 </LinearLayout>
