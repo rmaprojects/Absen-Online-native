@@ -104,15 +104,16 @@
                         android:layout_marginBottom="8dp"
                         android:text="09:00"
                         android:textAppearance="@style/TextAppearance.Material3.TitleSmall" />
+
                     <TextView
                         android:id="@+id/txt_status_day"
                         android:layout_width="wrap_content"
-                        android:text="Selesai"
-                        android:layout_alignParentBottom="true"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_margin="8dp"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
-                        android:layout_height="wrap_content"/>
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="12dp"
+                        android:text="Selesai"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
@@ -164,15 +165,16 @@
                         android:layout_marginBottom="8dp"
                         android:text="09:00"
                         android:textAppearance="@style/TextAppearance.Material3.TitleSmall" />
+
                     <TextView
                         android:id="@+id/txt_status_noon"
                         android:layout_width="wrap_content"
-                        android:text="Selesai"
-                        android:layout_alignParentBottom="true"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_margin="8dp"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
-                        android:layout_height="wrap_content"/>
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="12dp"
+                        android:text="Selesai"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.card.MaterialCardView
@@ -223,15 +225,16 @@
                         android:layout_marginBottom="8dp"
                         android:text="09:00"
                         android:textAppearance="@style/TextAppearance.Material3.TitleSmall" />
+
                     <TextView
                         android:id="@+id/txt_status_pulang"
                         android:layout_width="wrap_content"
-                        android:text="Selesai"
-                        android:layout_alignParentBottom="true"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_margin="8dp"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
-                        android:layout_height="wrap_content"/>
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="12dp"
+                        android:text="Selesai"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

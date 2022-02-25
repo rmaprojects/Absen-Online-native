@@ -1,0 +1,41 @@
+R_DEF: Internal format may change without notice
+local
+attr? bubbleColor
+attr? bubbleSize
+attr? bubbleTextColor
+attr? bubbleTextSize
+attr? handleColor
+attr? hideScrollbar
+attr? showBubble
+attr? showTrack
+attr? trackColor
+dimen fastscroll_bubble_padding
+dimen fastscroll_bubble_padding_small
+dimen fastscroll_bubble_radius
+dimen fastscroll_bubble_radius_small
+dimen fastscroll_bubble_size
+dimen fastscroll_bubble_size_small
+dimen fastscroll_bubble_text_size
+dimen fastscroll_bubble_text_size_small
+dimen fastscroll_handle_height
+dimen fastscroll_handle_radius
+dimen fastscroll_handle_width
+dimen fastscroll_scrollbar_margin_bottom
+dimen fastscroll_scrollbar_margin_top
+dimen fastscroll_scrollbar_padding_end
+dimen fastscroll_scrollbar_padding_start
+dimen fastscroll_track_width
+drawable fastscroll_bubble
+drawable fastscroll_bubble_small
+drawable fastscroll_handle
+drawable fastscroll_track
+id fast_scroller
+id fastscroll_bubble
+id fastscroll_handle
+id fastscroll_scrollbar
+id fastscroll_track
+id normal
+id recycler_view
+id small
+layout fast_scroller
+styleable FastScroller hideScrollbar showBubble showTrack bubbleColor bubbleTextColor handleColor trackColor bubbleTextSize bubbleSize

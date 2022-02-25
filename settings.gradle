@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Checkin Checkout"
-include ':app'
+include ':app', ':fastscroll'

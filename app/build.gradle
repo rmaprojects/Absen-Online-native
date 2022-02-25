@@ -49,4 +49,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.5.3'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation project(':fastscroll')
 }

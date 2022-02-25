@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml:17:1-19:12
+INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml:17:1-19:12
+INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml:17:1-19:12
+	package
+		ADDED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml:17:11-45
+		INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
+		INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml:17:1-19:12
+uses-sdk
+INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
+INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
+INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
+INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
+		ADDED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
+		INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
+		ADDED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
+		INJECTED from /home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
