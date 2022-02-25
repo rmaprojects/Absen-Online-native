@@ -24,12 +24,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:layout_marginTop="15dp"
-            android:elevation="4dp"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_margin="16dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -115,27 +114,39 @@
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_marginTop="10dp"
-            android:text="Penganturan"
+            style="@style/Widget.Material3.Button.TonalButton.Icon"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="16dp"
+            android:text="Pengaturan"
+            app:iconGravity="textStart"
+            android:layout_marginTop="12dp"
+            app:iconSize="24dp"
+            app:icon="@drawable/ic_baseline_settings_24"
             android:textAllCaps="false"
-            app:cornerRadius="10dp" />
+            app:cornerRadius="15dp" />
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="12dp"
+            app:icon="@drawable/ic_baseline_refresh_24"
+            app:iconGravity="textStart"
+            app:iconSize="24dp"
+            style="@style/Widget.Material3.Button.TonalButton.Icon"
             android:text="Ubah Password"
             android:textAllCaps="false"
-            app:cornerRadius="10dp" />
+            app:cornerRadius="15dp" />
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="60dp"
+            app:backgroundTint="?colorError"
+            android:layout_marginTop="12dp"
+            app:icon="@drawable/ic_baseline_logout_24"
+            app:iconSize="24dp"
+            app:iconGravity="textStart"
+            android:layout_marginHorizontal="16dp"
             android:text="Keluar"
             android:textAllCaps="false"
             app:cornerRadius="10dp" />
