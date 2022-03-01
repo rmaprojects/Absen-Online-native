@@ -9,28 +9,31 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
+
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
-            app:title="Selamat Pagi"
+            android:layout_height="wrap_content"
             app:subtitle="Mamang bin Mamang!"
-            android:layout_height="wrap_content">
+            app:title="Selamat Pagi">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profilePhoto"
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:padding="4dp"
-                android:layout_width="64dp"
-                android:src="@drawable/profil"
-                android:layout_height="match_parent"/>
+                android:src="@drawable/profil" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_height="match_parent"
         android:layout_marginHorizontal="16dp"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        android:layout_height="match_parent" >
+        android:layout_marginTop="16dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
         <fragment
             android:id="@+id/nav_host_fragment_activity_main"
             android:name="androidx.navigation.fragment.NavHostFragment"

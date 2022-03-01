@@ -1,44 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:padding="16dp"
-                android:src="@drawable/ic_baseline_dark_mode_24"
-                android:layout_height="match_parent"/>
+                android:src="@drawable/ic_baseline_dark_mode_24" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center|start"
                     android:text="Mode Gelap"
-                    android:gravity="center|start"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"/>
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ini akan mengaktifkan mode gelap"
                     android:gravity="center|start"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"/>
+                    android:text="Ini akan mengaktifkan mode gelap"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
             </LinearLayout>
 
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -52,144 +54,155 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <com.google.android.material.textview.MaterialTextView
-                android:layout_marginTop="16dp"
-                android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
-                android:drawableEnd="@drawable/ic_baseline_format_size_24"
                 android:layout_height="wrap_content"
-                android:text="Ukuran Font"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:drawableEnd="@drawable/ic_baseline_format_size_24"
                 android:gravity="center"
+                android:text="Ukuran Font"
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
             <com.google.android.material.slider.Slider
                 android:layout_width="match_parent"
-                app:thumbColor="?colorSecondary"
-                android:valueFrom="0"
-                app:labelBehavior="floating"
-                android:stepSize="1.0"
-                android:valueTo="5"
-                app:labelStyle="@style/TextAppearance.Material3.LabelSmall"
+                android:layout_height="wrap_content"
                 android:contentDescription="Slider pengganti ukuran font"
-                android:layout_height="wrap_content"/>
+                android:stepSize="1.0"
+                android:valueFrom="0"
+                android:valueTo="5"
+                app:labelBehavior="floating"
+                app:labelStyle="@style/TextAppearance.Material3.LabelSmall"
+                app:thumbColor="?colorSecondary" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
-                android:text="Preview"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                android:layout_height="wrap_content"/>
+                android:text="Preview"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
-                android:text="Hello World"
-                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_height="wrap_content"/>
+                android:text="Hello World"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/adminOnlyArea"
             android:layout_width="match_parent"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
             android:layout_marginTop="16dp"
-            android:layout_height="match_parent">
+            android:orientation="vertical">
+
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Admin-only area"
-                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-                android:layout_height="wrap_content"/>
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall" />
+
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_margin="8dp"
-                android:layout_height="0.7dp"/>
+                android:layout_height="0.7dp"
+                android:layout_margin="8dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="8dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
+
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Absen Siang Diperlukan"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"/>
+                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Ini akan mengaktifkan absen siang"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"/>
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
                 </LinearLayout>
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:gravity="center_vertical"
-                    />
+                    android:gravity="center_vertical" />
 
             </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Atur Jadwal Absen"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"/>
+                android:text="Atur Jadwal Absen"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
             <LinearLayout
-                android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="8dp"
                 android:orientation="horizontal">
+
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:clickable="true"
-                    android:background="?selectableItemBackground"
-                    android:layout_weight="1"
-                    app:cardElevation="8dp"
                     style="@style/Widget.Material3.CardView.Elevated"
-                    android:layout_marginHorizontal="6dp"
+                    android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:focusable="true">
+                    android:layout_marginHorizontal="6dp"
+                    android:layout_weight="1"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardElevation="8dp">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:padding="8dp"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:padding="8dp">
+
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="90dp"
                             android:src="@drawable/ic_baseline_wb_sunny_24" />
+
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:text="Pagi"
-                            android:gravity="center"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_height="wrap_content"/>
+                            android:gravity="center"
+                            android:text="Pagi" />
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:clickable="true"
                     style="@style/Widget.Material3.CardView.Elevated"
-                    android:background="?selectableItemBackground"
-                    android:layout_marginHorizontal="6dp"
+                    android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    app:cardElevation="8dp"
+                    android:layout_marginHorizontal="6dp"
                     android:layout_weight="1"
-                    android:focusable="true">
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardElevation="8dp">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:padding="8dp"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:padding="8dp">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -204,30 +217,34 @@
                             android:text="Siang" />
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    app:cardElevation="8dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:clickable="true"
-                    android:background="?selectableItemBackground"
-                    android:layout_height="150dp"
                     style="@style/Widget.Material3.CardView.Elevated"
-                    android:focusable="true">
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginHorizontal="6dp"
+                    android:layout_weight="1"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardElevation="8dp">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:padding="8dp"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:padding="8dp">
+
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="90dp"
                             android:src="@drawable/ic_round_home_24" />
+
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:text="Pulang"
-                            android:gravity="center"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_height="wrap_content"/>
+                            android:gravity="center"
+                            android:text="Pulang" />
                     </RelativeLayout>
 
                 </com.google.android.material.card.MaterialCardView>

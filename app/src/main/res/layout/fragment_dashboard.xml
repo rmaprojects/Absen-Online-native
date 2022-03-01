@@ -3,29 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.dashboard.DashboardFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
             android:id="@+id/txt_jam_sekarang"
-            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="Jam Sekarang:"
-            android:layout_height="wrap_content"/>
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_clock_server"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@id/txt_jam_sekarang"
-            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
             android:text="08:00"
-            android:layout_height="wrap_content"/>
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.Material3.Button.OutlinedButton.Icon"
@@ -37,36 +39,42 @@
             app:cornerRadius="8dp"
             app:icon="@drawable/ic_baseline_history_24" />
     </RelativeLayout>
+
     <com.google.android.material.textview.MaterialTextView
-        android:layout_marginTop="12dp"
-        android:textColor="?colorError"
         android:layout_width="match_parent"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:text="Anda terlambat 2x dalam minggu ini."
-        android:layout_height="wrap_content"/>
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        android:textColor="?colorError" />
+
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
-        android:layout_margin="8dp"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:layout_margin="8dp" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_margin="8dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="8dp">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <com.google.android.material.card.MaterialCardView
+                style="?attr/materialCardViewElevatedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginVertical="16dp"
-                android:clickable="true"
                 android:background="?selectableItemBackground"
-                android:layout_width="wrap_content"
-                app:cardElevation="8dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="12dp"
-                style="?attr/materialCardViewElevatedStyle"
-                android:layout_height="100dp"
-                android:focusable="true">
+                app:cardElevation="8dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -82,19 +90,20 @@
                         android:layout_marginBottom="8dp"
                         android:text="Absen Pagi"
                         android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
                     <ImageView
                         android:id="@+id/status_icon_day"
                         android:layout_width="40dp"
-                        android:layout_margin="8dp"
+                        android:layout_height="40dp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_sudah_absen"
-                        android:layout_height="40dp"/>
+                        android:layout_margin="8dp"
+                        android:src="@drawable/ic_sudah_absen" />
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txt_jam_absen_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txt_jam_absen_day"
                         android:layout_alignBottom="@id/status_icon_day"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
@@ -116,18 +125,20 @@
                         android:textAppearance="@style/TextAppearance.Material3.TitleSmall" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.card.MaterialCardView
-                android:layout_marginHorizontal="8dp"
-                android:layout_width="wrap_content"
-                
-                android:layout_marginVertical="16dp"
-                app:cardElevation="8dp"
-                android:clickable="true"
-                android:background="?selectableItemBackground"
-                app:cardCornerRadius="12dp"
                 style="?attr/materialCardViewElevatedStyle"
+                android:layout_width="wrap_content"
+
                 android:layout_height="100dp"
-                android:focusable="true">
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="16dp"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="8dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -143,19 +154,20 @@
                         android:layout_marginBottom="8dp"
                         android:text="Absen Siang"
                         android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
                     <ImageView
                         android:id="@+id/status_icon_noon"
                         android:layout_width="40dp"
-                        android:layout_margin="8dp"
+                        android:layout_height="40dp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_sudah_absen"
-                        android:layout_height="40dp"/>
+                        android:layout_margin="8dp"
+                        android:src="@drawable/ic_sudah_absen" />
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txt_jam_absen_noon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txt_jam_absen_noon"
                         android:layout_alignBottom="@id/status_icon_noon"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
@@ -177,17 +189,19 @@
                         android:textAppearance="@style/TextAppearance.Material3.TitleSmall" />
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.card.MaterialCardView
+                style="?attr/materialCardViewElevatedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
                 android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="16dp"
                 android:background="?selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_marginVertical="16dp"
-                android:layout_width="wrap_content"
-                app:cardElevation="8dp"
                 app:cardCornerRadius="12dp"
-                style="?attr/materialCardViewElevatedStyle"
-                android:layout_height="100dp">
+                app:cardElevation="8dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -203,19 +217,20 @@
                         android:layout_marginBottom="8dp"
                         android:text="Absen Pulang"
                         android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
                     <ImageView
                         android:id="@+id/status_icon_pulang"
                         android:layout_width="40dp"
-                        android:layout_margin="8dp"
+                        android:layout_height="40dp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_sudah_absen"
-                        android:layout_height="40dp"/>
+                        android:layout_margin="8dp"
+                        android:src="@drawable/ic_sudah_absen" />
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txt_jam_absen_pulang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txt_jam_absen_pulang"
                         android:layout_alignBottom="@id/status_icon_pulang"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"

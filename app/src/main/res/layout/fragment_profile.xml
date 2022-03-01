@@ -28,10 +28,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_margin="16dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -113,42 +114,42 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
             style="@style/Widget.Material3.Button.TonalButton.Icon"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginHorizontal="16dp"
-            android:text="Pengaturan"
-            app:iconGravity="textStart"
             android:layout_marginTop="12dp"
-            app:iconSize="24dp"
+            android:text="Pengaturan"
+            android:textAllCaps="false"
             app:icon="@drawable/ic_baseline_settings_24"
-            android:textAllCaps="false"/>
+            app:iconGravity="textStart"
+            app:iconSize="24dp" />
 
         <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TonalButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="12dp"
+            android:text="Ubah Password"
+            android:textAllCaps="false"
             app:icon="@drawable/ic_baseline_refresh_24"
             app:iconGravity="textStart"
-            app:iconSize="24dp"
-            style="@style/Widget.Material3.Button.TonalButton.Icon"
-            android:text="Ubah Password"
-            android:textAllCaps="false" />
+            app:iconSize="24dp" />
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            app:backgroundTint="?colorError"
-            android:textColor="?colorOnError"
-            app:iconTint="?colorOnError"
-            android:layout_marginTop="12dp"
-            app:icon="@drawable/ic_baseline_logout_24"
-            app:iconSize="24dp"
-            app:iconGravity="textStart"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="12dp"
             android:text="Keluar"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:textColor="?colorOnError"
+            app:backgroundTint="?colorError"
+            app:icon="@drawable/ic_baseline_logout_24"
+            app:iconGravity="textStart"
+            app:iconSize="24dp"
+            app:iconTint="?colorOnError" />
 
     </LinearLayout>
 
