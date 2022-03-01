@@ -64,6 +64,17 @@
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
+            <com.google.android.material.slider.Slider
+                android:layout_width="match_parent"
+                app:thumbColor="?colorSecondary"
+                android:valueFrom="0"
+                app:labelBehavior="floating"
+                android:stepSize="1.0"
+                android:valueTo="5"
+                app:labelStyle="@style/TextAppearance.Material3.LabelSmall"
+                android:contentDescription="Slider pengganti ukuran font"
+                android:layout_height="wrap_content"/>
+
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:text="Preview"
@@ -76,17 +87,6 @@
                 android:text="Hello World"
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                 android:gravity="center"
-                android:layout_height="wrap_content"/>
-
-            <com.google.android.material.slider.Slider
-                android:layout_width="match_parent"
-                app:thumbColor="?colorSecondary"
-                android:valueFrom="0"
-                app:labelBehavior="floating"
-                android:stepSize="1.0"
-                android:valueTo="5"
-                app:labelStyle="@style/TextAppearance.Material3.LabelSmall"
-                android:contentDescription="Slider pengganti ukuran font"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
