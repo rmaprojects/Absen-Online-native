@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_dashboard_to_absenFragment"
             app:destination="@id/absenFragment" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
 
     <fragment
@@ -29,10 +32,26 @@
     </fragment>
     <fragment
         android:id="@+id/absenFragment"
+        tools:layout="@layout/fragment_absen"
         android:name="com.pklproject.checkincheckout.ui.dashboard.absen.AbsenFragment"
         android:label="AbsenFragment" />
     <fragment
         android:id="@+id/settingsFragment"
+        tools:layout="@layout/fragment_settings"
         android:name="com.pklproject.checkincheckout.ui.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_settingAbsenBottomSheet"
+            app:destination="@id/settingAbsenBottomSheet" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_history"
+        android:id="@+id/historyFragment"
+        android:name="com.pklproject.checkincheckout.ui.dashboard.history.HistoryFragment"
+        android:label="HistoryFragment" />
+    <dialog
+        tools:layout="@layout/bottomsheet_jadwal_absen"
+        android:id="@+id/settingAbsenBottomSheet"
+        android:name="com.pklproject.checkincheckout.ui.bottomsheet.SettingAbsenBottomSheet"
+        android:label="SettingAbsenBottomSheet" />
 </navigation>
