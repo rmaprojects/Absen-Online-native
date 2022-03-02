@@ -46,34 +46,71 @@
             android:orientation="horizontal"
             android:layout_marginTop="12dp"
             android:layout_height="match_parent">
-            <com.google.android.material.textview.MaterialTextView
-                android:text="Pagi"
-                android:drawablePadding="6dp"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:drawableStart="@drawable/ic_baseline_wb_sunny_24"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                android:drawableEnd="@drawable/ic_sudah_absen"
-                />
-            <com.google.android.material.textview.MaterialTextView
-                android:text="Siang"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textview.MaterialTextView
+                    android:text="Pagi"
+                    android:drawablePadding="6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/ic_baseline_wb_sunny_24"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:drawableEnd="@drawable/ic_sudah_absen"
+                    />
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:text="09:00"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="16dp"
-                android:drawableStart="@drawable/ic_baseline_siang_7_24"
-                android:drawablePadding="6dp"
-                android:drawableEnd="@drawable/ic_telat"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                />
-            <com.google.android.material.textview.MaterialTextView
-                android:text="Pulang"
-                android:drawablePadding="6dp"
-                android:drawableEnd="@drawable/ic_not_available"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textview.MaterialTextView
+                    android:text="Siang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp"
+                    android:drawableStart="@drawable/ic_baseline_siang_7_24"
+                    android:drawablePadding="6dp"
+                    android:drawableEnd="@drawable/ic_telat"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    />
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:text="15:00"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:drawableStart="@drawable/ic_round_home_24"
-                android:layout_height="match_parent"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                />
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textview.MaterialTextView
+                    android:text="Pulang"
+                    android:drawablePadding="6dp"
+                    android:drawableEnd="@drawable/ic_not_available"
+                    android:layout_width="wrap_content"
+                    android:drawableStart="@drawable/ic_round_home_24"
+                    android:layout_height="match_parent"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:text="--/--"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
         </LinearLayout>
 
