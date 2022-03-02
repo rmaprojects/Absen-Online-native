@@ -28,16 +28,6 @@
             android:layout_toEndOf="@id/txt_jam_sekarang"
             android:text="08:00"
             android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="History"
-            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-            app:cornerRadius="8dp"
-            app:icon="@drawable/ic_baseline_history_24" />
     </RelativeLayout>
 
     <com.google.android.material.textview.MaterialTextView
