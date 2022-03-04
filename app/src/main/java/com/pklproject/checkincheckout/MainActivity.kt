@@ -43,8 +43,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 //Kalau di hide = false,
                 //Kalau di show = true
                 R.id.navigation_dashboard -> {
-                    showBottomNav = false
+                    showBottomNav = true
                     showTopAppBar = true
+                }
+                R.id.navigation_absen -> {
+                    showBottomNav = false
+                    showTopAppBar =  false
                 }
             }
             binding.bottomNavView.isVisible = showBottomNav

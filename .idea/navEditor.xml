@@ -20,27 +20,6 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="loginActivity">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-299" />
-                            <option name="y" value="-53" />
-                          </Point>
-                        </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_loginActivity_to_navigation_dashboard">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="navigation_absen">
                     <value>
                       <LayoutPositions>
@@ -58,8 +37,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-13" />
-                            <option name="y" value="54" />
+                            <option name="x" value="-345" />
+                            <option name="y" value="-62" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -101,23 +80,9 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-397" />
-                            <option name="y" value="418" />
+                            <option name="x" value="-273" />
+                            <option name="y" value="346" />
                           </Point>
-                        </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_navigation_profile_to_loginActivity">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_navigation_profile_to_settingsFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -127,8 +92,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="8" />
-                            <option name="y" value="366" />
+                            <option name="x" value="-36" />
+                            <option name="y" value="474" />
                           </Point>
                         </option>
                         <option name="myPositions">
