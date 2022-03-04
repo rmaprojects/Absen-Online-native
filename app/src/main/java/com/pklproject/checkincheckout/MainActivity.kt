@@ -50,6 +50,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     showBottomNav = false
                     showTopAppBar =  false
                 }
+                R.id.navigation_history -> {
+                    showBottomNav = true
+                    showTopAppBar = false
+                }
+                R.id.navigation_settings -> {
+                    showBottomNav = true
+                    showTopAppBar = false
+                }
+                R.id.navigation_profile -> {
+                    showBottomNav = true
+                    showTopAppBar = false
+                }
             }
             binding.bottomNavView.isVisible = showBottomNav
             binding.toolBar.isVisible = showTopAppBar
