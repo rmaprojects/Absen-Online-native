@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             )
         )
 
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             var showBottomNav = true
             var showTopAppBar = true
             when (destination.id) {
@@ -67,6 +67,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     //TODO semua ID destination diisi, mau di show atau tidak, petunjuk tertera di figma
-    //TODO semua class fragment di init bindingnya. Contoh sudah tertera di SettingsFragment
 
 }
