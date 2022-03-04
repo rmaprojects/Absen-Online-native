@@ -33,6 +33,7 @@
         android:textSize="15sp" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/username"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,6 +52,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,20 +71,22 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:id="@+id/forgetpassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:padding="8dp"
-        android:text="Forgot Password?" />
+        android:text="Lupa Password?" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/masuk"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="35dp"
-        android:text="Sign in"
+        android:text="Masuk"
         android:textAllCaps="false"
         app:cornerRadius="16dp" />
 

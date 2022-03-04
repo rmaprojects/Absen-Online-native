@@ -1,123 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:orientation="horizontal">
 
     <FrameLayout
+        android:id="@+id/item_line"
         android:layout_width="15dp"
         android:layout_height="match_parent"
-        android:padding="2dp"
         android:background="?colorPrimary"
-        android:id="@+id/item_line">
+        android:padding="2dp">
 
         <View
-            android:backgroundTint="?colorOnPrimary"
             android:layout_width="11dp"
-            android:layout_marginTop="6dp"
             android:layout_height="11dp"
-            android:background="@drawable/ic_baseline_circle_24"/>
+            android:layout_marginTop="6dp"
+            android:background="@drawable/ic_baseline_circle_24"
+            android:backgroundTint="?colorOnPrimary" />
 
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="24dp"
-        android:clickable="true"
+        android:layout_weight="1"
         android:background="?android:attr/selectableItemBackground"
-        android:focusable="true">
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:paddingLeft="24dp">
 
         <TextView
+            android:id="@+id/item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:singleLine="true"
             android:text="28/09/2022"
-            android:ellipsize="end"
-            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-            android:id="@+id/item_title"/>
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:layout_marginTop="12dp"
-            android:layout_height="match_parent">
+            android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <com.google.android.material.textview.MaterialTextView
-                    android:text="Pagi"
-                    android:drawablePadding="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:drawableStart="@drawable/ic_baseline_wb_sunny_24"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                     android:drawableEnd="@drawable/ic_sudah_absen"
-                    />
+                    android:drawablePadding="6dp"
+                    android:text="Pagi"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="09:00"
-                    android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <com.google.android.material.textview.MaterialTextView
-                    android:text="Siang"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="16dp"
                     android:drawableStart="@drawable/ic_baseline_siang_7_24"
-                    android:drawablePadding="6dp"
                     android:drawableEnd="@drawable/ic_telat"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    />
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:text="15:00"
-                    android:textStyle="bold"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-                <com.google.android.material.textview.MaterialTextView
-                    android:text="Pulang"
                     android:drawablePadding="6dp"
-                    android:drawableEnd="@drawable/ic_not_available"
-                    android:layout_width="wrap_content"
-                    android:drawableStart="@drawable/ic_round_home_24"
-                    android:layout_height="match_parent"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    />
+                    android:text="Siang"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="15:00"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/ic_round_home_24"
+                    android:drawableEnd="@drawable/ic_not_available"
+                    android:drawablePadding="6dp"
+                    android:text="Pulang"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="--/--"
-                    android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
-            android:layout_marginVertical="8dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp" />
 
     </LinearLayout>
 
