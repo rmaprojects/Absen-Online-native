@@ -50,18 +50,22 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 R.id.navigation_absen -> {
                     showBottomNav = false
                     showTopAppBar =  false
+                    showSubtitle = "Absen Pagi"
                 }
                 R.id.navigation_history -> {
                     showBottomNav = true
                     showTopAppBar = true
+                    showSubtitle = "Riwayat"
                 }
                 R.id.navigation_settings -> {
                     showBottomNav = true
                     showTopAppBar = true
+                    showSubtitle = "Pengaturan"
                 }
                 R.id.navigation_profile -> {
                     showBottomNav = true
                     showTopAppBar = true
+                    showSubtitle = "profil"
                 }
             }
             binding.bottomNavView.isVisible = showBottomNav
