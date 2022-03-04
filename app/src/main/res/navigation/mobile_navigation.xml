@@ -54,4 +54,13 @@
         android:id="@+id/bottomsheet_jadwal_absen"
         android:name="com.pklproject.checkincheckout.ui.bottomsheet.SettingAbsenBottomSheet"
         android:label="SettingAbsenBottomSheet" />
+    <fragment
+        tools:layout="@layout/activity_login"
+        android:id="@+id/loginActivity"
+        android:name="com.pklproject.checkincheckout.ui.auth.login.LoginActivity"
+        android:label="LoginActivity">
+        <action
+            android:id="@+id/action_loginActivity_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
 </navigation>
