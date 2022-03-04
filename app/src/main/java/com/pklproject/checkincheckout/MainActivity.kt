@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             var showBottomNav = true
             var showTopAppBar = true
             when (destination.id) {
+                //TODO semua ID destination diisi, mau di show atau tidak, petunjuk tertera di figma
                 //Ketika navigation nya kesini, apakah di show atau di hide
                 //Kalau di hide = false,
                 //Kalau di show = true
@@ -65,7 +66,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         // Inflate the menu; this adds items to the action bar if it is present.
         return true
     }
-
-    //TODO semua ID destination diisi, mau di show atau tidak, petunjuk tertera di figma
 
 }
