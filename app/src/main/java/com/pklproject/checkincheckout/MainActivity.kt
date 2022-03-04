@@ -2,10 +2,8 @@ package com.pklproject.checkincheckout
 
 import android.os.Bundle
 import android.view.Menu
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -37,14 +35,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             var showBottomNav = true
             var showTopAppBar = true
+            var showSubtitle = ""
             when (destination.id) {
-                //TODO semua ID destination diisi, mau di show atau tidak, petunjuk tertera di figma
                 //Ketika navigation nya kesini, apakah di show atau di hide
                 //Kalau di hide = false,
                 //Kalau di show = true
+                //Kecuali kalau subtitle, pakainya null saja
                 R.id.navigation_dashboard -> {
                     showBottomNav = true
                     showTopAppBar = true
+                    showSubtitle = "Nama Orang"
                 }
                 R.id.navigation_absen -> {
                     showBottomNav = false
@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
             binding.bottomNavView.isVisible = showBottomNav
             binding.toolBar.isVisible = showTopAppBar
+            binding.toolBar.subtitle = showSubtitle
         }
 
         setupActionBarWithNavController(navController, appBarConfiguration)
