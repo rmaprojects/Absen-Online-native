@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 //Kalau di hide = false,
                 //Kalau di show = true
                 //Kecuali kalau subtitle, pakainya null saja
+                    //TODO: isi subtitle
                 R.id.navigation_dashboard -> {
                     showBottomNav = true
                     showTopAppBar = true
