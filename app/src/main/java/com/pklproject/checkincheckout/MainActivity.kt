@@ -52,15 +52,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
                 R.id.navigation_history -> {
                     showBottomNav = true
-                    showTopAppBar = false
+                    showTopAppBar = true
                 }
                 R.id.navigation_settings -> {
                     showBottomNav = true
-                    showTopAppBar = false
+                    showTopAppBar = true
                 }
                 R.id.navigation_profile -> {
                     showBottomNav = true
-                    showTopAppBar = false
+                    showTopAppBar = true
                 }
             }
             binding.bottomNavView.isVisible = showBottomNav
