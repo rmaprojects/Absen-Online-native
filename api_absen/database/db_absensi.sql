@@ -19,19 +19,18 @@ CREATE TABLE tbl_pengaturan_absen (
 );
 
 CREATE TABLE tbl_absensi (
+    id_absen INT(5),
     id_karyawan INT(11),
     nama_karyawan VARCHAR (60),
-    absen_pagi TIME,
-    absen_siang TIME,
-    absen_pulang TIME,
-    absen_pagi_awal TIME,
-    absen_pagi_akhir TIME,
-    absen_siang_awal TIME,
-    absen_siang_akhir TIME,
-    absen_pulang_awal TIME,
-    absen_pulang_akhir TIME,
+    absen_type ENUM ('absen_pagi', 'absen_siang', 'absen_malam'),
+    waktu_absen TIMESTAMP,
     FOREIGN KEY (id_karyawan) REFERENCES tbl_karyawan(id_karyawan)
 );
+
+INSERT INTO tbl_absensi (id_karyawan, nama_karyawan, absen_type)
+VALUES (1, "Mamang Sumamang", 'absen_pulang');
+
+ALTER TABLE tbl_pengaturan_absen ADD COLUMN id_pengaturan VARCHAR(1) PRIMARY KEY;
 
 ALTER TABLE tbl_karyawan ADD COLUMN username VARCHAR (60);
 ALTER TABLE tbl_karyawan ADD COLUMN password VARCHAR (60);
@@ -46,5 +45,5 @@ VALUES ("Sumamang Sumang", "Manager", "IT", "OMG Indonesia", false);
 INSERT INTO tbl_absensi(id_karyawan, nama_karyawan,absen_pagi ,absen_siang ,absen_pulang ,absen_pagi_awal ,absen_pagi_akhir ,absen_siang_awal ,absen_siang_akhir ,absen_pulang_awal ,absen_pulang_akhir)
 VALUES (1, "Mamang Sumamang", "09:14:00", "15:12:00", "17:00:00", "09:00:00", "15:00:00", "15:00:00", "17:00:00", "17:00:00","22:00:00");
 
-INSERT INTO tbl_pengaturan_absen (absen_siang_diperlukan,absen_pagi_awal,absen_pagi_akhir,absen_siang_awal,absen_siang_akhir,absen_pulang_awal,absen_pulang_akhir)
-VALUES (true, "09:00:00", "15:00:00", "15:00:00", "17:00:00", "17:00:00","22:00:00");
+INSERT INTO tbl_pengaturan_absen (absen_siang_diperlukan,absen_pagi_awal,absen_pagi_akhir,absen_siang_awal,absen_siang_akhir,absen_pulang_awal,absen_pulang_akhir, id_pengaturan)
+VALUES (true, "09:00:00", "15:00:00", "15:00:00", "17:00:00", "17:00:00","22:00:00", 1);
