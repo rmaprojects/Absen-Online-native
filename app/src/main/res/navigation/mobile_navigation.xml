@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_settingsFragment"
             app:destination="@id/navigation_settings" />
+        <action
+            android:id="@+id/action_navigation_profile_to_loginActivity"
+            app:destination="@id/loginActivity" />
     </fragment>
     <fragment
         android:id="@+id/navigation_absen"
