@@ -8,11 +8,10 @@
     tools:context=".ui.dashboard.DashboardFragment">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/txt_jam_sekarang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Absensi"
-        android:layout_margin="10dp"
+        android:layout_margin="8dp"
         android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
 
