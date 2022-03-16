@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/navigation_dashboard"
-        android:title="Dashboard"
-        app:showAsAction="always"
+    <item
+        android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_round_home_24"
-        />
-    <item android:id="@+id/navigation_history"
-        android:title="Riwayat"
-        app:showAsAction="always"
+        android:title="Dashboard"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/navigation_absen"
+        android:icon="@drawable/ic_baseline_verified_24"
+        android:title="Absen"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/navigation_history"
         android:icon="@drawable/ic_baseline_history_24"
-        />
-    <item android:id="@+id/navigation_settings"
-        android:title="Pengaturan"
-        app:showAsAction="always"
+        android:title="Riwayat"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_baseline_settings_24"
-        />
-    <item android:id="@+id/navigation_profile"
-        android:title="Profile"
-        app:showAsAction="always"
+        android:title="Pengaturan"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_baseline_person_24"
-        />
+        android:title="Profile"
+        app:showAsAction="always" />
 </menu>
