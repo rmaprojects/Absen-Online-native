@@ -10,15 +10,6 @@
         android:name="com.pklproject.checkincheckout.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" >
-        <action
-            android:id="@+id/action_navigation_dashboard_to_navigation_profile"
-            app:destination="@id/navigation_profile" />
-        <action
-            android:id="@+id/action_navigation_dashboard_to_absenFragment"
-            app:destination="@id/navigation_absen" />
-        <action
-            android:id="@+id/action_navigation_dashboard_to_historyFragment"
-            app:destination="@id/navigation_history" />
     </fragment>
 
     <fragment
