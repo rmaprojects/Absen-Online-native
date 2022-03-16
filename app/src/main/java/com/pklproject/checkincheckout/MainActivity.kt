@@ -36,12 +36,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             var showBottomNav = true
             var showTopAppBar = true
             var showSubtitle = ""
+            var showTitle = ""
             when (destination.id) {
                 //Ketika navigation nya kesini, apakah di show atau di hide
                 //Kalau di hide = false,
                 //Kalau di show = true
                 //Kecuali kalau subtitle, pakainya null saja
-                    //TODO: isi subtitle
+                    //TODO: isi Subtitle dan Title
                 R.id.navigation_dashboard -> {
                     showBottomNav = true
                     showTopAppBar = true
@@ -71,6 +72,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             binding.bottomNavView.isVisible = showBottomNav
             binding.toolBar.isVisible = showTopAppBar
             binding.toolBar.subtitle = showSubtitle
+            binding.toolBar.title = showTitle
         }
 
         setupActionBarWithNavController(navController, appBarConfiguration)
