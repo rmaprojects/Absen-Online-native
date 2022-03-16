@@ -9,8 +9,8 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_margin="12dp"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="16dp"
         style="@style/Widget.Material3.CardView.Elevated"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -57,13 +57,13 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:text="07:00"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginHorizontal="16dp"
                     android:gravity="center_vertical"
                     android:layout_height="match_parent">
                     <LinearLayout
@@ -82,7 +82,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:text="07:00"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -107,7 +107,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:text="07:00"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>

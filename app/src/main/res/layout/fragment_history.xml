@@ -32,6 +32,7 @@
         android:layout_width="wrap_content"
         android:text="Maret 2022"
         android:textStyle="bold"
+        android:background="?selectableItemBackground"
         android:drawablePadding="8dp"
         android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
         android:layout_margin="8dp"

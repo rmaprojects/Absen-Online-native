@@ -34,6 +34,7 @@
                 android:layout_gravity="center"
                 android:layout_marginVertical="16dp"
                 android:text="Ambil Foto"
+                style="@style/Widget.Material3.Button.TonalButton.Icon"
                 app:icon="@drawable/ic_baseline_camera_alt_24" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -49,10 +50,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
                 android:layout_margin="12dp">
-
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Preview Tidak tersedia"
+                    android:layout_height="wrap_content"/>
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -77,15 +82,14 @@
                 </ScrollView>
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/kirim"
-                style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Tertiary"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
                 android:text="Kirim"
-                app:cornerRadius="20dp"
                 android:textAppearance="@style/TextAppearance.Material3.LabelLarge"/>
         </LinearLayout>
     </ScrollView>

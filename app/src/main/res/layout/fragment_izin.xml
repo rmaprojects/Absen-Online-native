@@ -36,9 +36,9 @@
             </ScrollView>
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/kirim"
-            style="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Tertiary"
+            style="@style/Widget.Material3.Button"
             android:layout_width="120dp"
             android:layout_height="60dp"
             android:layout_gravity="center"

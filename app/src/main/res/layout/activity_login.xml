@@ -46,6 +46,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="text"
             android:hint="Username"
             android:textSize="20sp" />
 
@@ -65,20 +66,11 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="textPassword"
             android:hint="Password"
             android:textSize="20sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/forgetpassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
-        android:padding="8dp"
-        android:text="Lupa Password?" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/masuk"
@@ -87,7 +79,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="35dp"
         android:text="Masuk"
-        android:textAllCaps="false"
-        app:cornerRadius="16dp" />
+        android:textAllCaps="false"/>
 
 </LinearLayout>
