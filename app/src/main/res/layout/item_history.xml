@@ -6,124 +6,111 @@
     android:baselineAligned="false"
     android:orientation="horizontal">
 
-    <FrameLayout
-        android:id="@+id/item_line"
-        android:layout_width="15dp"
-        android:layout_height="match_parent"
-        android:background="?colorPrimary"
-        android:padding="2dp">
-
-        <View
-            android:layout_width="11dp"
-            android:layout_height="11dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/ic_baseline_circle_24"
-            android:backgroundTint="?colorOnPrimary" />
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="vertical"
-        android:paddingLeft="24dp">
-
-        <TextView
-            android:id="@+id/item_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="28/09/2022"
-            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
-
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_margin="12dp"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="12dp"
+        style="@style/Widget.Material3.CardView.Elevated"
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
-
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_height="200dp">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:text="22 Maret 2022"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                android:layout_height="wrap_content"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:text="Status Absen:"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/material_on_surface_emphasis_medium"
+                android:layout_height="wrap_content"/>
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_height="match_parent">
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:drawableStart="@drawable/ic_baseline_wb_sunny_24"
-                    android:drawableEnd="@drawable/ic_sudah_absen"
-                    android:drawablePadding="6dp"
-                    android:text="Pagi"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="09:00"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.google.android.material.textview.MaterialTextView
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:text="Pagi"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                            android:drawablePadding="8dp"
+                            android:layout_height="wrap_content"
+                            android:drawableEnd="@drawable/ic_sudah_absen"
+                            />
+                    </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:text="07:00"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="16dp"
-                    android:drawableStart="@drawable/ic_baseline_siang_7_24"
-                    android:drawableEnd="@drawable/ic_telat"
-                    android:drawablePadding="6dp"
-                    android:text="Siang"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="15:00"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.google.android.material.textview.MaterialTextView
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:text="Siang"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                            android:drawablePadding="8dp"
+                            android:layout_height="wrap_content"
+                            android:drawableEnd="@drawable/ic_sudah_absen"
+                            />
+                    </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:text="07:00"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:drawableStart="@drawable/ic_round_home_24"
-                    android:drawableEnd="@drawable/ic_not_available"
-                    android:drawablePadding="6dp"
-                    android:text="Pulang"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="--/--"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                    android:textStyle="bold" />
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="12dp"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:text="Sore"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                            android:drawablePadding="8dp"
+                            android:layout_height="wrap_content"
+                            android:drawableEnd="@drawable/ic_sudah_absen"
+                            />
+                    </LinearLayout>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:text="07:00"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp" />
-
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

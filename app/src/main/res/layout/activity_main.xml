@@ -14,7 +14,7 @@
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="DashBoard">
+            app:title="Dashboard">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profilePhoto"
