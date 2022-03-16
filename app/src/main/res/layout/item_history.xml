@@ -21,6 +21,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:text="22 Maret 2022"
+                android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                 android:layout_height="wrap_content"/>
             <com.google.android.material.textview.MaterialTextView

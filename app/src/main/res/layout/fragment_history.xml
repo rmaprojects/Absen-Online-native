@@ -1,15 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_height="match_parent">
-    
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        tools:listitem="@layout/item_history"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_height="match_parent"/>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            android:text="Filter:" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hari"
+            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+            app:icon="@drawable/ic_baseline_filter_list_24" />
+    </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:text="Maret 2022"
+        android:textStyle="bold"
+        android:drawablePadding="8dp"
+        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+        android:layout_margin="8dp"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_history" />
+
+</LinearLayout>
