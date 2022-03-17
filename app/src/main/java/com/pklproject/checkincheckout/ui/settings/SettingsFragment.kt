@@ -21,8 +21,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         binding.switchTema.isChecked = isDarkMode
 
-        binding.switchTema.setOnCheckedChangeListener{  buttonView, isChecked->
-
+        binding.switchTema.setOnCheckedChangeListener{  _, isChecked->
             if (isChecked){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }else{
