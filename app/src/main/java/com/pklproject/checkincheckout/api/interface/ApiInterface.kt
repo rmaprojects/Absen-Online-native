@@ -1,9 +1,6 @@
 package com.pklproject.checkincheckout.api.`interface`
 
-import com.pklproject.checkincheckout.api.models.AbsenModel
-import com.pklproject.checkincheckout.api.models.History
-import com.pklproject.checkincheckout.api.models.HistoryModel
-import com.pklproject.checkincheckout.api.models.Login
+import com.pklproject.checkincheckout.api.models.*
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -11,6 +8,13 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiInterface {
+
+    //CONTOH:
+    @POST("Endpoint")
+    suspend fun login(
+        @Body username:String,
+        @Body password:String
+    ) : Response<LoginModel>
 
     @POST("username")
     suspend fun postusername(
