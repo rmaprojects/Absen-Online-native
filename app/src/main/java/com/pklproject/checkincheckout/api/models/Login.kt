@@ -1,4 +1,4 @@
-package com.pklproject.checkincheckout.ui.model
+package com.pklproject.checkincheckout.api.models
 
 
 import com.google.gson.annotations.SerializedName
