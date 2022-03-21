@@ -11,14 +11,14 @@ import retrofit2.http.POST
 interface ApiInterface {
 
     //CONTOH:
-    @POST("Endpoint")
+    @POST("login.php")
     suspend fun login(
         @Body username:String,
         @Body password:String
     ) : Response<LoginModel>
 
-    @POST("username")
-    suspend fun Absen(
+    @POST("absen.php")
+    suspend fun absen(
         @Body username:String,
         @Body password:String,
         @Body tipe_absen:String,
@@ -28,17 +28,17 @@ interface ApiInterface {
         @Body keterangan:String
     ):Response<AbsenModel>
 
-    @POST("password")
-    suspend fun History(
+    @POST("absen_settings.php")
+    suspend fun history(
         @Body username:String,
         @Body password:String,
         @Body tahun:Int,
         @Body Bulan:String
     ):Response<HistoryModel>
 
-    @GET("bulan")
-    suspend fun AbsenSettings(
-        @Body Setting: String
+    @GET("history_absen.php")
+    suspend fun absenSettings(
+        
     ):Response<AbsenSettingsModel>
 
     companion object{
