@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             var showBottomNav = true
             var showTopAppBar = true
-            var showTitle = ""
             when (destination.id) {
                 R.id.navigation_dashboard -> {
                     showBottomNav = true

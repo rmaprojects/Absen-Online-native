@@ -16,24 +16,25 @@ interface ApiInterface {
         @Field ("password") password: String
     ): LoginModel
 
+    @FormUrlEncoded
     @POST("absen.php")
     suspend fun kirimAbsen(
-        @Part username: String,
-        @Part password: String,
-        @Part tipe_absen: String,
-        @Part longitude: Double,
-        @Part latitude: Double,
-        @Part photo_name: String,
-        @Part keterangan: String
-    ): Response<AbsenModel>
+        @Field ("username") username: String,
+        @Field ("password") password: String,
+        @Field ("tipe_absen") tipe_absen: String,
+        @Field ("longitude") longitude: Double,
+        @Field ("latitude") latitude: Double,
+        @Field ("photo_name") photo_name: String,
+        @Field ("keterangan") keterangan: String
+    ): AbsenModel
 
     @POST("history_absen.php")
     suspend fun history(
-        @Part username: String,
-        @Part password: String,
-        @Part tahun: Int,
-        @Part Bulan: String
-    ): Response<HistoryModel>
+        @Field ("username") username: String,
+        @Field ("password") password: String,
+        @Field ("tahun") tahun: Int,
+        @Field ("bulan") bulan: String
+    ): HistoryModel
 
     @GET("absen_settings.php")
     suspend fun absenSettings(
