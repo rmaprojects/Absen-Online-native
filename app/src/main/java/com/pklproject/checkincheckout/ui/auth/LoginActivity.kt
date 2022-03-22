@@ -1,4 +1,4 @@
-package com.pklproject.checkincheckout.ui.auth.login
+package com.pklproject.checkincheckout.ui.auth
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
