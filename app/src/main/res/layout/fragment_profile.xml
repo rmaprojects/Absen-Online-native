@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -14,7 +14,7 @@
             android:layout_width="186dp"
             android:layout_height="186dp"
             android:layout_gravity="center"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/profil"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp" />
@@ -61,7 +61,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="Jabatan: "
-                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/jabatan"
@@ -70,7 +70,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="5dp"
                             android:text="Manager"
-                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -83,7 +83,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="Departemen: "
-                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/departemen"
@@ -92,7 +92,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
                             android:text="IT"
-                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -105,7 +105,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="Bisnis Unit: "
-                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/unit"
@@ -114,7 +114,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
                             android:text="OMG Indonesia"
-                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -140,12 +140,15 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
-                android:text="Version 1.0"
-                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
+                android:id="@+id/nomor_versi"
                 android:layout_alignParentBottom="true"
-                android:layout_height="wrap_content"/>
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="Version 1.0" />
         </RelativeLayout>
 
     </LinearLayout>

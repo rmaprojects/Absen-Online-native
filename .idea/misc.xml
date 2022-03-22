@@ -35,7 +35,7 @@
         <entry key="app/src/main/res/layout/fragment_izin.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_menu_absen.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.16" />
         <entry key="app/src/main/res/layout/fragment_settings_admin.xml" value="0.1721014492753623" />
         <entry key="app/src/main/res/layout/item_history.xml" value="0.33" />

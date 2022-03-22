@@ -11,6 +11,7 @@ import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.ActivityLoginBinding
+import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import kotlinx.coroutines.launch
 
@@ -28,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 val response = api.login(username.toString(), password.toString())
 
-                try {
+                if (response.code == 200) {
                     Snackbar.make(binding.masuk, "Login Berhasil!", Snackbar.LENGTH_SHORT)
                         .setAction("Ok") {}
                         .show()
@@ -48,12 +49,13 @@ class LoginActivity : AppCompatActivity() {
                             response.statusKaryawan,
                         )
                     )
+                    Preferences(this@LoginActivity).isLoggedIn = true
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
-                } catch (e: Exception) {
+                } else {
                     Snackbar.make(
                         binding.masuk,
-                        "User credential salah! Silahkan perbaiki lalu coba lagi!",
+                        response.message.toString(),
                         Snackbar.LENGTH_SHORT
                     )
                         .setAction("Ok") {}

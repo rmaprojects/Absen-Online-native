@@ -1,9 +1,11 @@
 package com.pklproject.checkincheckout.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.pklproject.checkincheckout.BuildConfig
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.FragmentProfileBinding
@@ -23,5 +25,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.jabatan.text = tinyDB.getObject(LoginActivity.KEYSIGNIN,LoginModel::class.java).jabatan
         binding.departemen.text = tinyDB.getObject(LoginActivity.KEYSIGNIN,LoginModel::class.java).departement
         binding.unit.text = tinyDB.getObject(LoginActivity.KEYSIGNIN,LoginModel::class.java).businessUnit
+        binding.nomorVersi.text = "Version: ${BuildConfig.VERSION_NAME}"
+
+        binding.keluar.setOnClickListener {
+            tinyDB.clear()
+            requireActivity().startActivity(Intent(requireContext(), LoginActivity::class.java))
+            requireActivity().finish()
+        }
     }
 }

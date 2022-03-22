@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_dashboard, R.id.navigation_profile, R.id.navigation_history, R.id.navigation_settings
+                R.id.navigation_dashboard, R.id.navigation_absen, R.id.navigation_history, R.id.navigation_settings, R.id.navigation_profile
             )
         )
 
@@ -45,27 +45,33 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     showBottomNav = true
                     showTopAppBar = true
                     binding.toolBar.subtitle = tinyDb.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).namaKaryawan
+                    binding.frameFragment.setPaddingRelative(0, 0, 0, 135)
                 }
                 R.id.navigation_absen -> {
                     showBottomNav = true
                     showTopAppBar =  true
                     binding.toolBar.subtitle = null
+                    binding.frameFragment.setPaddingRelative(0, 0, 0, 135)
                 }
                 R.id.navigation_history -> {
                     showBottomNav = true
                     showTopAppBar = true
                     binding.toolBar.subtitle = null
+                    binding.frameFragment.setPaddingRelative(0, 0, 0, 135)
                 }
                 R.id.navigation_settings -> {
                     showBottomNav = true
                     showTopAppBar = true
                     binding.toolBar.subtitle = null
+                    binding.frameFragment.setPaddingRelative(0, 0, 0, 135)
                 }
                 R.id.navigation_profile -> {
                     showBottomNav = true
                     showTopAppBar = true
                     binding.toolBar.subtitle = null
+                    binding.frameFragment.setPaddingRelative(0, 0, 0, 132)
                 }
+                else -> binding.frameFragment.setPaddingRelative(0, 0, 0, 0)
             }
             binding.bottomNavView.isVisible = showBottomNav
             binding.toolBar.isVisible = showTopAppBar

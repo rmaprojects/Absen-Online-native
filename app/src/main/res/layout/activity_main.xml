@@ -8,7 +8,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolBar"
@@ -19,7 +19,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profilePhoto"
                 android:layout_width="64dp"
-                android:layout_height="match_parent"
+                android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="end"
                 android:padding="4dp"
                 android:src="@drawable/profil" />

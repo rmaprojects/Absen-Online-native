@@ -1,6 +1,7 @@
 package com.pklproject.checkincheckout.ui.settings
 
 import android.app.AppComponentFactory
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
@@ -20,21 +21,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         binding.darkModeSwitcher.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Ubah tema aplikasi")
-                .setSingleChoiceItems(arrayOf("System", "Light", "Dark"), AppCompatDelegate.getDefaultNightMode()) { _, which ->
-                    when (which) {
-                        0 -> {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                            Preferences(requireContext()).changeTheme = 0
-                        }
-                        1 -> {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                            Preferences(requireContext()).changeTheme = 1
-                        }
-                        2 -> {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                            Preferences(requireContext()).changeTheme = 2
-                        }
-                    }
+                .setSingleChoiceItems(arrayOf("System", "Light", "Dark"), Preferences(requireContext()).changeTheme) { dialogInterface, i ->
+                    Preferences(requireContext()).changeTheme = i
+                    AppCompatDelegate.setDefaultNightMode(i)
                 }
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
