@@ -1,147 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/fotoprofil"
-        android:layout_width="186dp"
-        android:layout_height="186dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="35dp"
-        android:src="@drawable/profil"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp" />
-
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/fotoprofil"
+            android:layout_width="186dp"
+            android:layout_height="186dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            android:src="@drawable/profil"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:cardCornerRadius="8dp">
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:gravity="center"
-                android:orientation="vertical">
+                app:cardCornerRadius="8dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/name"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Fulan"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                        android:textStyle="bold" />
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="Fulan"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="Jabatan: "
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/jabatan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Manager"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="Departemen: "
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/departemen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="IT"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="Bisnis Unit: "
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="OMG Indonesia"
+                            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+            </com.google.android.material.card.MaterialCardView>
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Jabatan: "
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/jabatan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:text="Manager"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Departemen: "
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/departemen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:text="IT"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Bisnis Unit: "
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/unit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:text="OMG Indonesia"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/keluar"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/keluar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:text="Keluar"
+                android:textAllCaps="false"
+                android:textColor="?colorOnError"
+                app:backgroundTint="?colorError"
+                app:icon="@drawable/ic_baseline_logout_24"
+                app:iconGravity="textStart"
+                app:iconSize="24dp"
+                app:iconTint="?colorOnError" />
+        </LinearLayout>
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="12dp"
-            android:text="Keluar"
-            android:textAllCaps="false"
-            android:textColor="?colorOnError"
-            app:backgroundTint="?colorError"
-            app:icon="@drawable/ic_baseline_logout_24"
-            app:iconGravity="textStart"
-            app:iconSize="24dp"
-            app:iconTint="?colorOnError" />
-    </LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:text="Version 1.0"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_height="wrap_content"/>
-    </RelativeLayout>
+            android:layout_height="match_parent">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:text="Version 1.0"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
