@@ -22,9 +22,18 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 .setTitle("Ubah tema aplikasi")
                 .setSingleChoiceItems(arrayOf("System", "Light", "Dark"), AppCompatDelegate.getDefaultNightMode()) { _, which ->
                     when (which) {
-                        0 ->  AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                        1 ->  AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                        2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        0 -> {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                            Preferences(requireContext()).changeTheme = 0
+                        }
+                        1 -> {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                            Preferences(requireContext()).changeTheme = 1
+                        }
+                        2 -> {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                            Preferences(requireContext()).changeTheme = 2
+                        }
                     }
                 }
                 .setPositiveButton("OK") { dialog, _ ->
@@ -39,11 +48,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 .show()
         }
 
-        
-    }
-
-    companion object{
-        const val SETTING_TEMA = "SETTIG_MOD"
 
     }
 }

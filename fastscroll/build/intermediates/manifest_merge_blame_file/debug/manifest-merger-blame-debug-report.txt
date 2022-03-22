@@ -18,9 +18,9 @@
 18    package="com.l4digital.fastscroll" >
 19
 20    <uses-sdk
-21        android:minSdkVersion="24"
-21-->/home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
-22        android:targetSdkVersion="31" />
-22-->/home/raka/AndroidStudioProjects/MyQoran/fastscroll/src/main/AndroidManifest.xml
+21        android:minSdkVersion="21"
+21-->/home/raka/Android-Studio-Projects/checkin-checkout/fastscroll/src/main/AndroidManifest.xml
+22        android:targetSdkVersion="32" />
+22-->/home/raka/Android-Studio-Projects/checkin-checkout/fastscroll/src/main/AndroidManifest.xml
 23
 24</manifest>

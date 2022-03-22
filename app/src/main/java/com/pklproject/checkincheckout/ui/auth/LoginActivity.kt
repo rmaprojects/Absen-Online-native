@@ -32,13 +32,20 @@ class LoginActivity : AppCompatActivity() {
                     Snackbar.make(binding.masuk, "Login Berhasil!", Snackbar.LENGTH_SHORT)
                         .setAction("Ok") {}
                         .show()
+
                     TinyDB(this@LoginActivity).putObject(
                         KEYSIGNIN,
                         LoginModel(
-                            response.code(),
-                            response.body()!!.login,
-                            response.message(),
-                            response.body()!!.status
+                            response.businessUnit,
+                            response.code,
+                            response.departement,
+                            response.idKaryawan,
+                            response.jabatan,
+                            response.message,
+                            response.namaKaryawan,
+                            response.status,
+                            response.statusAdmin,
+                            response.statusKaryawan,
                         )
                     )
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
@@ -56,7 +63,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    //TODO: buat function Login
     companion object {
         const val KEYSIGNIN = "SIGNINKEY"
     }

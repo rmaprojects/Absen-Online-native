@@ -10,7 +10,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
+import com.pklproject.checkincheckout.ui.auth.LoginActivity
+import com.pklproject.checkincheckout.ui.settings.TinyDB
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -22,6 +25,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
+
+        val tinyDb = TinyDB(this)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
@@ -40,37 +45,31 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 R.id.navigation_dashboard -> {
                     showBottomNav = true
                     showTopAppBar = true
-                    binding.toolBar.subtitle = "Nama Orang"
-                    showTitle = "Selamat Datang,"
+                    binding.toolBar.subtitle = tinyDb.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).namaKaryawan
                 }
                 R.id.navigation_absen -> {
-                    showBottomNav = false
-                    showTopAppBar =  false
-                    showTitle = "Absen Pagi"
+                    showBottomNav = true
+                    showTopAppBar =  true
                     binding.toolBar.subtitle = null
                 }
                 R.id.navigation_history -> {
                     showBottomNav = true
                     showTopAppBar = true
-                    showTitle = "Riwayat"
                     binding.toolBar.subtitle = null
                 }
                 R.id.navigation_settings -> {
                     showBottomNav = true
                     showTopAppBar = true
-                    showTitle = "Pengaturan"
                     binding.toolBar.subtitle = null
                 }
                 R.id.navigation_profile -> {
                     showBottomNav = true
                     showTopAppBar = true
-                    showTitle = "Profil"
                     binding.toolBar.subtitle = null
                 }
             }
             binding.bottomNavView.isVisible = showBottomNav
             binding.toolBar.isVisible = showTopAppBar
-            binding.toolBar.title = showTitle
         }
 
         setupActionBarWithNavController(navController, appBarConfiguration)
