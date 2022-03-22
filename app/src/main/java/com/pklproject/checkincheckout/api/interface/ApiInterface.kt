@@ -13,34 +13,34 @@ interface ApiInterface {
     //CONTOH:
     @POST("login.php")
     suspend fun login(
-        @Body username:String,
-        @Body password:String
-    ) : Response<LoginModel>
+        @Body username: String,
+        @Body password: String
+    ): Response<LoginModel>
 
     @POST("absen.php")
     suspend fun kirimAbsen(
-        @Body username:String,
-        @Body password:String,
-        @Body tipe_absen:String,
-        @Body longitude:Double,
-        @Body latitude:Double,
-        @Body photo_name:String,
-        @Body keterangan:String
-    ):Response<AbsenModel>
+        @Body username: String,
+        @Body password: String,
+        @Body tipe_absen: String,
+        @Body longitude: Double,
+        @Body latitude: Double,
+        @Body photo_name: String,
+        @Body keterangan: String
+    ): Response<AbsenModel>
 
     @POST("history_absen.php")
     suspend fun history(
-        @Body username:String,
-        @Body password:String,
-        @Body tahun:Int,
-        @Body Bulan:String
-    ):Response<HistoryModel>
+        @Body username: String,
+        @Body password: String,
+        @Body tahun: Int,
+        @Body Bulan: String
+    ): Response<HistoryModel>
 
     @GET("absen_settings.php")
     suspend fun absenSettings(
-    ):Response<AbsenSettingsModel>
+    ): Response<AbsenSettingsModel>
 
-    companion object{
+    companion object {
         private const val BASE_URL: String = "10.10.22.147/api_absen/"
 
         fun createApi(): ApiInterface {

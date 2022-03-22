@@ -5,99 +5,112 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.DashboardFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                 android:text="Jam Sekarang:"
-                android:layout_height="wrap_content"/>
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
-                android:text="09:00"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="6dp"
-                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                android:layout_height="wrap_content"/>
+                android:text="09:00"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_height="wrap_content">
+            android:orientation="horizontal">
+
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Filter:"
-                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                android:layout_height="wrap_content"/>
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
             <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:text="Pekan"
-                app:icon="@drawable/ic_baseline_filter_list_24"
                 style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="6dp"
-                android:layout_height="wrap_content"/>
+                android:text="Pekan"
+                app:icon="@drawable/ic_baseline_filter_list_24" />
         </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
-            android:text="Pekan 2 Maret"
-            android:gravity="center"
-            android:layout_marginTop="52dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-            android:layout_height="wrap_content"/>
+            android:layout_marginTop="52dp"
+            android:gravity="center"
+            android:text="Pekan 2 Maret"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
+            android:layout_height="105dp"
             android:layout_marginTop="28dp"
-            android:layout_height="105dp">
+            android:orientation="horizontal">
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
+
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
-                    android:text="Kehadiran"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"
+                    android:text="Kehadiran"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:textStyle="bold"
+                    android:gravity="center"
                     android:text="80%"
                     android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
             </RelativeLayout>
+
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="1dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
+
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
-                    android:text="Kehadiran"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_height="wrap_content"/>
+                    android:gravity="center"
+                    android:text="Kehadiran"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
@@ -117,6 +130,7 @@
             android:layout_margin="16dp"
             android:orientation="horizontal"
             android:weightSum="100">
+
             <LinearLayout
                 android:id="@+id/absent_layout"
                 android:layout_width="0dp"
@@ -124,61 +138,64 @@
                 android:layout_weight="50"
                 android:background="#9C27B0"
                 android:gravity="center"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/text_absent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFF"
                     android:text="50%"
-                    />
+                    android:textColor="#FFF" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/present_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="30"
-                android:gravity="center"
                 android:background="#009688"
+                android:gravity="center"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/text_present"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFF"
                     android:text="30%"
-                    />
+                    android:textColor="#FFF" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/late_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
-                android:gravity="center"
                 android:background="#009688"
+                android:gravity="center"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/text_late"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFF"
                     android:text="20%"
-                    />
+                    android:textColor="#FFF" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/late"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
-                android:gravity="center"
                 android:background="#009688"
+                android:gravity="center"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFF"
                     android:text="20%"
-                    />
+                    android:textColor="#FFF" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
