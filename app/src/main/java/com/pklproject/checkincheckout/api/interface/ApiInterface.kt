@@ -18,7 +18,7 @@ interface ApiInterface {
     ) : Response<LoginModel>
 
     @POST("absen.php")
-    suspend fun absen(
+    suspend fun kirimAbsen(
         @Body username:String,
         @Body password:String,
         @Body tipe_absen:String,
@@ -38,7 +38,6 @@ interface ApiInterface {
 
     @GET("absen_settings.php")
     suspend fun absenSettings(
-
     ):Response<AbsenSettingsModel>
 
     companion object{

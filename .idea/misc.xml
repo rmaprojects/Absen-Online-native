@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.1609375" />
         <entry key="..\:/Users/ASUS/Documents/GitHub/Checkin-Checkout/app/src/main/res/layout/activity_login.xml" value="0.1625" />
         <entry key="..\:/Users/ASUS/Documents/GitHub/Checkin-Checkout/app/src/main/res/layout/activity_main.xml" value="0.17604166666666668" />
         <entry key="..\:/Users/ASUS/Documents/GitHub/Checkin-Checkout/app/src/main/res/layout/bottomsheet_jadwal_absen.xml" value="0.17604166666666668" />
@@ -11,12 +12,12 @@
         <entry key="..\:/Users/ASUS/Documents/GitHub/Checkin-Checkout/app/src/main/res/layout/fragment_history.xml" value="0.1625" />
         <entry key="..\:/Users/ASUS/Documents/GitHub/Checkin-Checkout/app/src/main/res/layout/fragment_home.xml" value="0.17604166666666668" />
         <entry key="..\:/Users/ASUS/Documents/GitHub/Checkin-Checkout/app/src/main/res/layout/fragment_izin.xml" value="0.17604166666666668" />
-        <entry key="..\:/Users/ASUS/Documents/GitHub/Checkin-Checkout/app/src/main/res/layout/fragment_menu_absen.xml" value="0.17604166666666668" />
         <entry key="..\:/Users/ASUS/Documents/GitHub/Checkin-Checkout/app/src/main/res/layout/fragment_profile.xml" value="0.17604166666666668" />
         <entry key="..\:/Users/ASUS/Documents/GitHub/Checkin-Checkout/app/src/main/res/layout/fragment_settings.xml" value="0.1625" />
         <entry key="..\:/Users/ASUS/Documents/GitHub/Checkin-Checkout/app/src/main/res/layout/item_history.xml" value="0.1625" />
         <entry key="..\:/Users/ASUS/Documents/GitHub/Checkin-Checkout/app/src/main/res/menu/menu_navigation.xml" value="0.17604166666666668" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.1215" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_not_available.xml" value="0.118" />
         <entry key="app/src/main/res/drawable/ic_telat.xml" value="0.118" />
@@ -25,19 +26,19 @@
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.2289156626506024" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1721014492753623" />
         <entry key="app/src/main/res/layout/back_layout.xml" value="0.14427083333333332" />
-        <entry key="app/src/main/res/layout/bottomsheet_jadwal_absen.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_absen.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/bottomsheet_jadwal_absen.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_absen.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_absensi.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_izin.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_izin.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_menu_absen.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_settings_admin.xml" value="0.1721014492753623" />
-        <entry key="app/src/main/res/layout/item_history.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_history.xml" value="0.33" />
         <entry key="app/src/main/res/layout/profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/setting_jadwal_absen.xml" value="0.5" />
         <entry key="app/src/main/res/layout/test_layout.xml" value="0.11" />
