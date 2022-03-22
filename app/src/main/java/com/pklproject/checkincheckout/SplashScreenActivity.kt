@@ -14,13 +14,7 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-        TinyDB(this).putBoolean("isLFirstRun", true)
-        if (TinyDB(this).getBoolean("isFirstRun")) {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        } else {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
+
+
     }
 }

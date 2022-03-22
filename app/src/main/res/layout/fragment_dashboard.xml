@@ -126,8 +126,10 @@
         <LinearLayout
             android:id="@+id/attendance_layout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="48dp"
             android:orientation="horizontal"
             android:weightSum="100">
 
@@ -136,7 +138,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="50"
-                android:background="#9C27B0"
+                android:background="#00A86B"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -153,8 +155,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="30"
+<<<<<<< Updated upstream
                 android:background="#009688"
                 android:gravity="center"
+=======
+                android:gravity="center"
+                android:background="#FFC30B"
+>>>>>>> Stashed changes
                 android:orientation="horizontal">
 
                 <TextView
@@ -170,8 +177,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
+<<<<<<< Updated upstream
                 android:background="#009688"
                 android:gravity="center"
+=======
+                android:gravity="center"
+                android:background="#003152"
+>>>>>>> Stashed changes
                 android:orientation="horizontal">
 
                 <TextView
@@ -187,8 +199,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
+<<<<<<< Updated upstream
                 android:background="#009688"
                 android:gravity="center"
+=======
+                android:gravity="center"
+                android:background="#8D021F"
+>>>>>>> Stashed changes
                 android:orientation="horizontal">
 
                 <TextView
