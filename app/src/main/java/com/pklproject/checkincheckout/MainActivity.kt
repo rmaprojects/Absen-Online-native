@@ -38,40 +38,39 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             var showSubtitle = ""
             var showTitle = ""
             when (destination.id) {
-                //Ketika navigation nya kesini, apakah di show atau di hide
-                //Kalau di hide = false,
-                //Kalau di show = true
-                //Kecuali kalau subtitle, pakainya null saja
-                    //TODO: isi Subtitle dan Title
                 R.id.navigation_dashboard -> {
                     showBottomNav = true
                     showTopAppBar = true
-                    showSubtitle = "Nama Orang"
+                    binding.toolBar.subtitle = "Nama Orang"
+                    showTitle = "Selamat Datang,"
                 }
                 R.id.navigation_absen -> {
                     showBottomNav = false
                     showTopAppBar =  false
-                    showSubtitle = "Absen Pagi"
+                    showTitle = "Absen Pagi"
+                    binding.toolBar.subtitle = null
                 }
                 R.id.navigation_history -> {
                     showBottomNav = true
                     showTopAppBar = true
-                    showSubtitle = "Riwayat"
+                    showTitle = "Riwayat"
+                    binding.toolBar.subtitle = null
                 }
                 R.id.navigation_settings -> {
                     showBottomNav = true
                     showTopAppBar = true
-                    showSubtitle = "Pengaturan"
+                    showTitle = "Pengaturan"
+                    binding.toolBar.subtitle = null
                 }
                 R.id.navigation_profile -> {
                     showBottomNav = true
                     showTopAppBar = true
-                    showSubtitle = "profil"
+                    showTitle = "Profil"
+                    binding.toolBar.subtitle = null
                 }
             }
             binding.bottomNavView.isVisible = showBottomNav
             binding.toolBar.isVisible = showTopAppBar
-            binding.toolBar.subtitle = showSubtitle
             binding.toolBar.title = showTitle
         }
 
