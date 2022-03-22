@@ -17,7 +17,7 @@ interface ApiInterface {
         @Body password:String
     ) : Response<LoginModel>
 
-    @POST("absen.php")
+    @POST("absen_settings.php")
     suspend fun absen(
         @Body username:String,
         @Body password:String,
@@ -28,7 +28,7 @@ interface ApiInterface {
         @Body keterangan:String
     ):Response<AbsenModel>
 
-    @POST("absen_settings.php")
+    @POST("absen.php")
     suspend fun history(
         @Body username:String,
         @Body password:String,
@@ -38,7 +38,7 @@ interface ApiInterface {
 
     @GET("history_absen.php")
     suspend fun absenSettings(
-        
+
     ):Response<AbsenSettingsModel>
 
     companion object{
