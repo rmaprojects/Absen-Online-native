@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="8dp"
                 android:text="Pekan"
                 app:icon="@drawable/ic_baseline_filter_list_24" />
         </LinearLayout>
@@ -124,17 +124,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/attendance_layout"
+            android:id="@+id/attendance_percentage"
             android:layout_width="match_parent"
-            android:layout_gravity="center_horizontal"
             android:layout_height="40dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginHorizontal="12dp"
             android:orientation="horizontal"
             android:weightSum="100">
 
             <LinearLayout
-                android:id="@+id/absent_layout"
+                android:id="@+id/attended_percentage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="50"
@@ -143,7 +142,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/text_absent"
+                    android:id="@+id/txt_attended"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50%"
@@ -151,43 +150,33 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/present_layout"
+                android:id="@+id/late_percentage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="30"
-<<<<<<< Updated upstream
-                android:background="#009688"
+                android:background="#FFD300"
                 android:gravity="center"
-=======
-                android:gravity="center"
-                android:background="#FFC30B"
->>>>>>> Stashed changes
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/text_present"
+                    android:id="@+id/txt_late"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30%"
-                    android:textColor="#FFF" />
+                    android:textColor="#000" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/late_layout"
+                android:id="@+id/permission_percentage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
-<<<<<<< Updated upstream
-                android:background="#009688"
-                android:gravity="center"
-=======
-                android:gravity="center"
                 android:background="#003152"
->>>>>>> Stashed changes
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/text_late"
+                    android:id="@+id/txt_permission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20%"
@@ -195,25 +184,29 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/late"
+                android:id="@+id/absent_percentage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
-<<<<<<< Updated upstream
-                android:background="#009688"
-                android:gravity="center"
-=======
-                android:gravity="center"
                 android:background="#8D021F"
->>>>>>> Stashed changes
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/absent_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20%"
+                    android:text="10%"
                     android:textColor="#FFF" />
             </LinearLayout>
         </LinearLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textColor="?colorError"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            android:text="Anda 2x terlambat pekan ini"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </ScrollView>
