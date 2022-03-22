@@ -17,7 +17,7 @@ interface ApiInterface {
         @Body password:String
     ) : Response<LoginModel>
 
-    @POST("absen_settings.php")
+    @POST("history_absen.php")
     suspend fun absen(
         @Body username:String,
         @Body password:String,
@@ -36,7 +36,7 @@ interface ApiInterface {
         @Body Bulan:String
     ):Response<HistoryModel>
 
-    @GET("history_absen.php")
+    @GET("absen_settings.php")
     suspend fun absenSettings(
 
     ):Response<AbsenSettingsModel>
