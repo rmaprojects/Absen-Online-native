@@ -14,7 +14,7 @@ interface ApiInterface {
     suspend fun login(
         @Field ("username") username: String,
         @Field ("password") password: String
-    ): LoginModel
+    ): Response<LoginModel>
 
     @FormUrlEncoded
     @POST("absen.php")
@@ -26,7 +26,7 @@ interface ApiInterface {
         @Field ("latitude") latitude: Double,
         @Field ("photo_name") photo_name: String,
         @Field ("keterangan") keterangan: String
-    ): AbsenModel
+    ): Response<AbsenModel>
 
     @POST("history_absen.php")
     suspend fun history(
@@ -34,7 +34,7 @@ interface ApiInterface {
         @Field ("password") password: String,
         @Field ("tahun") tahun: Int,
         @Field ("bulan") bulan: String
-    ): HistoryModel
+    ): Response<HistoryModel>
 
     @GET("absen_settings.php")
     suspend fun absenSettings(

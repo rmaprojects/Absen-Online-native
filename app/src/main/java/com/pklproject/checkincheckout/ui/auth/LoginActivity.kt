@@ -3,6 +3,7 @@ package com.pklproject.checkincheckout.ui.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
@@ -21,48 +22,73 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val username = binding.username.editText?.text
-        val password = binding.password.editText?.text
         val api = ApiInterface.createApi()
 
         binding.masuk.setOnClickListener {
-            lifecycleScope.launch {
-                val response = api.login(username.toString(), password.toString())
-
-                if (response.code == 200) {
-                    Snackbar.make(binding.masuk, "Login Berhasil!", Snackbar.LENGTH_SHORT)
-                        .setAction("Ok") {}
-                        .show()
-
-                    TinyDB(this@LoginActivity).putObject(
-                        KEYSIGNIN,
-                        LoginModel(
-                            response.businessUnit,
-                            response.code,
-                            response.departement,
-                            response.idKaryawan,
-                            response.jabatan,
-                            response.message,
-                            response.namaKaryawan,
-                            response.status,
-                            response.statusAdmin,
-                            response.statusKaryawan,
+            val username = binding.username.editText?.text
+            val password = binding.password.editText?.text
+            print("$username, $password")
+            if (binding.username.editText?.text.toString() == "") {
+                binding.username.error = "Username tidak boleh kosong"
+            } else if (binding.password.editText?.text.toString() == ""){
+                binding.password.error = "Password tidak boleh kosong"
+            } else {
+                binding.password.error = null
+                binding.username.error = null
+                lifecycleScope.launch {
+                    val response = api.login(username.toString(), password.toString())
+                    Log.d("Username", username.toString())
+                    Log.d("Password", password.toString())
+                    if (response.isSuccessful) {
+                        val code = response.body()!!.code
+                        if (code == 200) {
+                            loginKeDashBoard(response.body()!!)
+                        } else if (code == 404) {
+                            Snackbar.make(
+                                binding.rootLayout,
+                                "Password atau Username salah, coba lagi",
+                                Snackbar.LENGTH_SHORT
+                            )
+                                .setAction("Ok") {}
+                                .show()
+                        }
+                    } else {
+                        Snackbar.make(
+                            binding.rootLayout,
+                            "Gagal mengambil data",
+                            Snackbar.LENGTH_SHORT
                         )
-                    )
-                    Preferences(this@LoginActivity).isLoggedIn = true
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                    finish()
-                } else {
-                    Snackbar.make(
-                        binding.masuk,
-                        response.message.toString(),
-                        Snackbar.LENGTH_SHORT
-                    )
-                        .setAction("Ok") {}
-                        .show()
+                            .setAction("Ok") {}
+                            .show()
+                    }
                 }
             }
         }
+    }
+
+    private fun loginKeDashBoard(response: LoginModel) {
+        Snackbar.make(binding.rootLayout, "Login Berhasil!", Snackbar.LENGTH_SHORT)
+            .setAction("Ok") {}
+            .show()
+
+        TinyDB(this@LoginActivity).putObject(
+            KEYSIGNIN,
+            LoginModel(
+                response.businessUnit,
+                response.code,
+                response.departement,
+                response.idKaryawan,
+                response.jabatan,
+                response.message,
+                response.namaKaryawan,
+                response.status,
+                response.statusAdmin,
+                response.statusKaryawan,
+            )
+        )
+        Preferences(this@LoginActivity).isLoggedIn = true
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        finish()
     }
 
     companion object {
