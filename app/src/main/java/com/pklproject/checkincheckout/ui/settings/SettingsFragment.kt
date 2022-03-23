@@ -18,12 +18,31 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        when (Preferences(requireContext()).changeTheme){
+            0 -> binding.currentThemeTxt.text = "Sistem"
+            1 -> binding.currentThemeTxt.text = "Light"
+            2 -> binding.currentThemeTxt.text = "Dark"
+        }
+
         binding.darkModeSwitcher.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Ubah tema aplikasi")
-                .setSingleChoiceItems(arrayOf("System", "Light", "Dark"), Preferences(requireContext()).changeTheme) { dialogInterface, i ->
+                .setItems(arrayOf("Sistem", "Light", "Dark")) { _, i ->
+                    when (i) {
+                        0 -> {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                            binding.currentThemeTxt.text = "Tema Sekarang: Sistem"
+                        }
+                        1 -> {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                            binding.currentThemeTxt.text = "Tema Sekarang: Light"
+                        }
+                        2 -> {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                            binding.currentThemeTxt.text = "Tema Sekarang: Dark"
+                        }
+                    }
                     Preferences(requireContext()).changeTheme = i
-                    AppCompatDelegate.setDefaultNightMode(i)
                 }
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
