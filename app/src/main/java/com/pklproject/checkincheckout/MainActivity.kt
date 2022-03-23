@@ -46,34 +46,40 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             var showBottomNav = true
             var showTopAppBar = true
+            var showImage = true
             when (destination.id) {
                 R.id.navigation_dashboard -> {
                     showBottomNav = true
                     showTopAppBar = true
+                    showImage = true
                     binding.toolBar.subtitle = tinyDb.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).namaKaryawan
                     binding.frameFragment.setPaddingRelative(0, 0, 0, 135)
                 }
                 R.id.navigation_absen -> {
                     showBottomNav = true
                     showTopAppBar =  true
+                    showImage =  false
                     binding.toolBar.subtitle = null
                     binding.frameFragment.setPaddingRelative(0, 0, 0, 135)
                 }
                 R.id.navigation_history -> {
                     showBottomNav = true
                     showTopAppBar = true
+                    showImage =  false
                     binding.toolBar.subtitle = null
                     binding.frameFragment.setPaddingRelative(0, 0, 0, 135)
                 }
                 R.id.navigation_settings -> {
                     showBottomNav = true
                     showTopAppBar = true
+                    showImage =  false
                     binding.toolBar.subtitle = null
                     binding.frameFragment.setPaddingRelative(0, 0, 0, 135)
                 }
                 R.id.navigation_profile -> {
                     showBottomNav = true
                     showTopAppBar = true
+                    showImage =  false
                     binding.toolBar.subtitle = null
                     binding.frameFragment.setPaddingRelative(0, 0, 0, 132)
                 }
@@ -81,6 +87,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
             binding.bottomNavView.isVisible = showBottomNav
             binding.toolBar.isVisible = showTopAppBar
+            binding.profilePhoto.isVisible = showImage
         }
 
         setupActionBarWithNavController(navController, appBarConfiguration)

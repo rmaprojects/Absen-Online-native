@@ -5,11 +5,14 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pklproject.checkincheckout.R
+import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.FragmentSettingsBinding
+import com.pklproject.checkincheckout.ui.auth.LoginActivity
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
@@ -18,6 +21,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val tinyDB = TinyDB(requireContext())
+        val isadmin = tinyDB.getObject(LoginActivity.KEYSIGNIN,LoginModel::class.java).statusAdmin
+        if (isadmin == "Admin"){
+            binding.adminOnlyArea.isVisible = true
+        }
         when (Preferences(requireContext()).changeTheme){
             0 -> binding.currentThemeTxt.text = "Sistem"
             1 -> binding.currentThemeTxt.text = "Light"
