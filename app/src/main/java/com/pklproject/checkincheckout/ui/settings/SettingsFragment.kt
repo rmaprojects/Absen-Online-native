@@ -22,14 +22,14 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         super.onViewCreated(view, savedInstanceState)
 
         val tinyDB = TinyDB(requireContext())
-        val isadmin = tinyDB.getObject(LoginActivity.KEYSIGNIN,LoginModel::class.java).statusAdmin
-        if (isadmin == "Admin"){
-            binding.adminOnlyArea.isVisible = true
-        }
+        val isAdmin = tinyDB.getObject(LoginActivity.KEYSIGNIN,LoginModel::class.java).statusAdmin
+
+        binding.adminOnlyArea.isVisible = isAdmin == "1"
+
         when (Preferences(requireContext()).changeTheme){
-            0 -> binding.currentThemeTxt.text = "Sistem"
-            1 -> binding.currentThemeTxt.text = "Light"
-            2 -> binding.currentThemeTxt.text = "Dark"
+            0 -> binding.currentThemeTxt.text = "Tema Sekarang: Sistem"
+            1 -> binding.currentThemeTxt.text = "Tema Sekarang: Light"
+            2 -> binding.currentThemeTxt.text = "Tema Sekarang: Dark"
         }
 
         binding.darkModeSwitcher.setOnClickListener {

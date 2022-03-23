@@ -26,12 +26,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
-        //TODO:
-        // #1: Ganti nama navigator di mobile_navigation.xml
-        // #2: Ganti layout di mobile_navigation.xml untuk navigation_absen
-        // #3: Bikin Logic, ketika dia admin, maka tampilkan menu admin di SettingsFragment
-        // #4: Tampilkan gambar profil hanya di dashbor saja, contoh bisa diliat di navController.addOnDestinationChangedListener
-
         val tinyDb = TinyDB(this)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)

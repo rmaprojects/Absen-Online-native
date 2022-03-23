@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_round_home_24"
-        android:title="Dashboard"
+        android:title="Dasbor"
         app:showAsAction="always" />
     <item
         android:id="@+id/navigation_absen"
@@ -19,7 +19,7 @@
     <item
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="Pengaturan"
+        android:title="Setelan"
         app:showAsAction="always" />
     <item
         android:id="@+id/navigation_profile"
