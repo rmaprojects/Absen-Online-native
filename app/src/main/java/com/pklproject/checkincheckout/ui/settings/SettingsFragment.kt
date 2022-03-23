@@ -26,12 +26,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         binding.adminOnlyArea.isVisible = isAdmin == "1"
 
-        if (isAdmin == "Admin"){
-            binding.adminOnlyArea.isVisible = true
-        }else{
-            binding.adminOnlyArea.isVisible = false
-        }
-
         when (Preferences(requireContext()).changeTheme){
             0 -> binding.currentThemeTxt.text = "Tema Sekarang: Sistem"
             1 -> binding.currentThemeTxt.text = "Tema Sekarang: Light"

@@ -10,11 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title="Dashboard">
+            android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profilePhoto"
@@ -23,15 +22,15 @@
                 android:layout_gravity="end"
                 android:padding="4dp"
                 android:src="@drawable/profil" />
-        </com.google.android.material.appbar.MaterialToolbar>
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:id="@+id/frame_fragment"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="12dp"
         android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="8dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <fragment

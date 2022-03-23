@@ -1,6 +1,7 @@
 package com.pklproject.checkincheckout
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -13,6 +14,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
+import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -40,48 +42,57 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             var showBottomNav = true
             var showTopAppBar = true
-            var showImage = true
+            var showImage:Boolean
+            var showTitle = ""
             when (destination.id) {
                 R.id.navigation_dashboard -> {
                     showBottomNav = true
                     showTopAppBar = true
                     showImage = true
-                    binding.toolBar.subtitle = tinyDb.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).namaKaryawan
-                    binding.frameFragment.setPaddingRelative(0, 0, 0, 135)
+                    binding.frameFragment.setPaddingRelative(0, 0, 0, 100)
+                    showTitle = Preferences(this).employeeName.toString()
                 }
                 R.id.navigation_absen -> {
                     showBottomNav = true
                     showTopAppBar =  true
                     showImage =  false
                     binding.toolBar.subtitle = null
-                    binding.frameFragment.setPaddingRelative(0, 0, 0, 135)
+                    binding.frameFragment.setPaddingRelative(0, 0, 0, 100)
+                    showTitle = "Absen"
                 }
                 R.id.navigation_history -> {
                     showBottomNav = true
                     showTopAppBar = true
                     showImage =  false
                     binding.toolBar.subtitle = null
-                    binding.frameFragment.setPaddingRelative(0, 0, 0, 135)
+                    binding.frameFragment.setPaddingRelative(0, 0, 0, 100)
+                    showTitle = "History"
                 }
                 R.id.navigation_settings -> {
                     showBottomNav = true
                     showTopAppBar = true
                     showImage =  false
                     binding.toolBar.subtitle = null
-                    binding.frameFragment.setPaddingRelative(0, 0, 0, 135)
+                    showTitle = "Pengaturan"
+                    binding.frameFragment.setPaddingRelative(0, 0, 0, 100)
                 }
                 R.id.navigation_profile -> {
                     showBottomNav = true
                     showTopAppBar = true
                     showImage =  false
                     binding.toolBar.subtitle = null
-                    binding.frameFragment.setPaddingRelative(0, 0, 0, 132)
+                    showTitle = "Profile"
+                    binding.frameFragment.setPaddingRelative(0, 0, 0, 100)
                 }
-                else -> binding.frameFragment.setPaddingRelative(0, 0, 0, 0)
+                else -> {
+                    binding.frameFragment.setPaddingRelative(0, 0, 0, 0)
+                    showImage = false
+                }
             }
             binding.bottomNavView.isVisible = showBottomNav
             binding.toolBar.isVisible = showTopAppBar
             binding.profilePhoto.isVisible = showImage
+            binding.toolBar.title = showTitle
         }
 
         setupActionBarWithNavController(navController, appBarConfiguration)

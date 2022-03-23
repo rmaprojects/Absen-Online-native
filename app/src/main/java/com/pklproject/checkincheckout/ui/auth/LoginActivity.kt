@@ -15,6 +15,8 @@ import com.pklproject.checkincheckout.databinding.ActivityLoginBinding
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import kotlinx.coroutines.launch
+import okio.Timeout
+import java.util.concurrent.TimeoutException
 
 class LoginActivity : AppCompatActivity() {
     private val binding: ActivityLoginBinding by viewBinding()
@@ -37,25 +39,33 @@ class LoginActivity : AppCompatActivity() {
                 binding.username.error = null
                 lifecycleScope.launch {
                     val response = api.login(username.toString(), password.toString())
-                    Log.d("Username", username.toString())
-                    Log.d("Password", password.toString())
-                    if (response.isSuccessful) {
-                        val code = response.body()!!.code
-                        if (code == 200) {
-                            loginKeDashBoard(response.body()!!)
-                        } else if (code == 404) {
+                    try {
+                        if (response.isSuccessful) {
+                            val code = response.body()!!.code
+                            if (code == 200) {
+                                loginKeDashBoard(response.body()!!)
+                            } else if (code == 404) {
+                                Snackbar.make(
+                                    binding.rootLayout,
+                                    "Password atau Username salah, coba lagi",
+                                    Snackbar.LENGTH_SHORT
+                                )
+                                    .setAction("Ok") {}
+                                    .show()
+                            }
+                        } else {
                             Snackbar.make(
                                 binding.rootLayout,
-                                "Password atau Username salah, coba lagi",
+                                "Gagal mengambil data",
                                 Snackbar.LENGTH_SHORT
                             )
                                 .setAction("Ok") {}
                                 .show()
                         }
-                    } else {
+                    } catch (e: TimeoutException) {
                         Snackbar.make(
                             binding.rootLayout,
-                            "Gagal mengambil data",
+                            "Server sedang tidak aktif atau internet anda bermasalah",
                             Snackbar.LENGTH_SHORT
                         )
                             .setAction("Ok") {}
@@ -87,6 +97,7 @@ class LoginActivity : AppCompatActivity() {
             )
         )
         Preferences(this@LoginActivity).isLoggedIn = true
+        Preferences(this@LoginActivity).employeeName = response.namaKaryawan
         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
         finish()
     }
