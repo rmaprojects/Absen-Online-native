@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -27,14 +28,19 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         // Kasih ID dulu
 
         binding.pagi.setOnClickListener {
-            findNavController().navigate(R.id.action_settingsFragment_to_settingAbsenBottomSheet)
+            val bundle = bundleOf(KEYKIRIMWAKTU to "Pagi")
+            findNavController().navigate(R.id.action_settingsFragment_to_settingAbsenBottomSheet, bundle)
         }
         binding.siang.setOnClickListener {
-            findNavController().navigate(R.id.action_settingsFragment_to_settingAbsenBottomSheet)
+            val bundle = bundleOf(KEYKIRIMWAKTU to "Siang")
+            findNavController().navigate(R.id.action_settingsFragment_to_settingAbsenBottomSheet, bundle)
         }
         binding.pulang.setOnClickListener {
-            findNavController().navigate(R.id.action_settingsFragment_to_settingAbsenBottomSheet)
+            val bundle = bundleOf(KEYKIRIMWAKTU to "Pulang")
+            findNavController().navigate(R.id.action_settingsFragment_to_settingAbsenBottomSheet, bundle)
         }
+
+
         val tinyDB = TinyDB(requireContext())
         val isAdmin = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).statusAdmin
 
@@ -79,6 +85,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 .show()
         }
 
+    }
 
+    companion object{
+        const val KEYKIRIMWAKTU = "KirimWaktu"
     }
 }

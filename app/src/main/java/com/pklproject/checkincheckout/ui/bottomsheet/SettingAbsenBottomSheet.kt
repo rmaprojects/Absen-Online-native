@@ -9,10 +9,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.databinding.BottomsheetJadwalAbsenBinding
 import com.pklproject.checkincheckout.databinding.FragmentSettingsBinding
+import com.pklproject.checkincheckout.ui.settings.SettingsFragment.Companion.KEYKIRIMWAKTU
 
-class SettingAbsenBottomSheet : BottomSheetDialogFragment() {
+class SettingAbsenBottomSheet : BottomSheetDialogFragment(){
 
-    private val binding: BottomsheetJadwalAbsenBinding by viewBinding()
+    private val binding :BottomsheetJadwalAbsenBinding by viewBinding()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,11 +22,14 @@ class SettingAbsenBottomSheet : BottomSheetDialogFragment() {
     ): View? {
         return inflater.inflate(R.layout.bottomsheet_jadwal_absen, container, false)
 
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val waktu = arguments?.getString(KEYKIRIMWAKTU) ?:""
+
+        binding.pagi.text = "Menampilkan Waktu untuk: $waktu"
 
     }
 
