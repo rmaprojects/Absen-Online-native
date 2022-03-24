@@ -24,7 +24,7 @@ interface ApiInterface {
         @Field ("tipe_absen") tipe_absen: String,
         @Field ("longitude") longitude: Double,
         @Field ("latitude") latitude: Double,
-        @Field ("photo_name") photo_name: String,
+        @Field ("photo_name") photo_name: String?,
         @Field ("keterangan") keterangan: String
     ): Response<AbsenModel>
 

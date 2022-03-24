@@ -14,6 +14,21 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var absen = arguments?.getString(ABSEN_TYPE)
+
+        var tipeAbsen = ""
+
+        if (absen == "pagi") {
+            tipeAbsen = "1"
+        } else if (absen == "siang") {
+            tipeAbsen = "2"
+        } else if (absen == "pulang") {
+            tipeAbsen = "3"
+        }
+
+        //TODO:
+        // bikin logic kirim absen, contohnya ada di AbsenMenuFragment. Tepatnya di function kirimAbsen(), Longitude dan latitude dummy aja.
+
     }
 
     companion object {
