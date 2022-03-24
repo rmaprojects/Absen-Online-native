@@ -28,28 +28,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initialisation()
+        val tinyDB = TinyDB(requireContext())
 
-        var tipeAbsen = ""
-
-        binding.pilihanAbsen.setOnCheckedChangeListener{ _, isChecked ->
-            when(isChecked){
-                R.id.absen -> {
-                    binding.absensi.isVisible = true
-                    binding.izindialog.isVisible = false
-                }
-                R.id.izin -> {
-                    binding.izindialog.isVisible = true
-                    binding.absensi.isVisible = false
-                    tipeAbsen = "izin"
-                }
-                R.id.cuti -> {
-                    binding.izindialog.isVisible = true
-                    binding.absensi.isVisible = false
-                    tipeAbsen = "cuti"
-                }
-            }
-        }
+        initialisation(tinyDB)
 
         binding.absenpagi.setOnClickListener {
             goToAbsensi("pagi")
@@ -65,19 +46,86 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
     }
 
-    private fun initialisation() {
+    private fun initialisation(tinyDB: TinyDB) {
         binding.pilihanAbsen.check(R.id.absen)
         binding.absensi.isVisible = true
         binding.izindialog.isVisible = false
 
-        val tinyDB = TinyDB(requireContext())
         val api = ApiInterface.createApi()
         val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
         val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
         val hariIni = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
+        cekAbsenHariIni(api, username.toString(), password.toString(), hariIni)
+
+        val keterangan = binding.keterangan.text
+        var tipeAbsen:String
+
+        binding.pilihanAbsen.setOnCheckedChangeListener{ _, isChecked ->
+            when(isChecked){
+                R.id.absen -> {
+                    binding.absensi.isVisible = true
+                    binding.izindialog.isVisible = false
+                    cekAbsenHariIni(api, username.toString(), password.toString(), hariIni)
+                }
+                R.id.izin -> {
+                    binding.izindialog.isVisible = true
+                    binding.absensi.isVisible = false
+                    tipeAbsen = "izin"
+                    binding.kirim.setOnClickListener {
+                        kirimAbsen(tipeAbsen, tinyDB, keterangan.toString())
+                    }
+                }
+                R.id.cuti -> {
+                    binding.izindialog.isVisible = true
+                    binding.absensi.isVisible = false
+                    tipeAbsen = "cuti"
+                    binding.kirim.setOnClickListener {
+                        kirimAbsen(tipeAbsen, tinyDB, keterangan.toString())
+                    }
+                }
+            }
+        }
+    }
+
+    private fun kirimAbsen (tipeAbsen: String, tinyDB: TinyDB, keterangan:String) {
+
+        var absentype = ""
+        if (tipeAbsen == "izin") {
+            absentype = "4"
+        } else if (tipeAbsen == "cuti") {
+            absentype = "5"
+        }
+        val api = ApiInterface.createApi()
+        val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
+        val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
+        val longitude = 1.2093213912
+        val latitude = 1923190238129.0
+
         lifecycleScope.launch {
-            val response = api.cekAbsenHariIni(username.toString(), password.toString(), hariIni)
+            val response = api.kirimAbsen(username.toString(), password.toString(), absentype, longitude, latitude, "$tipeAbsen.jpg", keterangan)
+
+            try {
+                if (response.isSuccessful){
+                    Snackbar.make(binding.rootLayout, "Data berhasil dikirim", Snackbar.LENGTH_SHORT)
+                        .setAction("Ok") {}
+                        .show()
+                } else {
+                    Snackbar.make(binding.rootLayout, "Gagal mengirim data, terjadi kesalahan", Snackbar.LENGTH_SHORT)
+                        .setAction("Ok") {}
+                        .show()
+                }
+            } catch (e: Exception) {
+                Snackbar.make(binding.rootLayout, "Gagal mengambil data, aktifkan internet anda", Snackbar.LENGTH_SHORT)
+                    .setAction("Ok") {}
+                    .show()
+            }
+        }
+    }
+
+    private fun cekAbsenHariIni(api: ApiInterface, username:String, password:String, hariIni:String) {
+        lifecycleScope.launch {
+            val response = api.cekAbsenHariIni(username, password, hariIni)
             try {
                 if (response.isSuccessful) {
                     val statusAbsen = response.body()!!.absenHariIni
@@ -102,7 +150,13 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                             binding.absensiang.isClickable = false
                             binding.absenpulang.isClickable = false
                         }
+                        else -> {
+                            binding.absenpagi.isClickable = false
+                            binding.absensiang.isClickable = false
+                            binding.absenpulang.isClickable = false
+                        }
                     }
+
                 } else {
                     Snackbar.make(
                         requireView(),

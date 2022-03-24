@@ -29,7 +29,7 @@ class SettingAbsenBottomSheet : BottomSheetDialogFragment(){
 
         val waktu = arguments?.getString(KEYKIRIMWAKTU) ?:""
 
-        binding.pagi.text = "Menampilkan Waktu untuk: $waktu"
+        binding.pagi.text = "Menampilkan waktu absen untuk: $waktu"
 
     }
 

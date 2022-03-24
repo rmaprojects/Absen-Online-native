@@ -23,6 +23,15 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initialisation()
+
+        val tinyDB = TinyDB(requireContext())
+        val isAdmin = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).statusAdmin
+
+        binding.adminOnlyArea.isVisible = isAdmin == "1"
+    }
+
+    private fun initialisation() {
         binding.pagi.setOnClickListener {
             val bundle = bundleOf(KEYKIRIMWAKTU to "Pagi")
             findNavController().navigate(R.id.action_settingsFragment_to_settingAbsenBottomSheet, bundle)
@@ -36,12 +45,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             findNavController().navigate(R.id.action_settingsFragment_to_settingAbsenBottomSheet, bundle)
         }
 
-
-        val tinyDB = TinyDB(requireContext())
-        val isAdmin = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).statusAdmin
-
-        binding.adminOnlyArea.isVisible = isAdmin == "1"
-
         when (Preferences(requireContext()).changeTheme) {
             0 -> binding.currentThemeTxt.text = "Tema Sekarang: Sistem"
             1 -> binding.currentThemeTxt.text = "Tema Sekarang: Light"
@@ -49,38 +52,41 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         binding.darkModeSwitcher.setOnClickListener {
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Ubah tema aplikasi")
-                .setItems(arrayOf("Sistem", "Light", "Dark")) { _, i ->
-                    when (i) {
-                        0 -> {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                            binding.currentThemeTxt.text = "Tema Sekarang: Sistem"
-                        }
-                        1 -> {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                            binding.currentThemeTxt.text = "Tema Sekarang: Light"
-                        }
-                        2 -> {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                            binding.currentThemeTxt.text = "Tema Sekarang: Dark"
-                        }
-                    }
-                    Preferences(requireContext()).changeTheme = i
-                }
-                .setPositiveButton("OK") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .setNeutralButton("Reset") { dialog, _ ->
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                    dialog.dismiss()
-                    Preferences(requireContext()).changeTheme =
-                        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                }
-                .create()
-                .show()
+            changeThemeDialog()
         }
+    }
 
+    private fun changeThemeDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Ubah tema aplikasi")
+            .setItems(arrayOf("Sistem", "Light", "Dark")) { _, i ->
+                when (i) {
+                    0 -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                        binding.currentThemeTxt.text = "Tema Sekarang: Sistem"
+                    }
+                    1 -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        binding.currentThemeTxt.text = "Tema Sekarang: Light"
+                    }
+                    2 -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        binding.currentThemeTxt.text = "Tema Sekarang: Dark"
+                    }
+                }
+                Preferences(requireContext()).changeTheme = i
+            }
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setNeutralButton("Reset") { dialog, _ ->
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                dialog.dismiss()
+                Preferences(requireContext()).changeTheme =
+                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            }
+            .create()
+            .show()
     }
 
     companion object{

@@ -264,7 +264,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/keterangan"
             style="@style/Widget.Material3.CardView.Outlined"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -277,6 +276,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
+                    android:id="@+id/keterangan"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:background="@null"
