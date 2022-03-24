@@ -23,10 +23,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //TODO: 
-        // Arahkan tombol atur jadwal absen ke bottom sheet, jika diklik maka bottom sheet akan muncul
-        // Kasih ID dulu
-
         binding.pagi.setOnClickListener {
             val bundle = bundleOf(KEYKIRIMWAKTU to "Pagi")
             findNavController().navigate(R.id.action_settingsFragment_to_settingAbsenBottomSheet, bundle)

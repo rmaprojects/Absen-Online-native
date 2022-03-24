@@ -8,9 +8,15 @@ import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.databinding.FragmentAbsenBinding
 
 class AbsenFragment : Fragment(R.layout.fragment_absen) {
-    private val Binding: FragmentAbsenBinding by viewBinding()
+
+    private val binding: FragmentAbsenBinding by viewBinding()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+    }
+
+    companion object {
+        const val ABSEN_TYPE = "ABSENTYPEKEY"
     }
 }

@@ -23,5 +23,9 @@ data class LoginModel(
     @SerializedName("status_admin")
     val statusAdmin: String?,
     @SerializedName("status_karyawan")
-    val statusKaryawan: String?
+    val statusKaryawan: String?,
+    @SerializedName("username")
+    val username: String?,
+    @SerializedName("password")
+    val password: String?
 )

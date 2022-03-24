@@ -1,9 +1,9 @@
 package com.pklproject.checkincheckout.ui.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
@@ -15,7 +15,6 @@ import com.pklproject.checkincheckout.databinding.ActivityLoginBinding
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import kotlinx.coroutines.launch
-import okio.Timeout
 import java.util.concurrent.TimeoutException
 
 class LoginActivity : AppCompatActivity() {
@@ -29,7 +28,6 @@ class LoginActivity : AppCompatActivity() {
         binding.masuk.setOnClickListener {
             val username = binding.username.editText?.text
             val password = binding.password.editText?.text
-            print("$username, $password")
             if (binding.username.editText?.text.toString() == "") {
                 binding.username.error = "Username tidak boleh kosong"
             } else if (binding.password.editText?.text.toString() == ""){
@@ -94,10 +92,13 @@ class LoginActivity : AppCompatActivity() {
                 response.status,
                 response.statusAdmin,
                 response.statusKaryawan,
+                response.username,
+                response.password
             )
         )
         Preferences(this@LoginActivity).isLoggedIn = true
         Preferences(this@LoginActivity).employeeName = response.namaKaryawan
+
         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
         finish()
     }

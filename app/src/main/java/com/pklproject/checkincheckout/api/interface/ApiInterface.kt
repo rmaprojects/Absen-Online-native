@@ -28,6 +28,7 @@ interface ApiInterface {
         @Field ("keterangan") keterangan: String
     ): Response<AbsenModel>
 
+    @FormUrlEncoded
     @POST("history_absen.php")
     suspend fun history(
         @Field ("username") username: String,
@@ -39,6 +40,14 @@ interface ApiInterface {
     @GET("absen_settings.php")
     suspend fun absenSettings(
     ): Response<AbsenSettingsModel>
+
+    @FormUrlEncoded
+    @POST("cek_absen_hari_ini.php")
+    suspend fun cekAbsenHariIni(
+        @Field ("username") username: String,
+        @Field ("password") password: String,
+        @Field ("tanggal_sekarang") today:String
+    ): Response<TodayAttendanceModel>
 
     companion object {
         private const val BASE_URL: String = "http://10.10.22.147/api_absen/"
