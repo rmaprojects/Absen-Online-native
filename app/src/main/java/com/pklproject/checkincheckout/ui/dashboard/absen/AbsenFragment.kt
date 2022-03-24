@@ -21,41 +21,27 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val absen = arguments?.getString(ABSEN_TYPE)
+
         val tinyDB = TinyDB(requireContext())
 
-        initialisation(tinyDB)
-        //TODO:
-        // bikin logic kirim absen, contohnya ada di AbsenMenuFragment. Tepatnya di function kirimAbsen(), Longitude dan latitude dummy aja.
+        initialisation(tinyDB, absen.toString())
 
         binding.ambilfoto.setOnClickListener {
 
         }
     }
 
-
-
-    private fun initialisation(tinyDB: TinyDB) {
-        var absen = arguments?.getString(ABSEN_TYPE)
-        var tipeAbsen = ""
-
-        if (absen == "pagi") {
-            tipeAbsen = "1"
-        } else if (absen == "siang") {
-            tipeAbsen = "2"
-        } else if (absen == "pulang") {
-            tipeAbsen = "3"
-        }
+    private fun initialisation(tinyDB: TinyDB, absen:String) {
 
         val keterangan = binding.keterangan.text
 
         binding.kirimabsen.setOnClickListener {
-            kirimAbsen(tipeAbsen,tinyDB,keterangan.toString())
+            kirimAbsen(absen,tinyDB,keterangan.toString())
         }
     }
 
     private fun kirimAbsen (tipeAbsen: String, tinyDB: TinyDB, keterangan:String) {
-
-
         val api = ApiInterface.createApi()
         val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
         val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
@@ -66,7 +52,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             val response = api.kirimAbsen(username.toString(), password.toString(), tipeAbsen, longitude, latitude, null, keterangan)
 
             try {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     Snackbar.make(binding.hasilfoto, "Data berhasil dikirim", Snackbar.LENGTH_SHORT)
                         .setAction("Ok") {}
                         .show()

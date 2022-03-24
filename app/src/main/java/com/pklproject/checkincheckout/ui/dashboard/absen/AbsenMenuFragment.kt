@@ -1,6 +1,7 @@
 package com.pklproject.checkincheckout.ui.dashboard.absen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -31,15 +32,15 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         initialisation(tinyDB)
 
         binding.absenpagi.setOnClickListener {
-            goToAbsensi("pagi")
+            goToAbsensi("1")
         }
 
         binding.absensiang.setOnClickListener {
-            goToAbsensi("siang")
+            goToAbsensi("2")
         }
 
         binding.absenpulang.setOnClickListener {
-            goToAbsensi("pulang")
+            goToAbsensi("3")
         }
 
     }
@@ -57,7 +58,6 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         cekAbsenHariIni(api, username.toString(), password.toString(), hariIni)
 
         val keterangan = binding.keterangan.text
-        var tipeAbsen:String
 
         binding.pilihanAbsen.setOnCheckedChangeListener{ _, isChecked ->
             when(isChecked){
@@ -69,17 +69,15 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 R.id.izin -> {
                     binding.izindialog.isVisible = true
                     binding.absensi.isVisible = false
-                    tipeAbsen = "izin"
                     binding.kirim.setOnClickListener {
-                        kirimAbsen(tipeAbsen, tinyDB, keterangan.toString())
+                        kirimAbsen("4", tinyDB, keterangan.toString())
                     }
                 }
                 R.id.cuti -> {
                     binding.izindialog.isVisible = true
                     binding.absensi.isVisible = false
-                    tipeAbsen = "cuti"
                     binding.kirim.setOnClickListener {
-                        kirimAbsen(tipeAbsen, tinyDB, keterangan.toString())
+                        kirimAbsen("5", tinyDB, keterangan.toString())
                     }
                 }
             }
@@ -88,12 +86,6 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
     private fun kirimAbsen (tipeAbsen: String, tinyDB: TinyDB, keterangan:String) {
 
-        var absentype = ""
-        if (tipeAbsen == "izin") {
-            absentype = "4"
-        } else if (tipeAbsen == "cuti") {
-            absentype = "5"
-        }
         val api = ApiInterface.createApi()
         val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
         val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
@@ -101,7 +93,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val latitude = 1923190238129.0
 
         lifecycleScope.launch {
-            val response = api.kirimAbsen(username.toString(), password.toString(), absentype, longitude, latitude, null, keterangan)
+            val response = api.kirimAbsen(username.toString(), password.toString(), tipeAbsen, longitude, latitude, null, keterangan)
 
             try {
                 if (response.isSuccessful){
@@ -114,6 +106,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         .show()
                 }
             } catch (e: Exception) {
+                Log.d("Error", e.message.toString())
                 Snackbar.make(binding.rootLayout, "Gagal mengambil data, aktifkan internet anda", Snackbar.LENGTH_SHORT)
                     .setAction("Ok") {}
                     .show()
@@ -127,12 +120,12 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
             try {
                 if (response.isSuccessful) {
                     val statusAbsen = response.body()!!.absenHariIni
-                    if (statusAbsen!!.isEmpty()) {
+                    if (response.body()!!.code == 202) {
                         binding.absenpagi.isClickable= true
                         binding.absensiang.isClickable = false
                         binding.absenpulang.isClickable = false
                     }
-                    when (statusAbsen[0].tipeAbsen) {
+                    when (statusAbsen?.get(0)!!.tipeAbsen) {
                         "pagi" -> {
                             binding.absenpagi.isClickable = false
                             binding.absensiang.isClickable = true
@@ -154,7 +147,6 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                             binding.absenpulang.isClickable = false
                         }
                     }
-
                 } else {
                     Snackbar.make(
                         requireView(),
@@ -163,6 +155,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         .show()
                 }
             } catch (e: Exception) {
+                Log.d("ERROR", e.toString())
                 Snackbar.make(binding.rootLayout, "Gagal mengambil data, aktifkan internet anda", Snackbar.LENGTH_SHORT)
                     .setAction("Ok") {}
                     .show()
