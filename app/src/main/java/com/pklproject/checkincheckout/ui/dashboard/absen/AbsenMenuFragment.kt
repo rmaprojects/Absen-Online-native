@@ -1,7 +1,6 @@
 package com.pklproject.checkincheckout.ui.dashboard.absen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -15,7 +14,6 @@ import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.FragmentMenuAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
-import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -103,7 +101,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val latitude = 1923190238129.0
 
         lifecycleScope.launch {
-            val response = api.kirimAbsen(username.toString(), password.toString(), absentype, longitude, latitude, "$tipeAbsen.jpg", keterangan)
+            val response = api.kirimAbsen(username.toString(), password.toString(), absentype, longitude, latitude, null, keterangan)
 
             try {
                 if (response.isSuccessful){
