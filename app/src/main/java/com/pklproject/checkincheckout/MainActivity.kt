@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -49,24 +50,24 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     showBottomNav = true
                     showTopAppBar = true
                     showImage = true
-                    binding.frameFragment.setPaddingRelative(0, 0, 0, 100)
                     showTitle = Preferences(this).employeeName.toString()
+                    binding.fragmentContainer.setPadding(0,0,0,128)
                 }
                 R.id.navigation_absen -> {
                     showBottomNav = true
                     showTopAppBar =  true
                     showImage =  false
                     binding.toolBar.subtitle = null
-                    binding.frameFragment.setPaddingRelative(0, 0, 0, 100)
                     showTitle = "Absen"
+                    binding.fragmentContainer.setPadding(0,0,0,128)
                 }
                 R.id.navigation_history -> {
                     showBottomNav = true
                     showTopAppBar = true
                     showImage =  false
                     binding.toolBar.subtitle = null
-                    binding.frameFragment.setPaddingRelative(0, 0, 0, 100)
                     showTitle = "History"
+                    binding.fragmentContainer.setPadding(0,0,0,128)
                 }
                 R.id.navigation_settings -> {
                     showBottomNav = true
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     showImage =  false
                     binding.toolBar.subtitle = null
                     showTitle = "Pengaturan"
-                    binding.frameFragment.setPaddingRelative(0, 0, 0, 100)
+                    binding.fragmentContainer.setPadding(0,0,0,128)
                 }
                 R.id.navigation_profile -> {
                     showBottomNav = true
@@ -82,11 +83,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     showImage =  false
                     binding.toolBar.subtitle = null
                     showTitle = "Profile"
-                    binding.frameFragment.setPaddingRelative(0, 0, 0, 100)
+                    binding.fragmentContainer.setPadding(0,0,0,128)
                 }
                 else -> {
-                    binding.frameFragment.setPaddingRelative(0, 0, 0, 0)
                     showImage = false
+                    showBottomNav = false
+                    binding.fragmentContainer.setPadding(0,0,0,0)
                 }
             }
             binding.bottomNavView.isVisible = showBottomNav
