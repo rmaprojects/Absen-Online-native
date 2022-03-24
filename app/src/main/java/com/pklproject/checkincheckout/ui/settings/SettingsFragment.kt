@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pklproject.checkincheckout.R
@@ -25,12 +26,21 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         // Arahkan tombol atur jadwal absen ke bottom sheet, jika diklik maka bottom sheet akan muncul
         // Kasih ID dulu
 
+        binding.pagi.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_settingAbsenBottomSheet)
+        }
+        binding.siang.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_settingAbsenBottomSheet)
+        }
+        binding.pulang.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_settingAbsenBottomSheet)
+        }
         val tinyDB = TinyDB(requireContext())
-        val isAdmin = tinyDB.getObject(LoginActivity.KEYSIGNIN,LoginModel::class.java).statusAdmin
+        val isAdmin = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).statusAdmin
 
         binding.adminOnlyArea.isVisible = isAdmin == "1"
 
-        when (Preferences(requireContext()).changeTheme){
+        when (Preferences(requireContext()).changeTheme) {
             0 -> binding.currentThemeTxt.text = "Tema Sekarang: Sistem"
             1 -> binding.currentThemeTxt.text = "Tema Sekarang: Light"
             2 -> binding.currentThemeTxt.text = "Tema Sekarang: Dark"
@@ -62,7 +72,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 .setNeutralButton("Reset") { dialog, _ ->
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                     dialog.dismiss()
-                    Preferences(requireContext()).changeTheme = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                    Preferences(requireContext()).changeTheme =
+                        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 }
                 .create()
                 .show()

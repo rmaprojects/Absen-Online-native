@@ -10,9 +10,9 @@ import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.databinding.BottomsheetJadwalAbsenBinding
 import com.pklproject.checkincheckout.databinding.FragmentSettingsBinding
 
-class SettingAbsenBottomSheet : BottomSheetDialogFragment(){
+class SettingAbsenBottomSheet : BottomSheetDialogFragment() {
 
-    private val binding :BottomsheetJadwalAbsenBinding by viewBinding()
+    private val binding: BottomsheetJadwalAbsenBinding by viewBinding()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,6 +20,8 @@ class SettingAbsenBottomSheet : BottomSheetDialogFragment(){
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.bottomsheet_jadwal_absen, container, false)
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

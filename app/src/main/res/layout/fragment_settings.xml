@@ -12,9 +12,9 @@
 
         <LinearLayout
             android:id="@+id/darkModeSwitcher"
-            android:background="?selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
             android:orientation="horizontal">
 
             <ImageView
@@ -86,8 +86,8 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Admin-only area"
                 android:layout_margin="8dp"
+                android:text="Admin-only area"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall" />
 
             <com.google.android.material.divider.MaterialDivider
@@ -124,8 +124,8 @@
                     android:id="@+id/absen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_weight="2" />
 
             </LinearLayout>
 
@@ -178,9 +178,9 @@
                     style="@style/Widget.Material3.CardView.Elevated"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
+                    android:layout_margin="8dp"
                     android:layout_marginHorizontal="6dp"
                     android:layout_weight="1"
-                    android:layout_margin="8dp"
                     android:background="?selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
@@ -210,11 +210,11 @@
                     style="@style/Widget.Material3.CardView.Elevated"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
+                    android:layout_margin="8dp"
                     android:layout_marginHorizontal="6dp"
                     android:layout_weight="1"
                     android:background="?selectableItemBackground"
                     android:clickable="true"
-                    android:layout_margin="8dp"
                     android:focusable="true"
                     app:cardElevation="8dp">
 
