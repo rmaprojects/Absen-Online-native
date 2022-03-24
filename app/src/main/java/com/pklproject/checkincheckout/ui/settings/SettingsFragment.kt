@@ -21,6 +21,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //TODO: 
+        // Arahkan tombol atur jadwal absen ke bottom sheet, jika diklik maka bottom sheet akan muncul
+        // Kasih ID dulu
+
         val tinyDB = TinyDB(requireContext())
         val isAdmin = tinyDB.getObject(LoginActivity.KEYSIGNIN,LoginModel::class.java).statusAdmin
 
