@@ -59,7 +59,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/keterangan"
+
             style="@style/Widget.Material3.CardView.Outlined"
             android:layout_width="match_parent"
             android:layout_height="260dp"
@@ -70,6 +70,7 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/keterangan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
@@ -78,8 +79,10 @@
                     android:inputType="textNoSuggestions|textMultiLine"
                     android:minHeight="48dp" />
             </ScrollView>
-        </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView
+            >
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/kirimabsen"
             android:layout_width="match_parent"
             android:text="Kirim"
             app:icon="@drawable/ic_baseline_send_24"
