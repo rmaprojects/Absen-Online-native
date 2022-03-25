@@ -49,24 +49,18 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         val latitude = 107.1834223
 
         lifecycleScope.launch {
-            val response = api.kirimAbsen(username.toString(), password.toString(), tipeAbsen, longitude, latitude, null, keterangan)
-
-            if (response.code == 200) {
-                Snackbar.make(binding.root, "Berhasil Absen", Snackbar.LENGTH_SHORT).show()
-            } else {
-                Snackbar.make(binding.root, "Gagal Absen", Snackbar.LENGTH_SHORT).show()
-            }
-
             try {
-                Snackbar.make(binding.hasilfoto, "Data berhasil dikirim", Snackbar.LENGTH_SHORT)
-                    .setAction("Ok") {}
-                    .show()
+                val response = api.kirimAbsen(username.toString(), password.toString(), tipeAbsen, longitude, latitude, null, keterangan)
+                if (response.code == 200) {
+                    Snackbar.make(binding.root, "Berhasil Absen", Snackbar.LENGTH_SHORT).show()
+                } else {
+                    Snackbar.make(binding.root, "Gagal Absen", Snackbar.LENGTH_SHORT).show()
+                }
             } catch (e: Exception) {
-                Snackbar.make(binding.ambilfoto, "Gagal mengambil data, aktifkan internet anda", Snackbar.LENGTH_SHORT)
+                Snackbar.make(binding.root, "Gagal mengambil data, aktifkan internet anda", Snackbar.LENGTH_SHORT)
                     .setAction("Ok") {}
                     .show()
             }
-
         }
     }
 

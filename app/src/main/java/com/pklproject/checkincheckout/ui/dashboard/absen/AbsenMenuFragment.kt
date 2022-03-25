@@ -93,10 +93,8 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val latitude = 1923190238129.0
 
         lifecycleScope.launch {
-            val response = api.kirimAbsen(username.toString(), password.toString(), tipeAbsen, longitude, latitude, null, keterangan)
-
             try {
-
+                val response = api.kirimAbsen(username.toString(), password.toString(), tipeAbsen, longitude, latitude, null, keterangan)
                 if (response.code == 200) {
                     Snackbar.make(binding.rootLayout, "Sukses mengirim absen ${response.tipeAbsen}", Snackbar.LENGTH_SHORT)
                         .setAction("Ok") {}
@@ -117,8 +115,8 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
     private fun cekAbsenToday(api: ApiInterface, username:String, password:String, hariIni:String) {
         lifecycleScope.launch {
-            val response = api.cekAbsenHariIni(username, password, hariIni)
             try {
+                val response = api.cekAbsenHariIni(username, password, hariIni)
                 val statusAbsen = response.absenHariIni
                 when (statusAbsen?.get(0)?.tipeAbsen) {
                     "Data Kosong" -> {
