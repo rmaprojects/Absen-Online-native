@@ -6,10 +6,7 @@ import com.pklproject.checkincheckout.api.models.*
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface ApiInterface {
@@ -32,7 +29,7 @@ interface ApiInterface {
         @Field ("latitude") latitude: Double,
         @Field ("photo_name") photo_name: String?,
         @Field ("keterangan") keterangan: String
-    ): Response<AbsenModel>
+    ): KirimAbsenModel
 
     @FormUrlEncoded
     @POST("history_absen.php")
@@ -53,7 +50,7 @@ interface ApiInterface {
         @Field ("username") username: String,
         @Field ("password") password: String,
         @Field ("tanggal_sekarang") today:String
-    ): Response<TodayAttendanceModel>
+    ):TodayAttendanceModel
 
     companion object {
         private const val BASE_URL: String = "http://10.10.22.147/api_absen/"

@@ -3,13 +3,13 @@ package com.pklproject.checkincheckout.api.models
 
 import com.google.gson.annotations.SerializedName
 
-data class AbsenModel(
+data class KirimAbsenModel(
     @SerializedName("code")
-    val code: Int,
+    val code: Int?,
     @SerializedName("message")
-    val message: String,
+    val message: String?,
     @SerializedName("status")
-    val status: Boolean,
+    val status: Boolean?,
     @SerializedName("tipe_absen")
-    val tipeAbsen: String
+    val tipeAbsen: String?
 )

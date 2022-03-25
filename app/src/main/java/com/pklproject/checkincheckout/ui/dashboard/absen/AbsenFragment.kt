@@ -51,16 +51,16 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         lifecycleScope.launch {
             val response = api.kirimAbsen(username.toString(), password.toString(), tipeAbsen, longitude, latitude, null, keterangan)
 
+            if (response.code == 200) {
+                Snackbar.make(binding.root, "Berhasil Absen", Snackbar.LENGTH_SHORT).show()
+            } else {
+                Snackbar.make(binding.root, "Gagal Absen", Snackbar.LENGTH_SHORT).show()
+            }
+
             try {
-                if (response.isSuccessful) {
-                    Snackbar.make(binding.hasilfoto, "Data berhasil dikirim", Snackbar.LENGTH_SHORT)
-                        .setAction("Ok") {}
-                        .show()
-                } else {
-                    Snackbar.make(binding.ambilfoto, "Gagal mengirim data, terjadi kesalahan", Snackbar.LENGTH_SHORT)
-                        .setAction("Ok") {}
-                        .show()
-                }
+                Snackbar.make(binding.hasilfoto, "Data berhasil dikirim", Snackbar.LENGTH_SHORT)
+                    .setAction("Ok") {}
+                    .show()
             } catch (e: Exception) {
                 Snackbar.make(binding.ambilfoto, "Gagal mengambil data, aktifkan internet anda", Snackbar.LENGTH_SHORT)
                     .setAction("Ok") {}

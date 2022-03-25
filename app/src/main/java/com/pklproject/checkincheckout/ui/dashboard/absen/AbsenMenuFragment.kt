@@ -55,7 +55,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
         val hariIni = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
-        cekAbsenHariIni(api, username.toString(), password.toString(), hariIni)
+        cekAbsenToday(api, username.toString(), password.toString(), hariIni)
 
         val keterangan = binding.keterangan.text
 
@@ -64,20 +64,20 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 R.id.absen -> {
                     binding.absensi.isVisible = true
                     binding.izindialog.isVisible = false
-                    cekAbsenHariIni(api, username.toString(), password.toString(), hariIni)
+                    cekAbsenToday(api, username.toString(), password.toString(), hariIni)
                 }
                 R.id.izin -> {
                     binding.izindialog.isVisible = true
                     binding.absensi.isVisible = false
                     binding.kirim.setOnClickListener {
-                        kirimAbsen("4", tinyDB, keterangan.toString())
+                        kirimAbsen("5", tinyDB, keterangan.toString())
                     }
                 }
                 R.id.cuti -> {
                     binding.izindialog.isVisible = true
                     binding.absensi.isVisible = false
                     binding.kirim.setOnClickListener {
-                        kirimAbsen("5", tinyDB, keterangan.toString())
+                        kirimAbsen("4", tinyDB, keterangan.toString())
                     }
                 }
             }
@@ -96,12 +96,13 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
             val response = api.kirimAbsen(username.toString(), password.toString(), tipeAbsen, longitude, latitude, null, keterangan)
 
             try {
-                if (response.isSuccessful){
-                    Snackbar.make(binding.rootLayout, "Data berhasil dikirim", Snackbar.LENGTH_SHORT)
+
+                if (response.code == 200) {
+                    Snackbar.make(binding.rootLayout, "Sukses mengirim absen ${response.tipeAbsen}", Snackbar.LENGTH_SHORT)
                         .setAction("Ok") {}
                         .show()
                 } else {
-                    Snackbar.make(binding.rootLayout, "Gagal mengirim data, terjadi kesalahan", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(binding.rootLayout, "Data gagal dikirim", Snackbar.LENGTH_SHORT)
                         .setAction("Ok") {}
                         .show()
                 }
@@ -114,50 +115,54 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         }
     }
 
-    private fun cekAbsenHariIni(api: ApiInterface, username:String, password:String, hariIni:String) {
+    private fun cekAbsenToday(api: ApiInterface, username:String, password:String, hariIni:String) {
         lifecycleScope.launch {
             val response = api.cekAbsenHariIni(username, password, hariIni)
             try {
-                if (response.isSuccessful) {
-                    val statusAbsen = response.body()!!.absenHariIni
-                    when (statusAbsen?.get(0)?.tipeAbsen) {
-                        "Data Kosong" -> {
-                            binding.absenpagi.isClickable = true
-                            binding.absensiang.isClickable = false
-                            binding.absenpulang.isClickable = false
-                        }
-                        "pagi" -> {
-                            binding.absenpagi.isClickable = false
-                            binding.absensiang.isClickable = true
-                            binding.absenpulang.isClickable = false
-                        }
-                        "siang" -> {
-                            binding.absenpagi.isClickable = false
-                            binding.absensiang.isClickable = false
-                            binding.absenpulang.isClickable = true
-                        }
-                        "pulang" -> {
-                            binding.absenpagi.isClickable = false
-                            binding.absensiang.isClickable = false
-                            binding.absenpulang.isClickable = false
-                        }
-                        "izin" -> {
-                            binding.absenpagi.isClickable = false
-                            binding.absensiang.isClickable = false
-                            binding.absenpulang.isClickable = false
-                        }
-                        "absen" -> {
-                            binding.absenpagi.isClickable = false
-                            binding.absensiang.isClickable = false
-                            binding.absenpulang.isClickable = false
-                        }
+                val statusAbsen = response.absenHariIni
+                when (statusAbsen?.get(0)?.tipeAbsen) {
+                    "Data Kosong" -> {
+                        binding.absenpagi.isClickable = true
+                        binding.absensiang.isClickable = false
+                        binding.absenpulang.isClickable = false
+                        binding.kirim.isEnabled = true
                     }
-                } else {
-                    Snackbar.make(
-                        requireView(),
-                        "Gagal mengambil data absen",
-                        Snackbar.LENGTH_SHORT).setAction("Ok") {}
-                        .show()
+                    "pagi" -> {
+                        binding.absenpagi.isClickable = false
+                        binding.absensiang.isClickable = true
+                        binding.absenpulang.isClickable = false
+                        binding.kirim.isEnabled = true
+                    }
+                    "siang" -> {
+                        binding.absenpagi.isClickable = false
+                        binding.absensiang.isClickable = false
+                        binding.absenpulang.isClickable = true
+                        binding.kirim.isEnabled = true
+                    }
+                    "pulang" -> {
+                        binding.absenpagi.isClickable = false
+                        binding.absensiang.isClickable = false
+                        binding.absenpulang.isClickable = false
+                        binding.kirim.isEnabled = true
+                    }
+                    "izin" -> {
+                        binding.absenpagi.isClickable = false
+                        binding.absensiang.isClickable = false
+                        binding.absenpulang.isClickable = false
+                        binding.kirim.isEnabled = false
+                    }
+                    "cuti" -> {
+                        binding.absenpagi.isClickable = false
+                        binding.absensiang.isClickable = false
+                        binding.absenpulang.isClickable = false
+                        binding.kirim.isEnabled = false
+                    }
+                    else -> {
+                        binding.absenpagi.isClickable = false
+                        binding.absensiang.isClickable = false
+                        binding.absenpulang.isClickable = false
+                        binding.kirim.isEnabled = false
+                    }
                 }
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())
