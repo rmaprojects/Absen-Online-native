@@ -55,12 +55,10 @@ interface ApiInterface {
     companion object {
         private const val BASE_URL: String = "http://10.10.22.147/api_absen/"
 
-        val gson:Gson = GsonBuilder().setLenient().create()
-
         fun createApi(): ApiInterface {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(ApiInterface::class.java)
         }

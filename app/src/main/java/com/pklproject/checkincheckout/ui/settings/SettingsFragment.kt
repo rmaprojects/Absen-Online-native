@@ -1,14 +1,11 @@
 package com.pklproject.checkincheckout.ui.settings
 
-import android.app.AppComponentFactory
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -16,7 +13,6 @@ import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.FragmentSettingsBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
-import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 

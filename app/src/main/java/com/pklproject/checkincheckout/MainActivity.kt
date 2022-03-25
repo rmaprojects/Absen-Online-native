@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     companion object {
-        private const val PENGATURANABSENKEY = "ABSENSIKEYSETTINGVALUE"
+        const val PENGATURANABSENKEY = "ABSENSIKEYSETTINGVALUE"
     }
 
 }

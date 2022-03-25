@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.otaliastudios.cameraview.CameraView
+        android:layout_width="match_parent"
+        android:id="@+id/camera"
+        android:keepScreenOn="true"
+        app:cameraEngine="camera1"
+        app:cameraFacing="back"
+        app:cameraPictureFormat="jpeg"
+        app:cameraMode="picture"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

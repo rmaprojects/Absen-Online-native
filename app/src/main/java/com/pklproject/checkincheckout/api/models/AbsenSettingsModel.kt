@@ -9,7 +9,7 @@ data class AbsenSettingsModel(
     @SerializedName("message")
     val message: String,
     @SerializedName("setting")
-    val setting: List<Setting>,
+    val setting: Setting,
     @SerializedName("status")
     val status: Boolean
 )
