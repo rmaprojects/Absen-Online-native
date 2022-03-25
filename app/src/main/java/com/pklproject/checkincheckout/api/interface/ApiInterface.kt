@@ -41,8 +41,8 @@ interface ApiInterface {
     ): Response<HistoryModel>
 
     @GET("absen_settings.php")
-    suspend fun absenSettings(
-    ): Response<AbsenSettingsModel>
+    suspend fun getAbsenSettings(
+    ): AbsenSettingsModel
 
     @FormUrlEncoded
     @POST("cek_absen_hari_ini.php")
