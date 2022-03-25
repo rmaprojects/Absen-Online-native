@@ -4,31 +4,22 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-        $query_get_settings_absen = "SELECT * FROM tbl_pengaturan_absen";
+        $query_get_settings_absen = "SELECT kunci, nilai FROM tbl_pengaturan_absen";
         $get_settings_absen = mysqli_query($_AUTH, $query_get_settings_absen);
 
         if (isset($get_settings_absen)) {
-            $response['message'] = "Pengaturan absen diterima!";
+            $response['message'] = "Pengaturan absen didapatkan!";
             $response['code'] = 200;
             $response['status'] = true;
             $response['setting'] = array();
+
             while ($row = mysqli_fetch_array($get_settings_absen)) {
                 $data = array();
-                $condition;
 
-                if ($row['absen_siang_diperlukan'] == 1) {
-                    $condition = true;
-                } else {
-                    $condition = false;
-                }
+                $list_nilai = array();
+                array_push($list_nilai, $row['nilai']);
 
-                $data['absen_siang_diperlukan'] = $condition;
-                $data['absen_pagi_awal'] = $row['absen_pagi_awal'];
-                $data['absen_pagi_akhir'] = $row['absen_pagi_akhir'];
-                $data['absen_siang_awal'] = $row['absen_siang_awal'];
-                $data['absen_siang_akhir'] = $row['absen_siang_akhir'];
-                $data['absen_pulang_awal'] = $row['absen_pulang_awal'];
-                $data['absen_pulang_akhir'] = $row['absen_pulang_akhir'];
+                $data[$row['kunci']] = $list_nilai[0];
 
                 array_push($response['setting'], $data);
             }

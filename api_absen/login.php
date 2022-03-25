@@ -12,7 +12,7 @@
 
         if ($exec_queryCheckData['total'] == 0) {
 
-            $response['message'] = "User tidak ditemukan, pastikan password dan username sudah benar lalu coba lagi";
+            $response['message'] = "User tidak ditemukan, pastikan password dan penamaan username sudah benar, lalu coba lagi!";
             $response['code'] = 404;
             $response['status'] = false;
 
@@ -22,23 +22,22 @@
             $queryGetData = "SELECT * FROM tbl_karyawan WHERE username = '$username' AND password = '$password'";
             $exec_queryGetData = mysqli_query($_AUTH, $queryGetData);
 
-            $response['message'] = "Login karyawan ditemukan!";
+            $row = mysqli_fetch_array($exec_queryGetData);
+
+            $response['message'] = "Login karyawan sukses!";
             $response['code'] = 200;
             $response['status'] = true;
-            $response['login'] = array();
-            while ($row = mysqli_fetch_array($exec_queryGetData)) {
 
-                $data = array();
+            $response['id_karyawan'] = $row['id_karyawan'];
+            $response['nama_karyawan'] = $row['nama_karyawan'];
+            $response['jabatan'] = $row['jabatan'];
+            $response['departement'] = $row['departement'];
+            $response['business_unit'] = $row['business_unit'];
+            $response['status_admin'] = $row['status_admin'];
+            $response['status_karyawan'] = $row['status_karyawan'];
+            $response['username'] = $row['username'];
+            $response['password'] = $row['password'];
 
-                $data['id_karyawan'] = $row['id_karyawan'];
-                $data['nama_karyawan'] = $row['nama_karyawan'];
-                $data['jabatan'] = $row['jabatan'];
-                $data['departement'] = $row['departement'];
-                $data['business_unit'] = $row['business_unit'];
-                $data['status_admin'] = $row['status_admin'];
-
-                array_push($response['login'], $data);
-            }
             echo json_encode($response);
         }
 
