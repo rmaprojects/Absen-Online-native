@@ -164,7 +164,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 }
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())
-                Snackbar.make(binding.rootLayout, "Gagal mengambil data, aktifkan internet anda", Snackbar.LENGTH_SHORT)
+                Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data, aktifkan internet anda", Snackbar.LENGTH_SHORT)
                     .setAction("Ok") {}
                     .show()
             }
