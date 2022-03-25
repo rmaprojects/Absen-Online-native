@@ -120,12 +120,12 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
             try {
                 if (response.isSuccessful) {
                     val statusAbsen = response.body()!!.absenHariIni
-                    if (response.body()!!.code == 202) {
-                        binding.absenpagi.isClickable= true
-                        binding.absensiang.isClickable = false
-                        binding.absenpulang.isClickable = false
-                    }
-                    when (statusAbsen?.get(0)!!.tipeAbsen) {
+                    when (statusAbsen?.get(0)?.tipeAbsen) {
+                        "Data Kosong" -> {
+                            binding.absenpagi.isClickable = true
+                            binding.absensiang.isClickable = false
+                            binding.absenpulang.isClickable = false
+                        }
                         "pagi" -> {
                             binding.absenpagi.isClickable = false
                             binding.absensiang.isClickable = true
@@ -141,7 +141,12 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                             binding.absensiang.isClickable = false
                             binding.absenpulang.isClickable = false
                         }
-                        else -> {
+                        "izin" -> {
+                            binding.absenpagi.isClickable = false
+                            binding.absensiang.isClickable = false
+                            binding.absenpulang.isClickable = false
+                        }
+                        "absen" -> {
                             binding.absenpagi.isClickable = false
                             binding.absensiang.isClickable = false
                             binding.absenpulang.isClickable = false
