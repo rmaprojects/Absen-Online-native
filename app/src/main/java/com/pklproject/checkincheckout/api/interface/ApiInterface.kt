@@ -1,5 +1,7 @@
 package com.pklproject.checkincheckout.api.`interface`
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.pklproject.checkincheckout.api.models.*
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -56,10 +58,12 @@ interface ApiInterface {
     companion object {
         private const val BASE_URL: String = "http://10.10.22.147/api_absen/"
 
+        val gson:Gson = GsonBuilder().setLenient().create()
+
         fun createApi(): ApiInterface {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(ApiInterface::class.java)
         }
