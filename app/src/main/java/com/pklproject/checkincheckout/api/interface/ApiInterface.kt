@@ -24,10 +24,10 @@ interface ApiInterface {
     suspend fun kirimAbsen(
         @Field ("username") username: String,
         @Field ("password") password: String,
-        @Field ("tipe_absen") tipe_absen: String,
+        @Field ("tipe_absen") tipeAbsen: String,
         @Field ("longitude") longitude: Double,
         @Field ("latitude") latitude: Double,
-        @Field ("photo_name") photo_name: String?,
+        @Field ("photo_name") photoName: String?,
         @Field ("keterangan") keterangan: String
     ): KirimAbsenModel
 
@@ -52,13 +52,21 @@ interface ApiInterface {
         @Field ("tanggal_sekarang") today:String
     ):TodayAttendanceModel
 
+    @FormUrlEncoded
+    @POST("update_absen_settings.php")
+    suspend fun updateSettingsAbsen(
+        @Field("tipe_absen") tipeAbsen: String,
+        @Field ("absen_awal") absenAwal :String?,
+        @Field ("absen_akhir") AbsenAkhir :String?
+    ):UpdateSettingsAbsenModel
+
     companion object {
         private const val BASE_URL: String = "http://10.10.22.147/api_absen/"
 
         fun createApi(): ApiInterface {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
                 .build()
                 .create(ApiInterface::class.java)
         }

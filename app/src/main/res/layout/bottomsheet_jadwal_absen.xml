@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/semua"
+    android:id="@+id/bottomSheetAturJadwal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="12dp"
@@ -36,7 +36,7 @@
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/jammulai"
+                android:id="@+id/jamMulai"
                 style="@style/Widget.Material3.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/jamsampai"
+                android:id="@+id/jamSampai"
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

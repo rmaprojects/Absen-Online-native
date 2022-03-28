@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         return true
     }
 
-    private fun retrieveSettingsAbsen(tinyDB: TinyDB) {
+    fun retrieveSettingsAbsen(tinyDB: TinyDB) {
         val api = ApiInterface.createApi()
         lifecycleScope.launch {
             try {
