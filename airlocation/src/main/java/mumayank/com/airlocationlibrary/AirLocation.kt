@@ -195,7 +195,7 @@ class AirLocation(
         }
 
         locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
+            override fun onLocationResult(locationResult: LocationResult) {
                 if (activityWeakReference.get() == null) {
                     return
                 }
@@ -204,12 +204,12 @@ class AirLocation(
                 callback?.onSuccess(locationResult.locations as ArrayList<Location>)
             }
 
-            override fun onLocationAvailability(locationAvailability: LocationAvailability?) {
+            override fun onLocationAvailability(locationAvailability: LocationAvailability) {
                 if (activityWeakReference.get() == null) {
                     return
                 }
 
-                if (locationAvailability?.isLocationAvailable == false) {
+                if (!locationAvailability?.isLocationAvailable) {
                     callback?.onFailure(LocationFailedEnum.HIGH_PRECISION_LOCATION_NA_TRY_AGAIN_PREFERABLY_WITH_NETWORK_CONNECTIVITY)
                     fusedLocationClient.removeLocationUpdates(locationCallback)
                 }
