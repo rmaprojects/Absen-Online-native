@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(~0);
 include 'connection.php';
 
 
@@ -58,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $data = array();
 
-                $waktu_awal = new DateTime($row['absen_awal']);
                 $waktu_akhir = new DateTime($row['absen_akhir']);
                 $waktu_absen = new DateTime($row['waktu_absen']);
 

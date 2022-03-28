@@ -1,7 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(~0);
 
     include 'connection.php';
 
@@ -108,7 +106,7 @@ error_reporting(~0);
                 $waktu_absen_awal = $nilaiAwal[0];
                 $waktu_absen_akhir = $nilaiAkhir[0];
 
-                $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, type_absen, longitude, latitude, photo_directory, keterangan, absen_awal, absen_akhir) VALUES ('$id_karyawan', '$type', '$long', '$lat', '$photo', '$ket', '$waktu_absen_awal', '$waktu_absen_akhir')");
+                $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, type_absen, longitude, latitude, photo_directory, keterangan, absen_awal, absen_akhir, absen_siang_diperlukan) VALUES ('$id_karyawan', '$type', '$long', '$lat', '$photo', '$ket', '$waktu_absen_awal', '$waktu_absen_akhir', '$perlu_absen_siang')");
 
                 if ($inputAbsen) {
 
@@ -148,7 +146,7 @@ error_reporting(~0);
                 $waktu_absen_awal = $nilaiAwal[0];
                 $waktu_absen_akhir = $nilaiAkhir[0];
 
-                $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, type_absen, longitude, latitude, photo_directory, keterangan, absen_awal, absen_akhir) VALUES ('$id_karyawan', '$type', '$long', '$lat', '$photo', '$ket', '$waktu_absen_awal', '$waktu_absen_akhir')");
+                $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, type_absen, longitude, latitude, photo_directory, keterangan, absen_awal, absen_akhir, absen_siang_diperlukan) VALUES ('$id_karyawan', '$type', '$long', '$lat', '$photo', '$ket', '$waktu_absen_awal', '$waktu_absen_akhir', '$perlu_absen_siang')");
 
                 if ($inputAbsen) {
 
@@ -167,7 +165,7 @@ error_reporting(~0);
                     echo json_encode($response);
                 }
             } else if ($absen_type == '4' || '5') {
-                $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, type_absen, longitude, latitude, photo_directory, keterangan, absen_awal, absen_akhir) VALUES ('$id_karyawan', '$type', '$long', '$lat', '$photo', '$ket', null, null)");
+                $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, type_absen, longitude, latitude, photo_directory, keterangan, absen_awal, absen_akhir, absen_siang_diperlukan) VALUES ('$id_karyawan', '$type', '$long', '$lat', '$photo', '$ket', null, null, null)");
 
                 $tipe_absen = "";
 
