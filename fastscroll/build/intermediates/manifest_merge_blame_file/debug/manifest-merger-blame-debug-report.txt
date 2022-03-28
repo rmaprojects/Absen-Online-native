@@ -19,8 +19,8 @@
 19
 20    <uses-sdk
 21        android:minSdkVersion="21"
-21-->/home/raka/Android-Studio-Projects/checkin-checkout/fastscroll/src/main/AndroidManifest.xml
+21-->C:\Users\ASUS\Documents\GitHub\Checkin-Checkout\fastscroll\src\main\AndroidManifest.xml
 22        android:targetSdkVersion="32" />
-22-->/home/raka/Android-Studio-Projects/checkin-checkout/fastscroll/src/main/AndroidManifest.xml
+22-->C:\Users\ASUS\Documents\GitHub\Checkin-Checkout\fastscroll\src\main\AndroidManifest.xml
 23
 24</manifest>

@@ -1,6 +1,9 @@
 package com.pklproject.checkincheckout.ui.dashboard.absen
 
+import android.content.Intent
+import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -13,10 +16,13 @@ import com.pklproject.checkincheckout.databinding.FragmentAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import kotlinx.coroutines.launch
+import mumayank.com.airlocationlibrary.AirLocation
 
 class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
     private val binding: FragmentAbsenBinding by viewBinding()
+    private lateinit var airLocation: AirLocation
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,28 +31,41 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
         val tinyDB = TinyDB(requireContext())
 
-        initialisation(tinyDB, absen.toString())
+        var latitude = 0.0
+        var longtude = 0.0
 
-        binding.ambilfoto.setOnClickListener {
+        airLocation = AirLocation(requireActivity(), object : AirLocation.Callback {
 
-        }
+            override fun onSuccess(locations: ArrayList<Location>) {
+                 latitude = locations.first().latitude
+                 longtude = locations.first().longitude
+            }
+
+            override fun onFailure(locationFailedEnum: AirLocation.LocationFailedEnum) {
+
+            }
+        },true)
+        airLocation.start()
+        initialisation(tinyDB, absen.toString(), latitude, longtude)
     }
 
-    private fun initialisation(tinyDB: TinyDB, absen:String) {
+
+
+    private fun initialisation(tinyDB: TinyDB, absen:String, latitude : Double, longtude: Double) {
 
         val keterangan = binding.keterangan.text
 
         binding.kirimabsen.setOnClickListener {
-            kirimAbsen(absen,tinyDB,keterangan.toString())
+            kirimAbsen(absen,tinyDB,keterangan.toString(),latitude,longtude )
         }
     }
 
-    private fun kirimAbsen (tipeAbsen: String, tinyDB: TinyDB, keterangan:String) {
+    private fun kirimAbsen (tipeAbsen: String, tinyDB: TinyDB, keterangan:String, latitude: Double,  longtude: Double) {
         val api = ApiInterface.createApi()
         val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
         val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
-        val longitude = -6.2848285
-        val latitude = 107.1834223
+        val latitude = latitude
+        val longitude = longtude
 
         lifecycleScope.launch {
             try {
@@ -62,8 +81,29 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                     .show()
             }
         }
+        Log.d("longitude",longitude.toString())
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        airLocation.onActivityResult(
+            requestCode,
+            resultCode,
+            data
+        ) // ADD THIS LINE INSIDE onActivityResult
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        airLocation.onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults
+        ) // ADD THIS LINE INSIDE onRequestPermissionResult
+    }
 
 
     companion object {

@@ -22,7 +22,6 @@ class AirLocation(
     private val callback: Callback?,
     private val isLocationRequiredOnlyOneTime: Boolean = false,
     private val locationInterval: Long = 0,
-    private val toastTextWhenOpenAppSettingsIfPermissionsPermanentlyDenied: String = "Please enable location permissions from settings to proceed"
 ): Serializable {
     /*
     declarations

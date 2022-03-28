@@ -1,7 +1,9 @@
 package com.pklproject.checkincheckout.viewmodel
 
+import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.util.ArrayList
 
 class ServiceViewModel : ViewModel() {
 
@@ -15,6 +17,11 @@ class ServiceViewModel : ViewModel() {
         absenSettings.value = settings
     }
 
+    fun location(locations: ArrayList<Location>) {
+        val latitude = locations.first().latitude
+        val longitude = locations.first().longitude
+
+    }
 
 
 }
