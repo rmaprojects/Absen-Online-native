@@ -22,6 +22,7 @@ import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
+import mumayank.com.airlocationlibrary.AirLocation
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 

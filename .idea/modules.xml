@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Checkin_Checkout.iml" filepath="$PROJECT_DIR$/.idea/modules/Checkin_Checkout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/airlocation/Checkin_Checkout.airlocation.iml" filepath="$PROJECT_DIR$/.idea/modules/airlocation/Checkin_Checkout.airlocation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/airpermissions/Checkin_Checkout.airpermissions.iml" filepath="$PROJECT_DIR$/.idea/modules/airpermissions/Checkin_Checkout.airpermissions.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Checkin_Checkout.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Checkin_Checkout.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/fastscroll/Checkin_Checkout.fastscroll.iml" filepath="$PROJECT_DIR$/.idea/modules/fastscroll/Checkin_Checkout.fastscroll.iml" />
     </modules>

@@ -54,5 +54,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.google.code.gson:gson:2.8.8'
     api 'com.otaliastudios:cameraview:2.7.2'
-    implementation 'com.github.mumayank:AirLocation:2.5.2'
+    implementation project(':airlocation')
 }
