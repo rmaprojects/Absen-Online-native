@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            var showBottomNav = true
+            var showBottomNav:Boolean
             var showTopAppBar = true
             var showImage:Boolean
             var showTitle = ""

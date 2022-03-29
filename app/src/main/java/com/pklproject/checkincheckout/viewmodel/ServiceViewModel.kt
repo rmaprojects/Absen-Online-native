@@ -7,21 +7,24 @@ import java.util.ArrayList
 
 class ServiceViewModel : ViewModel() {
 
-    private val absenSettings : MutableLiveData<List<String>> = MutableLiveData<List<String>>()
+//    private val absenSettings : MutableLiveData<List<String>> = MutableLiveData<List<String>>()
+    private val longitude : MutableLiveData<Double> = MutableLiveData<Double>()
+    private val latitude : MutableLiveData<Double> = MutableLiveData<Double>()
 
-    fun getAbsenSettings() : MutableLiveData<List<String>> {
-        return absenSettings
+    fun getLongitude() : Double? {
+        return longitude.value
     }
 
-    fun setAbsenSettings(settings : List<String>) {
-        absenSettings.value = settings
+    fun getLatitude() : Double? {
+        return latitude.value
     }
 
-    fun location(locations: ArrayList<Location>) {
-        val latitude = locations.first().latitude
-        val longitude = locations.first().longitude
-
+    fun setLatitude(latitude : Double) {
+        this.latitude.value = latitude
     }
 
+    fun setLongitude(longitude : Double) {
+        this.longitude.value = longitude
+    }
 
 }

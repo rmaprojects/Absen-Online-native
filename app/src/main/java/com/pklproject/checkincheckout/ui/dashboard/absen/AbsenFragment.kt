@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.R
@@ -15,6 +17,7 @@ import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.FragmentAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.TinyDB
+import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
 import mumayank.com.airlocationlibrary.AirLocation
 
@@ -22,87 +25,86 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
     private val binding: FragmentAbsenBinding by viewBinding()
     private lateinit var airLocation: AirLocation
-
+    private val viewModel: ServiceViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val absen = arguments?.getString(ABSEN_TYPE)
-
         val tinyDB = TinyDB(requireContext())
 
-        var latitude = 0.0
-        var longtude = 0.0
-
-        airLocation = AirLocation(requireActivity(), object : AirLocation.Callback {
-
+        airLocation = AirLocation(requireActivity(), object:AirLocation.Callback{
             override fun onSuccess(locations: ArrayList<Location>) {
-                 latitude = locations.first().latitude
-                 longtude = locations.first().longitude
+                viewModel.setLatitude(locations[0].latitude)
+                viewModel.setLongitude(locations[0].longitude)
+                binding.kirimabsen.isEnabled = true
             }
 
             override fun onFailure(locationFailedEnum: AirLocation.LocationFailedEnum) {
-
+                viewModel.setLatitude(0.0)
+                viewModel.setLongitude(0.0)
+                binding.kirimabsen.isEnabled = false
+                Snackbar.make(binding.root, "Gagal mendapatkan lokasi", Snackbar.LENGTH_SHORT).show()
             }
-        },true)
+
+        }, true)
+
         airLocation.start()
-        initialisation(tinyDB, absen.toString(), latitude, longtude)
+
+        initialisation(tinyDB, absen.toString())
     }
 
+    private fun initialisation(tinyDB: TinyDB, absen:String) {
 
-
-    private fun initialisation(tinyDB: TinyDB, absen:String, latitude : Double, longtude: Double) {
-
+        val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
+        val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
+        val longitude = viewModel.getLongitude()?:0.0
+        val latitude = viewModel.getLatitude()?:0.0
         val keterangan = binding.keterangan.text
 
         binding.kirimabsen.setOnClickListener {
-            kirimAbsen(absen,tinyDB,keterangan.toString(),latitude,longtude )
+            kirimAbsen(username!!, password!!, absen, keterangan.toString(), longitude, latitude)
         }
     }
 
-    private fun kirimAbsen (tipeAbsen: String, tinyDB: TinyDB, keterangan:String, latitude: Double,  longtude: Double) {
+    private fun kirimAbsen(username:String, password:String, tipeAbsen:String, keterangan:String, longitude:Double, latitude:Double) {
         val api = ApiInterface.createApi()
-        val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
-        val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
-        val latitude = latitude
-        val longitude = longtude
-
+        Log.d("longitude", longitude.toString())
+        Log.d("latitude", latitude.toString())
         lifecycleScope.launch {
             try {
-                val response = api.kirimAbsen(username.toString(), password.toString(), tipeAbsen, longitude, latitude, null, keterangan)
+                val response = api.kirimAbsen(username, password, tipeAbsen, longitude, latitude, "namaphoto", keterangan)
                 if (response.code == 200) {
-                    Snackbar.make(binding.root, "Berhasil Absen", Snackbar.LENGTH_SHORT).show()
+                    findNavController().navigateUp()
+                    Snackbar.make(requireActivity().findViewById(R.id.container), "Berhasil absen", Snackbar.LENGTH_SHORT).show()
                 } else {
-                    Snackbar.make(binding.root, "Gagal Absen", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Gagal absen, silahkan coba lagi", Snackbar.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Snackbar.make(binding.root, "Gagal mengambil data, aktifkan internet anda", Snackbar.LENGTH_SHORT)
-                    .setAction("Ok") {}
-                    .show()
+                Log.d("Error", e.toString())
+                Snackbar.make(binding.root, "Gagal", Snackbar.LENGTH_SHORT).show()
             }
         }
-        Log.d("longitude",longitude.toString())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
         airLocation.onActivityResult(
             requestCode,
             resultCode,
             data
-        ) // ADD THIS LINE INSIDE onActivityResult
+        )
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         airLocation.onRequestPermissionsResult(
             requestCode,
             permissions,
             grantResults
-        ) // ADD THIS LINE INSIDE onRequestPermissionResult
+        )
     }
 
 
