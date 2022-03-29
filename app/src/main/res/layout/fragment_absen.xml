@@ -41,19 +41,20 @@
             android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/hasilfoto"
             style="@style/Widget.Material3.CardView.Outlined"
             android:layout_width="match_parent"
             android:layout_height="210dp"
             android:layout_margin="12dp">
 
             <ImageView
+                android:id="@+id/hasilfoto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/cauctionTxt"
                 android:layout_gravity="center"
                 android:text="Preview Tidak tersedia" />
         </com.google.android.material.card.MaterialCardView>
