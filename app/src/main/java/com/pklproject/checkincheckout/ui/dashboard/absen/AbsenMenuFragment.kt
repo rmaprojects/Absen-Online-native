@@ -1,11 +1,14 @@
 package com.pklproject.checkincheckout.ui.dashboard.absen
 
+import android.content.Intent
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -16,17 +19,39 @@ import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.FragmentMenuAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.TinyDB
+import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
+import mumayank.com.airlocationlibrary.AirLocation
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
     private val binding: FragmentMenuAbsenBinding by viewBinding()
+    private lateinit var airLocation: AirLocation
+    private val viewModel: ServiceViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        airLocation = AirLocation(requireActivity(), object : AirLocation.Callback {
+            override fun onSuccess(locations: ArrayList<Location>) {
+                viewModel.setLatitude(locations[0].latitude)
+                viewModel.setLongitude(locations[0].longitude)
+                binding.kirim.isEnabled = true
+            }
+
+            override fun onFailure(locationFailedEnum: AirLocation.LocationFailedEnum) {
+                viewModel.setLatitude(0.0)
+                viewModel.setLongitude(0.0)
+                binding.kirim.isEnabled = false
+                Snackbar.make(binding.root, "Gagal mendapatkan lokasi", Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+
+        }, true)
+
+        airLocation.start()
         val tinyDB = TinyDB(requireContext())
 
         initialisation(tinyDB)
@@ -89,8 +114,8 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val api = ApiInterface.createApi()
         val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
         val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
-        val longitude = 1.2093213912
-        val latitude = 1923190238129.0
+        val longitude = viewModel.getLongitude()?:0.0
+        val latitude = viewModel.getLatitude()?:0.0
 
         lifecycleScope.launch {
             try {
@@ -99,6 +124,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     Snackbar.make(binding.rootLayout, "Sukses mengirim absen ${response.tipeAbsen}", Snackbar.LENGTH_SHORT)
                         .setAction("Ok") {}
                         .show()
+                    binding.kirim.isEnabled = false
                 } else {
                     Snackbar.make(binding.rootLayout, "Data gagal dikirim", Snackbar.LENGTH_SHORT)
                         .setAction("Ok") {}
@@ -174,5 +200,25 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
     private fun goToAbsensi(tipeAbsen:String) {
         val bundle = bundleOf(AbsenFragment.ABSEN_TYPE to tipeAbsen)
         findNavController().navigate(R.id.action_navigation_absen_to_absenFragment, bundle)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        airLocation.onActivityResult(
+            requestCode,
+            resultCode,
+            data
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        airLocation.onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults
+        )
     }
 }

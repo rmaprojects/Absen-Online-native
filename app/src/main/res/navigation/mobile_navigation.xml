@@ -59,5 +59,5 @@
         android:id="@+id/cameraView"
         tools:layout="@layout/fragment_camera_view"
         android:name="com.pklproject.checkincheckout.ui.dashboard.absen.camera.CameraView"
-        android:label="CameraView" />
+        android:label="Ambil Foto" />
 </navigation>

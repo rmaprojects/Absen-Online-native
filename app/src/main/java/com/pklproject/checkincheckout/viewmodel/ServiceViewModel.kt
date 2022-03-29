@@ -34,7 +34,7 @@ class ServiceViewModel : ViewModel() {
         return resultPicture.value
     }
 
-    fun setResultPicture(resultPicture : PictureResult) {
+    fun setResultPicture(resultPicture: PictureResult?) {
         this.resultPicture.value = resultPicture
     }
 

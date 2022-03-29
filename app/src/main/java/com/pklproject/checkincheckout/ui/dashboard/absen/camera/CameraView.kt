@@ -7,14 +7,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.otaliastudios.cameraview.CameraListener
-import com.otaliastudios.cameraview.FileCallback
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.controls.Audio
 import com.otaliastudios.cameraview.controls.PictureFormat
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.databinding.FragmentCameraViewBinding
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
-import java.io.File
 
 class CameraView : Fragment(R.layout.fragment_camera_view) {
 

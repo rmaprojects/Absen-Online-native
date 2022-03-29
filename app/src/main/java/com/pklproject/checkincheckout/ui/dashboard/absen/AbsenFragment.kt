@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
-import com.otaliastudios.cameraview.BitmapCallback
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.api.models.LoginModel
@@ -26,7 +25,6 @@ import mumayank.com.airlocationlibrary.AirLocation
 class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
     private val binding: FragmentAbsenBinding by viewBinding()
-    private lateinit var airLocation: AirLocation
     private val viewModel: ServiceViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,25 +48,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             }
         }
 
-        airLocation = AirLocation(requireActivity(), object : AirLocation.Callback {
-            override fun onSuccess(locations: ArrayList<Location>) {
-                viewModel.setLatitude(locations[0].latitude)
-                viewModel.setLongitude(locations[0].longitude)
-                binding.kirimabsen.isEnabled = true
-            }
-
-            override fun onFailure(locationFailedEnum: AirLocation.LocationFailedEnum) {
-                viewModel.setLatitude(0.0)
-                viewModel.setLongitude(0.0)
-                binding.kirimabsen.isEnabled = false
-                Snackbar.make(binding.root, "Gagal mendapatkan lokasi", Snackbar.LENGTH_SHORT)
-                    .show()
-            }
-
-        }, true)
-
-        airLocation.start()
-
         initialisation(tinyDB, absen.toString())
     }
 
@@ -78,13 +57,15 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             findNavController().navigate(R.id.action_absenFragment_to_cameraView)
         }
 
+        binding.kirimabsen.isEnabled = viewModel.getLatitude() != 0.0 && viewModel.getLongitude() != 0.0
+
         val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
         val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
-        val longitude = viewModel.getLongitude() ?: 0.0
-        val latitude = viewModel.getLatitude() ?: 0.0
         val keterangan = binding.keterangan.text
 
         binding.kirimabsen.setOnClickListener {
+            val longitude = viewModel.getLongitude() ?: 0.0
+            val latitude = viewModel.getLatitude() ?: 0.0
             kirimAbsen(username!!, password!!, absen, keterangan.toString(), longitude, latitude)
         }
     }
@@ -102,16 +83,10 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         Log.d("latitude", latitude.toString())
         lifecycleScope.launch {
             try {
-                val response = api.kirimAbsen(
-                    username,
-                    password,
-                    tipeAbsen,
-                    longitude,
-                    latitude,
-                    "namaphoto",
-                    keterangan
-                )
+                val response = api.kirimAbsen(username, password, tipeAbsen, longitude, latitude, "namaphoto", keterangan)
+                Log.d("response", response.toString())
                 if (response.code == 200) {
+                    viewModel.setResultPicture(null)
                     findNavController().navigateUp()
                     Snackbar.make(
                         requireActivity().findViewById(R.id.container),
@@ -130,26 +105,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 Snackbar.make(binding.root, "Gagal", Snackbar.LENGTH_SHORT).show()
             }
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        airLocation.onActivityResult(
-            requestCode,
-            resultCode,
-            data
-        )
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        airLocation.onRequestPermissionsResult(
-            requestCode,
-            permissions,
-            grantResults
-        )
     }
 
 
