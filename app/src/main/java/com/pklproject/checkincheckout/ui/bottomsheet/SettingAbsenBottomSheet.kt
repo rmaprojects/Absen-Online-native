@@ -1,6 +1,7 @@
 package com.pklproject.checkincheckout.ui.bottomsheet
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,7 +86,6 @@ class SettingAbsenBottomSheet : BottomSheetDialogFragment(){
                     val jamMulai = binding.jamMulai.text
                     val jamSampai = binding.jamSampai.text
                     ubahPengaturanAbsen("1", jamMulai.toString(), jamSampai.toString(), tinyDb)
-                    dismiss()
                 }
             }
             "Siang" -> {
@@ -127,7 +127,6 @@ class SettingAbsenBottomSheet : BottomSheetDialogFragment(){
                     val jamMulai = binding.jamMulai.text
                     val jamSampai = binding.jamSampai.text
                     ubahPengaturanAbsen("2", jamMulai.toString(), jamSampai.toString(), tinyDb)
-                    dismiss()
                 }
             }
             "Pulang" -> {
@@ -169,27 +168,27 @@ class SettingAbsenBottomSheet : BottomSheetDialogFragment(){
                     val jamMulai = binding.jamMulai.text
                     val jamSampai = binding.jamSampai.text
                     ubahPengaturanAbsen("3", jamMulai.toString(), jamSampai.toString(), tinyDb)
-                    dismiss()
                 }
             }
         }
     }
 
-    private fun ubahPengaturanAbsen(tipeAbsen:String, absenAwal:String, absenAkhir:String, tinyDB: TinyDB) {
+    fun ubahPengaturanAbsen(tipeAbsen:String, absenAwal:String, absenAkhir:String, tinyDB: TinyDB) {
         val api = ApiInterface.createApi()
         lifecycleScope.launch {
             try {
                 val response = api.updateSettingsAbsen(tipeAbsen, absenAwal, absenAkhir)
                 if (response.code == 200) {
                     Snackbar.make(
-                        requireActivity().findViewById(R.id.container),
-                        "Berhasil mengubah pengaturan absen!",
+                        binding.root,
+                        "Berhasil mengubah pengaturan absen",
                         Snackbar.LENGTH_SHORT
                     ).setAction("Ok") {
                         MainActivity().retrieveSettingsAbsen(tinyDB)
                         dismiss()
                     }.show()
                 } else {
+                    dismiss()
                     Snackbar.make(
                         requireActivity().findViewById(R.id.container),
                         "Gagal mengubah pengaturan absen",
@@ -199,16 +198,16 @@ class SettingAbsenBottomSheet : BottomSheetDialogFragment(){
                         dismiss()
                     }.show()
                 }
+                Log.d("response", response.toString())
             } catch (e: Exception) {
-                e.printStackTrace()
                 Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengubah pengaturan absen, periksa kembali internet anda", Snackbar.LENGTH_SHORT)
                     .setAction("Ok") {
                         MainActivity().retrieveSettingsAbsen(tinyDB)
                         dismiss()
                     }.show()
+                Log.d("response", e.toString())
             }
         }
-
     }
 
 }
