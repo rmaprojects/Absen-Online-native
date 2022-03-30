@@ -28,6 +28,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.nomorVersi.text = "Version: ${BuildConfig.VERSION_NAME}"
 
         binding.keluar.setOnClickListener {
+            //TODO: Kasih alert dialog, kalau mau keluar ditanya dulu, ok atau tidak, jika ok maka keluar, jika tidak maka batal.
             tinyDB.clear()
             requireActivity().startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish()

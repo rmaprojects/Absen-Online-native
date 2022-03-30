@@ -1,10 +1,13 @@
 package com.pklproject.checkincheckout.ui.dashboard.absen
 
+import android.content.Context
 import android.content.Intent
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.location.LocationManagerCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -12,6 +15,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
@@ -30,6 +34,16 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
     private val binding: FragmentMenuAbsenBinding by viewBinding()
     private lateinit var airLocation: AirLocation
     private val viewModel: ServiceViewModel by activityViewModels()
+
+    override fun onStart() {
+        super.onStart()
+        if (isLocationEnabled(requireContext())) {
+            airLocation.start()
+        } else {
+            Snackbar.make(binding.root, "Aktifkan lokasi terlebih dahulu", Snackbar.LENGTH_SHORT)
+                .show()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -85,7 +99,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val keterangan = binding.keterangan.text
 
         binding.pilihanAbsen.setOnCheckedChangeListener{ _, isChecked ->
-            when(isChecked){
+            when(isChecked) {
                 R.id.absen -> {
                     binding.absensi.isVisible = true
                     binding.izindialog.isVisible = false
@@ -142,32 +156,60 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
     private fun cekAbsenToday(api: ApiInterface, username:String, password:String, hariIni:String) {
         lifecycleScope.launch {
             try {
+
                 val response = api.cekAbsenHariIni(username, password, hariIni)
                 val statusAbsen = response.absenHariIni
+                var txtJamAbsenPagi = ""
+                var txtJamAbsenSiang = ""
+                var txtJamAbsenPulang = ""
+                var txtStatusAbsenPagi = ""
+                var txtStatusAbsenSiang = ""
+                var txtStatusAbsenPulang = ""
+                val statusImageDay = binding.statusIconDay
+                val statusImageSiang = binding.statusIconNoon
+                val statusImagePulang = binding.statusIconPulang
+
                 when (statusAbsen?.get(0)?.tipeAbsen) {
+                    //TODO: Cocokkan dengan yang ada di figma.
+                    // Kalau sudah absen, statusImageDay nya pakai yang ic_sudah_absen
+                    // Kalau belum absen, pakai yang ic_not_available
+                    // contohnya ada di saat "Data Kosong", di data kosong ini, cmn bisa absen pagi doang. Nah tampilannya bakal gmn yg lainnya?
                     "Data Kosong" -> {
+                        //Ketika data kosong, berarti bisanya absen pagi, yang lain g bisa
                         binding.absenpagi.isClickable = true
                         binding.absensiang.isClickable = false
                         binding.absenpulang.isClickable = false
                         binding.kirim.isEnabled = true
+                        txtJamAbsenPagi = "--:--"
+                        txtStatusAbsenPagi = "Belum Absen"
+                        statusImageDay.setImageResource(R.drawable.ic_not_available)
+                        txtJamAbsenSiang = "--:--"
+                        txtStatusAbsenSiang = "Belum Tersedia"
+                        statusImageSiang.isVisible = false
+                        txtJamAbsenPulang = "--:--"
+                        txtStatusAbsenPulang = "Belum Tersedia"
+                        statusImagePulang.isVisible = false
                     }
                     "pagi" -> {
+                        //ketika datanya pertama pagi doang, bisanya absen siang, pulang sama pagi g bisa
                         binding.absenpagi.isClickable = false
                         binding.absensiang.isClickable = true
                         binding.absenpulang.isClickable = false
                         binding.kirim.isEnabled = true
                     }
                     "siang" -> {
+                        //ketika datanya pertama siang, bisanya absen pulang doang, pagi dan siang g bisa
                         binding.absenpagi.isClickable = false
                         binding.absensiang.isClickable = false
                         binding.absenpulang.isClickable = true
                         binding.kirim.isEnabled = true
                     }
                     "pulang" -> {
+                        //ketika datanya pertama pulang, semuanya g bisa absen
                         binding.absenpagi.isClickable = false
                         binding.absensiang.isClickable = false
                         binding.absenpulang.isClickable = false
-                        binding.kirim.isEnabled = true
+                        binding.kirim.isEnabled = false
                     }
                     "izin" -> {
                         binding.absenpagi.isClickable = false
@@ -188,11 +230,25 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.kirim.isEnabled = false
                     }
                 }
+
+                binding.txtJamAbsenDay.text = txtJamAbsenPagi
+                binding.txtJamAbsenNoon.text = txtJamAbsenSiang
+                binding.txtJamAbsenPulang.text = txtJamAbsenPulang
+                binding.txtStatusDay.text = txtStatusAbsenPagi
+                binding.txtStatusNoon.text = txtStatusAbsenSiang
+                binding.txtStatusPulang.text = txtStatusAbsenPulang
+
             } catch (e: Exception) {
                 Log.d("ERROR", e.toString())
-                Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data, aktifkan internet anda", Snackbar.LENGTH_SHORT)
-                    .setAction("Ok") {}
-                    .show()
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Terjadi Kesalahan")
+                    .setMessage("Gagal mengambil data, aktifkan internet anda, atau cobalah untuk membuka ulang aplikasi")
+                    .setPositiveButton("Ok") { dialog, _ -> }
+                    .create().show()
+                binding.absenpagi.isClickable = false
+                binding.absensiang.isClickable = false
+                binding.absenpulang.isClickable = false
+                binding.kirim.isEnabled = false
             }
         }
     }
@@ -220,5 +276,10 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
             permissions,
             grantResults
         )
+    }
+
+    private fun isLocationEnabled(context: Context): Boolean {
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return LocationManagerCompat.isLocationEnabled(locationManager)
     }
 }

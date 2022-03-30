@@ -87,7 +87,6 @@
             android:layout_width="match_parent"
             android:text="Kirim"
             android:enabled="false"
-            app:icon="@drawable/ic_baseline_send_24"
             app:iconGravity="textEnd"
             android:layout_gravity="center"
             android:layout_margin="16dp"
