@@ -1,12 +1,9 @@
 package com.pklproject.checkincheckout
 
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -21,15 +18,12 @@ import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
-import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
-import mumayank.com.airlocationlibrary.AirLocation
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding:ActivityMainBinding by viewBinding()
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val viewModel: ServiceViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

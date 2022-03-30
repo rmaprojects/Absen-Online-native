@@ -31,17 +31,16 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.nomorVersi.text = "Version: ${BuildConfig.VERSION_NAME}"
 
         binding.keluar.setOnClickListener {
-            //TODO: Kasih alert dialog, kalau mau keluar ditanya dulu, ok atau tidak, jika ok maka keluar, jika tidak maka batal.
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Konfirmasi")
                 .setMessage("Apakah anda yakin ingin keluar?")
-                .setPositiveButton("Ya"){_,_ ->
+                .setPositiveButton("Ya"){ _, _ ->
                     requireActivity().startActivity(Intent(requireContext(), LoginActivity::class.java))
-                    requireActivity().finish()
                     tinyDB.clear()
                     Preferences(requireContext()).isLoggedIn
+                    requireActivity().finish()
                 }
-                .setNegativeButton("tidak"){_,_ ->
+                .setNegativeButton("Tidak"){ _, _ ->
                     LoginActivity
                 }
                 .create()

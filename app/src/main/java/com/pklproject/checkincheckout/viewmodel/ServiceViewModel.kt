@@ -4,6 +4,7 @@ import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.otaliastudios.cameraview.PictureResult
+import com.pklproject.checkincheckout.api.models.AbsenHariIni
 import java.util.ArrayList
 
 class ServiceViewModel : ViewModel() {
@@ -13,6 +14,15 @@ class ServiceViewModel : ViewModel() {
     private val latitude : MutableLiveData<Double> = MutableLiveData<Double>()
 
     private val resultPicture : MutableLiveData<PictureResult> = MutableLiveData<PictureResult>()
+    private val todayAttendance : MutableLiveData<List<AbsenHariIni>> = MutableLiveData<List<AbsenHariIni>>()
+
+    fun getTodayAttendance() : List<AbsenHariIni>? {
+        return todayAttendance.value
+    }
+
+    fun setTodayAttendance(todayAttendance : List<AbsenHariIni>?) {
+        this.todayAttendance.value = todayAttendance
+    }
 
     fun getLongitude() : Double? {
         return longitude.value

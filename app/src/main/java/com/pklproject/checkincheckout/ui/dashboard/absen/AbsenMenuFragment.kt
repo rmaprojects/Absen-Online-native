@@ -7,6 +7,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.location.LocationManagerCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -71,18 +72,6 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val tinyDB = TinyDB(requireContext())
 
         initialisation(tinyDB)
-
-        binding.absenpagi.setOnClickListener {
-            goToAbsensi("1")
-        }
-
-        binding.absensiang.setOnClickListener {
-            goToAbsensi("2")
-        }
-
-        binding.absenpulang.setOnClickListener {
-            goToAbsensi("3")
-        }
 
     }
 
@@ -158,7 +147,6 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
     private fun cekAbsenToday(api: ApiInterface, username:String, password:String, hariIni:String) {
         lifecycleScope.launch {
             try {
-
                 val response = api.cekAbsenHariIni(username, password, hariIni)
                 val statusAbsen = response.absenHariIni
                 var txtJamAbsenPagi = ""
@@ -171,61 +159,83 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 val statusImageSiang = binding.statusIconNoon
                 val statusImagePulang = binding.statusIconPulang
 
+                if (response.code == 200) {
+                    viewModel.setTodayAttendance(response.absenHariIni)
+                } else {
+                    viewModel.setTodayAttendance(null)
+                }
                 when (statusAbsen?.get(0)?.tipeAbsen) {
-                    //TODO: Cocokkan dengan yang ada di figma.
-                    // Kalau sudah absen, statusImageDay nya pakai yang ic_sudah_absen
-                    // Kalau belum absen, pakai yang ic_not_available
-                    // contohnya ada di saat "Data Kosong", di data kosong ini, cmn bisa absen pagi doang. Nah tampilannya bakal gmn yg lainnya?
                     "Data Kosong" -> {
-                        //Ketika data kosong, berarti bisanya absen pagi, yang lain g bisa
-                        binding.absenpagi.isClickable = true
-                        binding.absensiang.isClickable = false
-                        binding.absenpulang.isClickable = false
                         binding.kirim.isEnabled = true
                         txtJamAbsenPagi = "--:--"
                         txtStatusAbsenPagi = "Belum Absen"
-                        statusImageDay.setImageResource(R.drawable.ic_not_available)
+                        statusImageDay.setImageResource(R.drawable.ic_baseline_not_available_24)
                         txtJamAbsenSiang = "--:--"
                         txtStatusAbsenSiang = "Belum Tersedia"
-                        statusImageSiang.setImageResource(R.drawable.minus_button)
+                        statusImageSiang.isVisible = false
                         txtJamAbsenPulang = "--:--"
                         txtStatusAbsenPulang = "Belum Tersedia"
-                        statusImagePulang.setImageResource(R.drawable.minus_button)
+                        statusImagePulang.isVisible = false
+
+                        binding.absenpagi.setOnClickListener {
+                            goToAbsensi("1")
+                        }
+
+                        binding.absensiang.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda masih belum bisa melakukan absen siang", Toast.LENGTH_SHORT).show()
+                        }
+
+                        binding.absenpulang.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda masih belum bisa melakukan absen pulang", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     "pagi" -> {
-                        //ketika datanya pertama pagi doang, bisanya absen siang, pulang sama pagi g bisa
-                        binding.absenpagi.isClickable = false
-                        binding.absensiang.isClickable = true
-                        binding.absenpulang.isClickable = false
                         binding.kirim.isEnabled = true
-                        txtJamAbsenPagi = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY,TodayAttendanceModel::class.java).absenHariIni?.get(0)?.waktuAbsen.toString()
+                        txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.waktuAbsen ?: "--:--"
                         txtStatusAbsenPagi = "Sudah Absen"
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
-                        txtStatusAbsenSiang = "Belum Tersedia"
-                        statusImageSiang.setImageResource(R.drawable.minus_button)
+                        txtStatusAbsenSiang = "Belum Absen"
+                        statusImageSiang.setImageResource(R.drawable.ic_baseline_not_available_24)
                         txtStatusAbsenPulang = "Belum Tersedia"
-                        statusImagePulang.setImageResource(R.drawable.minus_button)
+                        statusImagePulang.isVisible = false
+
+                        binding.absenpagi.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah absen pagi, silahkan absen siang", Toast.LENGTH_SHORT).show()
+                        }
+
+                        binding.absensiang.setOnClickListener {
+                            goToAbsensi("2")
+                        }
+
+                        binding.absenpulang.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda belum bisa melakukan absen pulang", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     "siang" -> {
                         //ketika datanya pertama siang, bisanya absen pulang doang, pagi dan siang g bisa
-                        binding.absenpagi.isClickable = false
-                        binding.absensiang.isClickable = false
-                        binding.absenpulang.isClickable = true
                         binding.kirim.isEnabled = true
                         txtJamAbsenSiang = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY,TodayAttendanceModel::class.java).absenHariIni?.get(0)?.waktuAbsen.toString()
                         txtStatusAbsenPagi = "Sudah Absen"
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
                         txtStatusAbsenSiang = "Sudah Absen"
                         statusImageSiang.setImageResource(R.drawable.ic_sudah_absen)
-                        txtStatusAbsenPulang = "Belum Tersedia"
-                        statusImagePulang.setImageResource(R.drawable.minus_button)
+                        txtStatusAbsenPulang = "Belum Absen"
+                        statusImagePulang.setImageResource(R.drawable.ic_baseline_not_available_24)
+
+                        binding.absenpagi.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah melakukan absen pagi", Toast.LENGTH_SHORT).show()
+                        }
+
+                        binding.absensiang.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah melakukan absen siang", Toast.LENGTH_SHORT).show()
+                        }
+
+                        binding.absenpulang.setOnClickListener {
+                            goToAbsensi("3")
+                        }
 
                     }
                     "pulang" -> {
-                        //ketika datanya pertama pulang, semuanya g bisa absen
-                        binding.absenpagi.isClickable = false
-                        binding.absensiang.isClickable = false
-                        binding.absenpulang.isClickable = false
                         binding.kirim.isEnabled = false
                         txtJamAbsenPulang = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY, TodayAttendanceModel::class.java).absenHariIni?.get(0)?.waktuAbsen.toString()
                         txtStatusAbsenPagi = "Sudah Absen"
@@ -234,18 +244,46 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         statusImageSiang.setImageResource(R.drawable.ic_sudah_absen)
                         txtStatusAbsenPulang = "Sudah Absen"
                         statusImagePulang.setImageResource(R.drawable.ic_sudah_absen)
+
+                        binding.absenpagi.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah melakukan absen pagi", Toast.LENGTH_SHORT).show()
+                        }
+
+                        binding.absensiang.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah melakukan absen siang", Toast.LENGTH_SHORT).show()
+                        }
+
+                        binding.absenpulang.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah melakukan absen pulang", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     "izin" -> {
-                        binding.absenpagi.isClickable = false
-                        binding.absensiang.isClickable = false
-                        binding.absenpulang.isClickable = false
                         binding.kirim.isEnabled = false
+                        binding.absenpagi.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah melakukan absen cuti/izin", Toast.LENGTH_SHORT).show()
+                        }
+
+                        binding.absensiang.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah melakukan absen cuti/izin", Toast.LENGTH_SHORT).show()
+                        }
+
+                        binding.absenpulang.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah melakukan absen cuti/izin", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     "cuti" -> {
                         binding.absenpagi.isClickable = false
-                        binding.absensiang.isClickable = false
-                        binding.absenpulang.isClickable = false
-                        binding.kirim.isEnabled = false
+                        binding.absenpagi.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah melakukan absen cuti/izin", Toast.LENGTH_SHORT).show()
+                        }
+
+                        binding.absensiang.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah melakukan absen cuti/izin", Toast.LENGTH_SHORT).show()
+                        }
+
+                        binding.absenpulang.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah melakukan absen cuti/izin", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     else -> {
                         binding.absenpagi.isClickable = false
@@ -267,7 +305,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle("Terjadi Kesalahan")
                     .setMessage("Gagal mengambil data, aktifkan internet anda, atau cobalah untuk membuka ulang aplikasi")
-                    .setPositiveButton("Ok") { dialog, _ -> }
+                    .setPositiveButton("Ok") { _, _ -> }
                     .create().show()
                 binding.absenpagi.isClickable = false
                 binding.absensiang.isClickable = false
