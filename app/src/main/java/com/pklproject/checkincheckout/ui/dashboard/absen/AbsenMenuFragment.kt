@@ -17,9 +17,11 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.api.models.LoginModel
+import com.pklproject.checkincheckout.api.models.TodayAttendanceModel
 import com.pklproject.checkincheckout.databinding.FragmentMenuAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.TinyDB
@@ -185,10 +187,10 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         statusImageDay.setImageResource(R.drawable.ic_not_available)
                         txtJamAbsenSiang = "--:--"
                         txtStatusAbsenSiang = "Belum Tersedia"
-                        statusImageSiang.isVisible = false
+                        statusImageSiang.setImageResource(R.drawable.minus_button)
                         txtJamAbsenPulang = "--:--"
                         txtStatusAbsenPulang = "Belum Tersedia"
-                        statusImagePulang.isVisible = false
+                        statusImagePulang.setImageResource(R.drawable.minus_button)
                     }
                     "pagi" -> {
                         //ketika datanya pertama pagi doang, bisanya absen siang, pulang sama pagi g bisa
@@ -196,6 +198,13 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.absensiang.isClickable = true
                         binding.absenpulang.isClickable = false
                         binding.kirim.isEnabled = true
+                        txtJamAbsenPagi = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY,TodayAttendanceModel::class.java).absenHariIni?.get(0)?.waktuAbsen.toString()
+                        txtStatusAbsenPagi = "Sudah Absen"
+                        statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
+                        txtStatusAbsenSiang = "Belum Tersedia"
+                        statusImageSiang.setImageResource(R.drawable.minus_button)
+                        txtStatusAbsenPulang = "Belum Tersedia"
+                        statusImagePulang.setImageResource(R.drawable.minus_button)
                     }
                     "siang" -> {
                         //ketika datanya pertama siang, bisanya absen pulang doang, pagi dan siang g bisa
@@ -203,6 +212,14 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.absensiang.isClickable = false
                         binding.absenpulang.isClickable = true
                         binding.kirim.isEnabled = true
+                        txtJamAbsenSiang = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY,TodayAttendanceModel::class.java).absenHariIni?.get(0)?.waktuAbsen.toString()
+                        txtStatusAbsenPagi = "Sudah Absen"
+                        statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
+                        txtStatusAbsenSiang = "Sudah Absen"
+                        statusImageSiang.setImageResource(R.drawable.ic_sudah_absen)
+                        txtStatusAbsenPulang = "Belum Tersedia"
+                        statusImagePulang.setImageResource(R.drawable.minus_button)
+
                     }
                     "pulang" -> {
                         //ketika datanya pertama pulang, semuanya g bisa absen
@@ -210,6 +227,13 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.absensiang.isClickable = false
                         binding.absenpulang.isClickable = false
                         binding.kirim.isEnabled = false
+                        txtJamAbsenPulang = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY, TodayAttendanceModel::class.java).absenHariIni?.get(0)?.waktuAbsen.toString()
+                        txtStatusAbsenPagi = "Sudah Absen"
+                        statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
+                        txtStatusAbsenSiang = "Sudah Absen"
+                        statusImageSiang.setImageResource(R.drawable.ic_sudah_absen)
+                        txtStatusAbsenPulang = "Sudah Absen"
+                        statusImagePulang.setImageResource(R.drawable.ic_sudah_absen)
                     }
                     "izin" -> {
                         binding.absenpagi.isClickable = false
