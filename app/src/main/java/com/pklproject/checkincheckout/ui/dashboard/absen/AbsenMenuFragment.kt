@@ -100,14 +100,28 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     binding.izindialog.isVisible = true
                     binding.absensi.isVisible = false
                     binding.kirim.setOnClickListener {
-                        kirimAbsen("5", tinyDB, keterangan.toString())
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("Yakin ingin izin?")
+                            .setMessage("Setelah anda klik OK, maka anda tidak akan bisa absen lagi, lanjutkan?")
+                            .setNegativeButton("Tidak") { _, _ -> }
+                            .setPositiveButton("Ya") { _,_ ->
+                                kirimAbsen("5", tinyDB, keterangan.toString())
+                            }
+                            .show()
                     }
                 }
                 R.id.cuti -> {
                     binding.izindialog.isVisible = true
                     binding.absensi.isVisible = false
                     binding.kirim.setOnClickListener {
-                        kirimAbsen("4", tinyDB, keterangan.toString())
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("Yakin ingin izin?")
+                            .setMessage("Setelah anda klik OK, maka anda tidak akan bisa absen lagi, lanjutkan?")
+                            .setNegativeButton("Tidak") { _, _ -> }
+                            .setPositiveButton("Ya") { _, _ ->
+                                kirimAbsen("4", tinyDB, keterangan.toString())
+                            }
+                            .show()
                     }
                 }
             }
