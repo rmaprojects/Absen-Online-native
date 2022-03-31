@@ -27,5 +27,8 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_primaryInverse</item>
+        <item name="containerColor">@color/containerColourDark</item>
+        <item name="colorBottomNavText">@color/colorBottomNavTextDark</item>
+        <item name="colorBottomNavBackground">@color/colorBottomNavBackGroundDark</item>
     </style>
 </resources>

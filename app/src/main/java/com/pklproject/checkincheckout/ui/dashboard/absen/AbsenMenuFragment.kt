@@ -102,7 +102,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     binding.kirim.setOnClickListener {
                         MaterialAlertDialogBuilder(requireContext())
                             .setTitle("Yakin ingin izin?")
-                            .setMessage("Setelah anda klik OK, maka anda tidak akan bisa absen lagi, lanjutkan?")
+                            .setMessage("Setelah anda klik 'Ya', maka anda tidak akan bisa absen lagi, lanjutkan?")
                             .setNegativeButton("Tidak") { _, _ -> }
                             .setPositiveButton("Ya") { _,_ ->
                                 kirimAbsen("5", tinyDB, keterangan.toString())
@@ -116,7 +116,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     binding.kirim.setOnClickListener {
                         MaterialAlertDialogBuilder(requireContext())
                             .setTitle("Yakin ingin izin?")
-                            .setMessage("Setelah anda klik OK, maka anda tidak akan bisa absen lagi, lanjutkan?")
+                            .setMessage("Setelah anda klik 'Ya', maka anda tidak akan bisa absen lagi, lanjutkan?")
                             .setNegativeButton("Tidak") { _, _ -> }
                             .setPositiveButton("Ya") { _, _ ->
                                 kirimAbsen("4", tinyDB, keterangan.toString())

@@ -140,6 +140,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="8dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
@@ -149,6 +150,7 @@
                     android:layout_height="150dp"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
+                    android:backgroundTint="?containerColor"
                     android:background="?selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
@@ -181,6 +183,7 @@
                     android:layout_margin="8dp"
                     android:layout_marginHorizontal="6dp"
                     android:layout_weight="1"
+                    android:backgroundTint="?containerColor"
                     android:background="?selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
@@ -215,6 +218,7 @@
                     android:layout_weight="1"
                     android:background="?selectableItemBackground"
                     android:clickable="true"
+                    android:backgroundTint="?containerColor"
                     android:focusable="true"
                     app:cardElevation="8dp">
 

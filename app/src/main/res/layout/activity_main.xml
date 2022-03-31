@@ -48,6 +48,9 @@
         android:id="@+id/bottomNavView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:backgroundTint="?colorBottomNavBackground"
+        app:itemTextColor="?colorBottomNavText"
+        app:itemIconTint="?colorBottomNavText"
         android:layout_gravity="bottom|center_horizontal"
         app:labelVisibilityMode="selected"
         app:menu="@menu/menu_navigation" />

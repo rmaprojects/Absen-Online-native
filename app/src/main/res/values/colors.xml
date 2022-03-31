@@ -1,5 +1,5 @@
 <resources>
-    <color name="md_theme_light_primary">#B4281D</color>
+    <color name="md_theme_light_primary">#d81f27</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
     <color name="md_theme_light_primaryContainer">#FFDAD3</color>
     <color name="md_theme_light_onPrimaryContainer">#410000</color>
@@ -55,4 +55,12 @@
     <color name="md_theme_dark_inversePrimary">#B4281D</color>
     <color name="md_theme_dark_shadow">#000000</color>
     <color name="md_theme_dark_primaryInverse">#B4281D</color>
+
+    <color name="colorBottomNavBackGroundLight">#FFF</color>
+    <color name="colorBottomNavTextLight">#D81F27</color>
+    <color name="containerColourLight">#FFF</color>
+
+    <color name="colorBottomNavBackGroundDark">#121212</color>
+    <color name="colorBottomNavTextDark">#FFF</color>
+    <color name="containerColourDark">#121212</color>
 </resources>
