@@ -18,11 +18,9 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.api.models.LoginModel
-import com.pklproject.checkincheckout.api.models.TodayAttendanceModel
 import com.pklproject.checkincheckout.databinding.FragmentMenuAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.TinyDB
