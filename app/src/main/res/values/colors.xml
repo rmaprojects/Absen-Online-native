@@ -56,7 +56,7 @@
     <color name="md_theme_dark_shadow">#000000</color>
     <color name="md_theme_dark_primaryInverse">#B4281D</color>
 
-    <color name="colorBottomNavBackGroundLight">#FFF</color>
+    <color name="colorBottomNavBackGroundLight">#FFFAFE</color>
     <color name="colorBottomNavTextLight">#D81F27</color>
     <color name="containerColourLight">#FFF</color>
 

@@ -206,6 +206,8 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     "pagi" -> {
                         binding.kirim.isEnabled = true
                         txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.waktuAbsen ?: "--:--"
+                        txtJamAbsenSiang = "--:--"
+                        txtJamAbsenPulang = "--:--"
                         txtStatusAbsenPagi = "Sudah Absen"
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
                         txtStatusAbsenSiang = "Belum Absen"
@@ -228,7 +230,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     "siang" -> {
                         //ketika datanya pertama siang, bisanya absen pulang doang, pagi dan siang g bisa
                         binding.kirim.isEnabled = true
-                        txtJamAbsenSiang = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY,TodayAttendanceModel::class.java).absenHariIni?.get(0)?.waktuAbsen.toString()
+                        txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.waktuAbsen ?: "--:--"
+                        txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(1)?.waktuAbsen ?: "--:--"
+                        txtJamAbsenPulang = "--:--"
                         txtStatusAbsenPagi = "Sudah Absen"
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
                         txtStatusAbsenSiang = "Sudah Absen"
@@ -251,7 +255,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     }
                     "pulang" -> {
                         binding.kirim.isEnabled = false
-                        txtJamAbsenPulang = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY, TodayAttendanceModel::class.java).absenHariIni?.get(0)?.waktuAbsen.toString()
+                        txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(2)?.waktuAbsen ?: "--:--"
+                        txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(1)?.waktuAbsen ?: "--:--"
+                        txtJamAbsenPulang = viewModel.getTodayAttendance()?.get(0)?.waktuAbsen ?: "--:--"
                         txtStatusAbsenPagi = "Sudah Absen"
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
                         txtStatusAbsenSiang = "Sudah Absen"
