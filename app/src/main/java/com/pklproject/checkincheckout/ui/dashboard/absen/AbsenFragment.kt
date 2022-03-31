@@ -1,7 +1,5 @@
 package com.pklproject.checkincheckout.ui.dashboard.absen
 
-import android.content.Intent
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,7 +18,6 @@ import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
-import mumayank.com.airlocationlibrary.AirLocation
 
 class AbsenFragment : Fragment(R.layout.fragment_absen) {
 

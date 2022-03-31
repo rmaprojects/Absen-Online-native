@@ -1,10 +1,8 @@
 package com.pklproject.checkincheckout
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import by.kirich1409.viewbindingdelegate.viewBinding
-import com.pklproject.checkincheckout.databinding.ActivitySplashScreenBinding
+import androidx.appcompat.app.AppCompatActivity
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
 

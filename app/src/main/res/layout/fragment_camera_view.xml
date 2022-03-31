@@ -15,23 +15,34 @@
         app:cameraMode="picture"
         android:layout_height="match_parent"/>
     
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_gravity="bottom|center"
-        android:orientation="horizontal"
+        android:layout_gravity="bottom"
         android:background="@color/material_on_background_emphasis_high_type"
         android:backgroundTint="@color/material_on_background_emphasis_high_type"
-        android:gravity="center"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/captureButton"
-            android:clickable="true"
             android:layout_width="64dp"
-            android:background="?selectableItemBackground"
-            android:src="@drawable/ic_baseline_camera_24"
+            android:layout_margin="12dp"
             android:layout_height="128dp"
+            android:layout_centerHorizontal="true"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="Ambil gambar"
             android:focusable="true"
+            android:src="@drawable/ic_baseline_camera_24"
             app:tint="@color/material_on_primary_emphasis_high_type" />
-    </LinearLayout>
+        <ImageView
+            android:background="?selectableItemBackground"
+            android:id="@+id/switchCameraButton"
+            android:layout_gravity="end"
+            android:layout_margin="16dp"
+            android:layout_width="64dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_baseline_flip_camera_ios_24"
+            android:layout_height="128dp"/>
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

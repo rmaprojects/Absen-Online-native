@@ -9,6 +9,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.controls.Audio
+import com.otaliastudios.cameraview.controls.Facing
 import com.otaliastudios.cameraview.controls.PictureFormat
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.databinding.FragmentCameraViewBinding
@@ -35,6 +36,10 @@ class CameraView : Fragment(R.layout.fragment_camera_view) {
 
         binding.captureButton.setOnClickListener {
             binding.camera.takePicture()
+        }
+
+        binding.switchCameraButton.setOnClickListener {
+            binding.camera.facing = if (binding.camera.facing == Facing.FRONT) Facing.BACK else Facing.FRONT
         }
     }
 }
