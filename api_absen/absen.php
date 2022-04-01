@@ -1,6 +1,5 @@
 <?php
 
-
     include 'connection.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -92,8 +91,12 @@
                 $queryGetAkhir = "SELECT nilai FROM tbl_pengaturan_absen WHERE id = '5'";
                 $exec_queryGetSettingsAkhir = mysqli_fetch_assoc(mysqli_query($_AUTH, $queryGetAkhir));
 
+                $queryGetBoolSiang = "SELECT nilai FROM tbl_pengaturan_absen WHERE id = '1'";
+                $exec_queryGetSettingsBoolSiang = mysqli_fetch_assoc(mysqli_query($_AUTH, $queryGetBoolSiang));
+
                 $nilaiAwal = array();
                 $nilaiAkhir = array();
+                $absen_siang_diperlukan = array();
 
                 for ($i = 0; $i < count($exec_queryGetSettings); $i++) {
                     array_push($nilaiAwal, $exec_queryGetSettings['nilai']);
@@ -103,8 +106,13 @@
                     array_push($nilaiAkhir, $exec_queryGetSettingsAkhir['nilai']);
                 }
 
+                for ($i = 0; $i < count($exec_queryGetSettingsBoolSiang); $i++) {
+                    array_push($absen_siang_diperlukan, $exec_queryGetSettingsBoolSiang['nilai']);
+                }
+
                 $waktu_absen_awal = $nilaiAwal[0];
                 $waktu_absen_akhir = $nilaiAkhir[0];
+                $perlu_absen_siang = $absen_siang_diperlukan[0];
 
                 $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, type_absen, longitude, latitude, photo_directory, keterangan, absen_awal, absen_akhir, absen_siang_diperlukan) VALUES ('$id_karyawan', '$type', '$long', '$lat', '$photo', '$ket', '$waktu_absen_awal', '$waktu_absen_akhir', '$perlu_absen_siang')");
 
@@ -132,8 +140,12 @@
                 $queryGetAkhir = "SELECT nilai FROM tbl_pengaturan_absen WHERE id = '7'";
                 $exec_queryGetSettingsAkhir = mysqli_fetch_assoc(mysqli_query($_AUTH, $queryGetAkhir));
 
+                $queryGetBoolSiang = "SELECT nilai FROM tbl_pengaturan_absen WHERE id = '1'";
+                $exec_queryGetSettingsBoolSiang = mysqli_fetch_assoc(mysqli_query($_AUTH, $queryGetBoolSiang));
+
                 $nilaiAwal = array();
                 $nilaiAkhir = array();
+                $absen_siang_diperlukan = array();
 
                 for ($i = 0; $i < count($exec_queryGetSettings); $i++) {
                     array_push($nilaiAwal, $exec_queryGetSettings['nilai']);
@@ -143,8 +155,13 @@
                     array_push($nilaiAkhir, $exec_queryGetSettingsAkhir['nilai']);
                 }
 
+                for ($i = 0; $i < count($exec_queryGetSettingsBoolSiang); $i++) {
+                    array_push($absen_siang_diperlukan, $exec_queryGetSettingsBoolSiang['nilai']);
+                }
+
                 $waktu_absen_awal = $nilaiAwal[0];
                 $waktu_absen_akhir = $nilaiAkhir[0];
+                $perlu_absen_siang = $absen_siang_diperlukan[0];
 
                 $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, type_absen, longitude, latitude, photo_directory, keterangan, absen_awal, absen_akhir, absen_siang_diperlukan) VALUES ('$id_karyawan', '$type', '$long', '$lat', '$photo', '$ket', '$waktu_absen_awal', '$waktu_absen_akhir', '$perlu_absen_siang')");
 
