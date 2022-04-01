@@ -18,9 +18,12 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.api.models.LoginModel
+import com.pklproject.checkincheckout.api.models.Setting
+import com.pklproject.checkincheckout.api.models.TodayAttendanceModel
 import com.pklproject.checkincheckout.databinding.FragmentMenuAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.TinyDB
@@ -82,8 +85,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
         val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
         val hariIni = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val settingsAbsen = tinyDB.getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java)
 
-        cekAbsenToday(api, username.toString(), password.toString(), hariIni)
+        cekAbsenToday(api, username.toString(), password.toString(), hariIni, settingsAbsen)
 
         val keterangan = binding.keterangan.text
 
@@ -92,7 +96,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 R.id.absen -> {
                     binding.absensi.isVisible = true
                     binding.izindialog.isVisible = false
-                    cekAbsenToday(api, username.toString(), password.toString(), hariIni)
+                    cekAbsenToday(api, username.toString(), password.toString(), hariIni, settingsAbsen)
                 }
                 R.id.izin -> {
                     binding.izindialog.isVisible = true
@@ -156,7 +160,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         }
     }
 
-    private fun cekAbsenToday(api: ApiInterface, username:String, password:String, hariIni:String) {
+    private fun cekAbsenToday(api: ApiInterface, username:String, password:String, hariIni:String, settingsAbsen:Setting) {
         lifecycleScope.launch {
             try {
                 val response = api.cekAbsenHariIni(username, password, hariIni)
@@ -180,8 +184,13 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     "Data Kosong" -> {
                         binding.kirim.isEnabled = true
                         txtJamAbsenPagi = "--:--"
-                        txtStatusAbsenPagi = "Belum Absen"
-                        statusImageDay.setImageResource(R.drawable.ic_baseline_not_available_24)
+                        txtStatusAbsenPagi = if (checkIfAttendanceIsLate("pagi", settingsAbsen)) {
+                            statusImageDay.setImageResource(R.drawable.ic_telat)
+                            "Terlambat"
+                        } else {
+                            statusImageDay.setImageResource(R.drawable.ic_baseline_not_available_24)
+                            "Belum Absen"
+                        }
                         txtJamAbsenSiang = "--:--"
                         txtStatusAbsenSiang = "Belum Tersedia"
                         statusImageSiang.isVisible = false
@@ -208,8 +217,13 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         txtJamAbsenPulang = "--:--"
                         txtStatusAbsenPagi = "Sudah Absen"
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
-                        txtStatusAbsenSiang = "Belum Absen"
-                        statusImageSiang.setImageResource(R.drawable.ic_baseline_not_available_24)
+                        if (checkIfAttendanceIsLate("siang", settingsAbsen)) {
+                            txtStatusAbsenSiang = "Terlambat"
+                            statusImageSiang.setImageResource(R.drawable.ic_telat)
+                        } else {
+                            txtStatusAbsenSiang = "Belum Absen"
+                            statusImageSiang.setImageResource(R.drawable.ic_baseline_not_available_24)
+                        }
                         txtStatusAbsenPulang = "Belum Tersedia"
                         statusImagePulang.isVisible = false
 
@@ -235,8 +249,13 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
                         txtStatusAbsenSiang = "Sudah Absen"
                         statusImageSiang.setImageResource(R.drawable.ic_sudah_absen)
-                        txtStatusAbsenPulang = "Belum Absen"
-                        statusImagePulang.setImageResource(R.drawable.ic_baseline_not_available_24)
+                        if (checkIfAttendanceIsLate("pulang", settingsAbsen)) {
+                            txtStatusAbsenPulang = "Terlambat"
+                            statusImagePulang.setImageResource(R.drawable.ic_telat)
+                        } else {
+                            txtStatusAbsenPulang = "Belum Absen"
+                            statusImagePulang.setImageResource(R.drawable.ic_baseline_not_available_24)
+                        }
 
                         binding.absenpagi.setOnClickListener {
                             Toast.makeText(requireContext(), "Anda sudah melakukan absen pagi", Toast.LENGTH_SHORT).show()
@@ -336,6 +355,29 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
     private fun goToAbsensi(tipeAbsen:String) {
         val bundle = bundleOf(AbsenFragment.ABSEN_TYPE to tipeAbsen)
         findNavController().navigate(R.id.action_navigation_absen_to_absenFragment, bundle)
+    }
+
+    private fun checkIfAttendanceIsLate(eventType:String, absenSetings:Setting) : Boolean {
+        val sdf = SimpleDateFormat("HH:mm:ss")
+        val waktuPagiAkhir = sdf.parse(absenSetings.absenPagiAkhir)
+        val waktuSiangAkhir = sdf.parse(absenSetings.absenSiangAkhir)
+        val waktuPulangAkhir = sdf.parse(absenSetings.absenPulangAkhir)
+
+        return when (eventType) {
+            "pagi" -> {
+                val timeNow = sdf.parse(sdf.format(Date()))
+                timeNow!!.after(waktuPagiAkhir)
+            }
+            "siang" -> {
+                val timeNow = sdf.parse(sdf.format(Date()))
+                timeNow!!.after(waktuSiangAkhir)
+            }
+            "pulang" -> {
+                val timeNow = sdf.parse(sdf.format(Date()))
+                timeNow!!.after(waktuPulangAkhir)
+            }
+            else -> false
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
