@@ -9,10 +9,11 @@ import com.pklproject.checkincheckout.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment(R.layout.fragment_history) {
 
-    private val Binding: FragmentHistoryBinding by viewBinding()
+    private val binding: FragmentHistoryBinding by viewBinding()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //TODO: Set adapter dari recyclerView di layout fragment_history dengan HistoryItem()
 
     }
 
