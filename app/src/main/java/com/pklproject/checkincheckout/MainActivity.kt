@@ -16,6 +16,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
+import com.pklproject.checkincheckout.notif.NotifikasiFragment
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import kotlinx.coroutines.launch
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         checkTheme()
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
+
+        NotifikasiFragment()
 
         val tinyDb = TinyDB(this)
         retrieveSettingsAbsen(tinyDb)
