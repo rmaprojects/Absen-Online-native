@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.otaliastudios.cameraview.PictureResult
 import com.pklproject.checkincheckout.api.models.AbsenHariIni
 import com.pklproject.checkincheckout.api.models.HistoryAbsenModel
-import com.pklproject.checkincheckout.api.models.KirimAbsenModel
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -1,6 +1,5 @@
 package com.pklproject.checkincheckout.ui.dashboard.history.dialog
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.datepicker.MaterialStyledDatePickerDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.databinding.BottomSheetDatePickerBinding
@@ -47,7 +45,7 @@ class DatePickerDialog : BottomSheetDialogFragment() {
                 .show()
         }
 
-        val months = arrayListOf<String>(
+        val months = arrayListOf(
             "Januari",
             "Februari",
             "Maret",
