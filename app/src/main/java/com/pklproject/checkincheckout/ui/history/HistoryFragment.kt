@@ -1,4 +1,4 @@
-package com.pklproject.checkincheckout.ui.dashboard.history
+package com.pklproject.checkincheckout.ui.history
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,7 @@ import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.FragmentHistoryBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
-import com.pklproject.checkincheckout.ui.dashboard.history.item.HistoryItem
+import com.pklproject.checkincheckout.ui.history.item.HistoryItem
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.pklproject.checkincheckout.ui.dashboard.absen
+package com.pklproject.checkincheckout.ui.absen
 
 import android.graphics.Bitmap
 import android.os.Bundle

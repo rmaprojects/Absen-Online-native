@@ -1,9 +1,16 @@
 package com.pklproject.checkincheckout
 
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.core.view.isVisible
@@ -16,16 +23,19 @@ import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
+import com.pklproject.checkincheckout.api.models.Setting
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
+import com.pklproject.checkincheckout.notification.NotificationReceiver
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
-import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding:ActivityMainBinding by viewBinding()
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var alarmManager: AlarmManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +43,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         checkTheme()
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
+        createNotificationChannel()
 
         val tinyDb = TinyDB(this)
         retrieveSettingsAbsen(tinyDb)
+        setAlarm(tinyDb)
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -104,6 +116,99 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavView.setupWithNavController(navController)
+    }
+
+    private fun createNotificationChannel() {
+        //Create notification channel for android O and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(NotificationReceiver().CHANNEL_ID, NotificationReceiver().CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT).apply {
+                lightColor = Color.RED
+                enableLights(true)
+            }
+
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun setAlarm(tinyDB: TinyDB) {
+        val waktuAbsenPagiAkhir = tinyDB.getObject(PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir
+        val waktuAbsenSiangAkhir = tinyDB.getObject(PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir
+        val waktuAbsenPulangAkhir = tinyDB.getObject(PENGATURANABSENKEY, Setting::class.java).absenPulangAkhir
+
+        triggerSetAlarmPagi(waktuAbsenPagiAkhir)
+        triggerSetAlarmSiang(waktuAbsenSiangAkhir)
+        triggerSetAlarmPulang(waktuAbsenPulangAkhir)
+    }
+
+    private fun triggerSetAlarmPagi(scheduledTime:String) {
+
+        val hour = scheduledTime.split(":")[0].toInt()
+        val minute = scheduledTime.split(":")[1].toInt()
+
+        val calendar = Calendar.getInstance()
+        calendar[Calendar.HOUR_OF_DAY] = hour
+        calendar[Calendar.MINUTE] = minute - 5
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MILLISECOND] = 0
+
+        alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, NotificationReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent
+        )
+    }
+
+    private fun triggerSetAlarmSiang(scheduledTime:String) {
+
+        val hour = scheduledTime.split(":")[0].toInt()
+        val minute = scheduledTime.split(":")[1].toInt()
+
+        val calendar = Calendar.getInstance()
+        calendar[Calendar.HOUR_OF_DAY] = hour
+        calendar[Calendar.MINUTE] = minute - 5
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MILLISECOND] = 0
+
+        alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, NotificationReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent
+        )
+    }
+
+    private fun triggerSetAlarmPulang(scheduledTime:String) {
+
+        val hour = scheduledTime.split(":")[0].toInt()
+        val minute = scheduledTime.split(":")[1].toInt()
+
+        val calendar = Calendar.getInstance()
+        calendar[Calendar.HOUR_OF_DAY] = hour
+        calendar[Calendar.MINUTE] = minute - 5
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MILLISECOND] = 0
+
+        alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, NotificationReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 2, intent, 0)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent
+        )
     }
 
     //Suport for back button

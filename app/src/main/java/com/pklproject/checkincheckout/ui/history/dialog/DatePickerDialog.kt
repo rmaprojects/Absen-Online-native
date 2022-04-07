@@ -1,4 +1,4 @@
-package com.pklproject.checkincheckout.ui.dashboard.history.dialog
+package com.pklproject.checkincheckout.ui.history.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater

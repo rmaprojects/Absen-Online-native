@@ -1,4 +1,4 @@
-package com.pklproject.checkincheckout.ui.dashboard.history.item
+package com.pklproject.checkincheckout.ui.history.item
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,7 @@ import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.models.History
 import com.pklproject.checkincheckout.api.models.HistoryAbsenModel
 import com.pklproject.checkincheckout.databinding.ItemHistoryBinding
-import com.pklproject.checkincheckout.ui.dashboard.history.item.HistoryItem.HistoryItemViewHolder
+import com.pklproject.checkincheckout.ui.history.item.HistoryItem.HistoryItemViewHolder
 
 class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<HistoryItemViewHolder>() {
 

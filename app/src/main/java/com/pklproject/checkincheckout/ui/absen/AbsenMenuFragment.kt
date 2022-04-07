@@ -1,4 +1,4 @@
-package com.pklproject.checkincheckout.ui.dashboard.absen
+package com.pklproject.checkincheckout.ui.absen
 
 import android.content.Context
 import android.content.Intent

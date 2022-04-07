@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/navigation_absen"
         tools:layout="@layout/fragment_menu_absen"
-        android:name="com.pklproject.checkincheckout.ui.dashboard.absen.AbsenMenuFragment"
+        android:name="com.pklproject.checkincheckout.ui.absen.AbsenMenuFragment"
         android:label="Absen" >
         <action
             android:id="@+id/action_navigation_absen_to_absenFragment"
@@ -39,7 +39,7 @@
     <fragment
         tools:layout="@layout/fragment_history"
         android:id="@+id/navigation_history"
-        android:name="com.pklproject.checkincheckout.ui.dashboard.history.HistoryFragment"
+        android:name="com.pklproject.checkincheckout.ui.history.HistoryFragment"
         android:label="History" >
         <action
             android:id="@+id/action_navigation_history_to_datePickerDialog"
@@ -53,7 +53,7 @@
     <fragment
         android:id="@+id/absenFragment"
         tools:layout="@layout/fragment_absen"
-        android:name="com.pklproject.checkincheckout.ui.dashboard.absen.AbsenFragment"
+        android:name="com.pklproject.checkincheckout.ui.absen.AbsenFragment"
         android:label="Absen" >
         <action
             android:id="@+id/action_absenFragment_to_cameraView"
@@ -62,11 +62,11 @@
     <fragment
         android:id="@+id/cameraView"
         tools:layout="@layout/fragment_camera_view"
-        android:name="com.pklproject.checkincheckout.ui.dashboard.absen.camera.CameraView"
+        android:name="com.pklproject.checkincheckout.ui.absen.camera.CameraView"
         android:label="Ambil Foto" />
     <dialog
         android:id="@+id/datePickerDialog"
         tools:layout="@layout/bottom_sheet_date_picker"
-        android:name="com.pklproject.checkincheckout.ui.dashboard.history.dialog.DatePickerDialog"
+        android:name="com.pklproject.checkincheckout.ui.history.dialog.DatePickerDialog"
         android:label="DatePickerDialog" />
 </navigation>

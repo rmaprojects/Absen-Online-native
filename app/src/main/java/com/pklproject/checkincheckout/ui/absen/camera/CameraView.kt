@@ -1,4 +1,4 @@
-package com.pklproject.checkincheckout.ui.dashboard.absen.camera
+package com.pklproject.checkincheckout.ui.absen.camera
 
 import android.os.Bundle
 import android.view.View
