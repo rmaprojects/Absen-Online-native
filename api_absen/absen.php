@@ -1,5 +1,4 @@
 <?php
-
     include 'connection.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -9,8 +8,10 @@
         $absen_type = $_POST['tipe_absen'];
         $longitude = $_POST['longitude'];
         $latitude = $_POST['latitude'];
-        $photo_name = $_POST['photo_name'];
         $keterangan = $_POST['keterangan'];
+        $jam_masuk = $_POST['jam_masuk'];
+        $id_absensi = $_POST['id_absensi'];
+        $tanggal = $_POST['tanggal_sekarang'];
 
         $queryCheckData = "SELECT COUNT(*) 'total' FROM tbl_karyawan WHERE username = '$username' AND password = '$password'";
         $exec_queryCheckData = mysqli_fetch_assoc(mysqli_query($_AUTH, $queryCheckData));
@@ -33,7 +34,7 @@
             $long = $longitude;
             $lat = $latitude;
             $ket = $keterangan;
-            $photo = $photo_name;
+            $photo = $_FILES['photo_absen']['name'];
 
             if ($type == '1') {
                 $queryGetAwal = "SELECT nilai FROM tbl_pengaturan_absen WHERE id = '2'";
@@ -65,14 +66,18 @@
                 $waktu_absen_akhir = $nilaiAkhir[0];
                 $perlu_absen_siang = $absen_siang_diperlukan[0];
 
-                $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, type_absen, longitude, latitude, photo_directory, keterangan, absen_awal, absen_akhir, absen_siang_diperlukan) VALUES ('$id_karyawan', '$type', '$long', '$lat', '$photo', '$ket', '$waktu_absen_awal', '$waktu_absen_akhir', '$perlu_absen_siang')");
+                $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, jam_masuk_pagi, jam_awal_pagi, jam_akhir_pagi, longitude_pagi, latitude_pagi, photo_pagi, absen_siang_diperlukan) VALUES ('$id_karyawan', '$jam_masuk', '$waktu_absen_awal', '$waktu_absen_akhir', '$long', '$lat', '$photo', '$perlu_absen_siang');");
 
-                if ($inputAbsen) {
+                if ($inputAbsen && move_uploaded_file($_FILES['photo_absen']['tmp_name'],'images/' . $photo)) {
+
+                    $query_ambil_id = mysqli_query($_AUTH, "SELECT id_absensi FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' ORDER BY tanggal DESC LIMIT 1");
+                    $exec_get_id = mysqli_fetch_assoc($query_ambil_id);
 
                     $response['message'] = "Sukses menginput absensi!";
                     $response['code'] = 200;
                     $response['status'] = true;
                     $response['tipe_absen'] = "Absen Pagi";
+                    $response['id_absensi'] = $exec_get_id['id_absensi'];
 
                     echo json_encode($response);
                 } else {
@@ -114,9 +119,9 @@
                 $waktu_absen_akhir = $nilaiAkhir[0];
                 $perlu_absen_siang = $absen_siang_diperlukan[0];
 
-                $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, type_absen, longitude, latitude, photo_directory, keterangan, absen_awal, absen_akhir, absen_siang_diperlukan) VALUES ('$id_karyawan', '$type', '$long', '$lat', '$photo', '$ket', '$waktu_absen_awal', '$waktu_absen_akhir', '$perlu_absen_siang')");
+                $inputAbsen = mysqli_query($_AUTH, "UPDATE tbl_absensi SET jam_masuk_siang = '$jam_masuk', jam_awal_siang = '$waktu_absen_awal', jam_akhir_siang = '$waktu_absen_akhir', longitude_siang = '$long', latitude_siang = '$lat', photo_siang = '$photo', persentase = '66.6' WHERE id_absensi = '$id_absensi'");
 
-                if ($inputAbsen) {
+                if ($inputAbsen && move_uploaded_file($_FILES['photo_absen']['tmp_name'],'images/' . $photo)) {
 
                     $response['message'] = "Sukses menginput absensi!";
                     $response['code'] = 200;
@@ -163,9 +168,9 @@
                 $waktu_absen_akhir = $nilaiAkhir[0];
                 $perlu_absen_siang = $absen_siang_diperlukan[0];
 
-                $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, type_absen, longitude, latitude, photo_directory, keterangan, absen_awal, absen_akhir, absen_siang_diperlukan) VALUES ('$id_karyawan', '$type', '$long', '$lat', '$photo', '$ket', '$waktu_absen_awal', '$waktu_absen_akhir', '$perlu_absen_siang')");
+                $inputAbsen = mysqli_query($_AUTH, "UPDATE tbl_absensi SET jam_masuk_pulang = '$jam_masuk', jam_awal_pulang = '$waktu_absen_awal', jam_akhir_pulang = '$waktu_absen_awal', longitude_pulang = '$long', latitude_pulang = '$lat', photo_pulang = '$photo', persentase = '100' WHERE id_absensi = '$id_absensi'");
 
-                if ($inputAbsen) {
+                if ($inputAbsen && move_uploaded_file($_FILES['photo_absen']['tmp_name'],'images/' . $photo)) {
 
                     $response['message'] = "Sukses menginput absensi!";
                     $response['code'] = 200;
@@ -182,31 +187,91 @@
                     echo json_encode($response);
                 }
             } else if ($absen_type == '4' || '5') {
-                $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, type_absen, longitude, latitude, photo_directory, keterangan, absen_awal, absen_akhir, absen_siang_diperlukan) VALUES ('$id_karyawan', '$type', '$long', '$lat', '$photo', '$ket', null, null, null)");
-
                 $tipe_absen = "";
 
-                if ($absen_type == '4') {
-                    $tipe_absen = "Cuti";
-                } else if ($absen_type == '5') {
-                    $tipe_absen = "Izin";
-                }
+                $query_check_if_exist = mysqli_query($_AUTH, "SELECT EXISTS(SELECT * from tbl_absensi WHERE tanggal = '$tanggal') as RESULT;");
+                $exec_checkIfExist = mysqli_fetch_assoc($query_check_if_exist);
 
-                if ($inputAbsen) {
+                if ($exec_checkIfExist['RESULT'] == 0) {
+                    if ($absen_type == '4') {
+                        $tipe_absen = "Cuti";
+                        $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, cuti, izin, keterangan, longitude_izin_cuti, latitude_izin_cuti, persentase) VALUES ('$id_karyawan','1', '0', '$ket', '$long', '$lat', '100')");
+                        if ($inputAbsen) {
 
-                    $response['message'] = "Sukses menginput absensi!";
-                    $response['code'] = 200;
-                    $response['status'] = true;
-                    $response['tipe_absen'] = $tipe_absen;
+                            $response['message'] = "Sukses menginput absensi!";
+                            $response['code'] = 200;
+                            $response['status'] = true;
+                            $response['tipe_absen'] = $tipe_absen;
 
-                    echo json_encode($response);
-                } else {
+                            echo json_encode($response);
+                        } else {
 
-                    $response['message'] = "Gagal menginput absensi, silahkan coba lagi!";
-                    $response['code'] = 400;
-                    $response['status'] = false;
+                            $response['message'] = "Gagal menginput absensi, silahkan coba lagi!";
+                            $response['code'] = 400;
+                            $response['status'] = false;
 
-                    echo json_encode($response);
+                            echo json_encode($response);
+                        }
+                    } else if ($absen_type == '5') {
+                        $tipe_absen = "Izin";
+                        $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, cuti, izin, keterangan, longitude_izin_cuti, latitude_izin_cuti, persentase) VALUES ('$id_karyawan','0', '1', '$ket', '$long', '$lat', '100')");
+                        if ($inputAbsen) {
+
+                            $response['message'] = "Sukses menginput absensi!";
+                            $response['code'] = 200;
+                            $response['status'] = true;
+                            $response['tipe_absen'] = $tipe_absen;
+
+                            echo json_encode($response);
+                        } else {
+
+                            $response['message'] = "Gagal menginput absensi, silahkan coba lagi!";
+                            $response['code'] = 400;
+                            $response['status'] = false;
+
+                            echo json_encode($response);
+                        }
+                    }
+                } else if ($exec_checkIfExist['RESULT'] == 1) {
+                    if ($absen_type == '4') {
+                        $tipe_absen = "Cuti";
+                        $inputAbsen = mysqli_query($_AUTH, "UPDATE tbl_absensi SET cuti = '1', izin = '0', keterangan = '$ket', longitude_izin_cuti = '$long', latitude_izin_cuti = '$lat', persentase = '100' WHERE id_absensi = '$id_absensi'");
+                        if ($inputAbsen) {
+
+                            $response['message'] = "Sukses menginput absensi!";
+                            $response['code'] = 200;
+                            $response['status'] = true;
+                            $response['tipe_absen'] = $tipe_absen;
+
+                            echo json_encode($response);
+                        } else {
+
+                            $response['message'] = "Gagal menginput absensi, silahkan coba lagi!";
+                            $response['code'] = 400;
+                            $response['status'] = false;
+
+                            echo json_encode($response);
+                        }
+                    } else if ($absen_type == '5') {
+                        $tipe_absen = "Izin";
+                        $inputAbsen = mysqli_query($_AUTH, "UPDATE tbl_absensi SET cuti = '0', izin = '1', keterangan = '$ket', longitude_izin_cuti = '$long', latitude_izin_cuti = '$lat', persentase = '100' WHERE id_absensi = '$id_absensi'");
+                        if ($inputAbsen) {
+
+                            $response['message'] = "Sukses menginput absensi!";
+                            $response['code'] = 200;
+                            $response['status'] = true;
+                            $response['tipe_absen'] = $tipe_absen;
+
+                            echo json_encode($response);
+                        } else {
+
+                            $response['message'] = "Gagal menginput absensi, silahkan coba lagi!";
+                            $response['code'] = 400;
+                            $response['status'] = false;
+
+                            echo json_encode($response);
+                        }
+                    }
                 }
             }
         }
@@ -220,5 +285,3 @@
         echo json_encode($response);
     }
 //Code by Raka
-
-?>

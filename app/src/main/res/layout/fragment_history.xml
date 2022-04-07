@@ -24,13 +24,14 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hari"
+            android:text="Bulan"
             style="@style/Widget.Material3.Button.OutlinedButton.Icon"
             app:icon="@drawable/ic_baseline_filter_list_24" />
     </LinearLayout>
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
+        android:id="@+id/selectMonthButton"
         android:text="Maret 2022"
         android:textStyle="bold"
         android:background="?selectableItemBackground"

@@ -1,17 +1,31 @@
 package com.pklproject.checkincheckout.viewmodel
 
+import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.otaliastudios.cameraview.PictureResult
 import com.pklproject.checkincheckout.api.models.AbsenHariIni
+import com.pklproject.checkincheckout.api.models.HistoryAbsenModel
+import com.pklproject.checkincheckout.api.models.KirimAbsenModel
+import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ServiceViewModel : ViewModel() {
 
     private val longitude : MutableLiveData<Double> = MutableLiveData<Double>()
     private val latitude : MutableLiveData<Double> = MutableLiveData<Double>()
 
+    private val history : MutableLiveData<HistoryAbsenModel> = MutableLiveData()
+
     private val resultPicture : MutableLiveData<PictureResult> = MutableLiveData<PictureResult>()
     private val todayAttendance : MutableLiveData<List<AbsenHariIni>> = MutableLiveData<List<AbsenHariIni>>()
+
+    private val month :MutableLiveData<String> = MutableLiveData()
+    private val year :MutableLiveData<String> = MutableLiveData()
+
+    private val bitmapImage: MutableLiveData<Bitmap> = MutableLiveData()
+
 
     fun getTodayAttendance() : List<AbsenHariIni>? {
         return todayAttendance.value
@@ -43,6 +57,38 @@ class ServiceViewModel : ViewModel() {
 
     fun setResultPicture(resultPicture: PictureResult?) {
         this.resultPicture.value = resultPicture
+    }
+
+    fun getHistory() : HistoryAbsenModel? {
+        return history.value
+    }
+
+    fun setHistory(history : HistoryAbsenModel?) {
+        this.history.value = history
+    }
+
+    fun getMonth() : String? {
+        return month.value?: SimpleDateFormat("MM", Locale.getDefault()).format(Date())
+    }
+
+    fun setMonth(month : String?) {
+        this.month.value = month
+    }
+
+    fun getYear() : String? {
+        return year.value?: SimpleDateFormat("yyyy", Locale.getDefault()).format(Date())
+    }
+
+    fun setYear(year : String?) {
+        this.year.value = year
+    }
+
+    fun getBitmapImage() : Bitmap? {
+        return bitmapImage.value
+    }
+
+    fun setBitmapImage(bitmapImage: Bitmap?) {
+        this.bitmapImage.value = bitmapImage
     }
 
 }

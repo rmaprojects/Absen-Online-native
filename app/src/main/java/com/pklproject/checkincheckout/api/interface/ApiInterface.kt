@@ -2,13 +2,12 @@ package com.pklproject.checkincheckout.api.`interface`
 
 import com.google.gson.GsonBuilder
 import com.pklproject.checkincheckout.api.models.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface ApiInterface {
@@ -21,26 +20,29 @@ interface ApiInterface {
         @Field ("password") password: String
     ): Response<LoginModel>
 
-    @FormUrlEncoded
+    @Multipart
     @POST("absen.php")
     suspend fun kirimAbsen(
-        @Field ("username") username: String,
-        @Field ("password") password: String,
-        @Field ("tipe_absen") tipeAbsen: String,
-        @Field ("longitude") longitude: Double,
-        @Field ("latitude") latitude: Double,
-        @Field ("photo_name") photoName: String?,
-        @Field ("keterangan") keterangan: String
-    ): KirimAbsenModel
+        @Part("username") username: RequestBody,
+        @Part("password") password: RequestBody,
+        @Part("tipe_absen") tipeAbsen: RequestBody,
+        @Part("longitude") longitude: RequestBody?,
+        @Part("latitude") latitude: RequestBody?,
+        @Part photo_absen: MultipartBody.Part?,
+        @Part("keterangan") keterangan: RequestBody?,
+        @Part("jam_masuk") waktuMasuk: RequestBody,
+        @Part("id_absensi") idAbsensi: RequestBody?,
+        @Part("tanggal_sekarang") tanggalSekarang: RequestBody?
+    ): Response<KirimAbsenModel>
 
     @FormUrlEncoded
     @POST("history_absen.php")
     suspend fun history(
         @Field ("username") username: String,
         @Field ("password") password: String,
-        @Field ("tahun") tahun: Int,
+        @Field ("tahun") tahun: String,
         @Field ("bulan") bulan: String
-    ): Response<HistoryModel>
+    ): Response<HistoryAbsenModel>
 
     @GET("absen_settings.php")
     suspend fun getAbsenSettings(

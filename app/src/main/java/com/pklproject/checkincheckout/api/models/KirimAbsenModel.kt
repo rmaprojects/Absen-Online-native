@@ -11,5 +11,7 @@ data class KirimAbsenModel(
     @SerializedName("status")
     val status: Boolean?,
     @SerializedName("tipe_absen")
-    val tipeAbsen: String?
+    val tipeAbsen: String?,
+    @SerializedName("id_absensi")
+    val idAbsensi:String?
 )

@@ -1,6 +1,9 @@
 <?php
-include 'connection.php';
 
+ini_set('display_errors', 1);
+error_reporting(~0);
+
+include 'connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -25,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $id_karyawan = mysqli_fetch_assoc($exec_getId)['id_karyawan'];
 
-        $query_cek_absen = "SELECT DATE(waktu_absen) 'tanggal_absen', TIME(waktu_absen) 'waktu_absen', type_absen, absen_awal, absen_akhir, absen_siang_diperlukan FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' AND waktu_absen >= '$hari_ini' ORDER BY waktu_absen DESC";
+        $query_cek_absen = "SELECT tanggal, jam_masuk_pagi, jam_masuk_siang, jam_masuk_pulang, izin, cuti FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' AND tanggal >= '$hari_ini' ORDER BY tanggal DESC";
         $exec_cek_absen = mysqli_query($_AUTH, $query_cek_absen);
 
-        $query_cek_jumlah_absen = "SELECT COUNT(*) 'jumlah_absen' FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' AND waktu_absen >= '$hari_ini'";
+        $query_cek_jumlah_absen = "SELECT COUNT(*) 'jumlah_absen' FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' AND tanggal >= '$hari_ini'";
         $exec_cek_jumlah_absen = mysqli_fetch_assoc(mysqli_query($_AUTH, $query_cek_jumlah_absen));
 
         if ($exec_cek_jumlah_absen['jumlah_absen'] == 0) {
@@ -39,10 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $data = array();
 
-            $data['tanggal_absen'] = "Data Kosong";
-            $data['waktu_absen'] = "Data Kosong";
-            $data['tipe_absen'] = "Data Kosong";
-            $data['status_absen'] = "Data Kosong";
+            $data['tanggal'] = null;
+            $data['jam_masuk_pagi'] = null;
+            $data['jam_masuk_siang'] = null;
+            $data['jam_masuk_pulang'] = null;
+            $data['izin'] = null;
+            $data['cuti'] = null;
+
             array_push($response['absen_hari_ini'], $data);
 
             echo json_encode($response);
@@ -56,27 +62,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $data = array();
 
-                $waktu_akhir = new DateTime($row['absen_akhir']);
-                $waktu_absen = new DateTime($row['waktu_absen']);
+                $absen_yang_dibutuhkan = "pagi";
 
-                $status_absen = "";
-
-                if ($waktu_absen <= $waktu_akhir) {
-                    $status_absen = "Hadir";
-                } else if ($waktu_absen >= $waktu_akhir) {
-                    $status_absen = "Terlambat";
-                } else {
-                    $status_absen = "Tidak Absen";
+                if (isset($row['jam_masuk_pagi'])) {
+                    $absen_yang_dibutuhkan = "siang";
+                    if (isset($row['jam_masuk_siang'])) {
+                        $absen_yang_dibutuhkan = "pulang";
+                        if (isset($row['jam_masuk_pulang'])) {
+                            $absen_yang_dibutuhkan = "selesai";
+                        }
+                    }
                 }
 
-                $data['tanggal_absen'] = isset($row['tanggal_absen']) ? $row['tanggal_absen'] : "Belum Absen";
-                $data['waktu_absen'] = isset($row['waktu_absen']) ? $row['waktu_absen'] : "Belum Absen";
-                $data['tipe_absen'] = isset($row['type_absen']) ? $row['type_absen'] : "Belum Absen";
-                $data['status_absen'] = isset($status_absen) ? $status_absen : "Belum Absen";
+                if ($row['izin'] == '1' || $row['cuti'] == '1') {
+                    $absen_yang_dibutuhkan = "selesai";
+                }
+
+                $data['tanggal'] = $row['tanggal'];
+                $data['jam_masuk_pagi'] = $row['jam_masuk_pagi'];
+                $data['jam_masuk_siang'] = $row['jam_masuk_siang'];
+                $data['jam_masuk_pulang'] = $row['jam_masuk_pulang'];
+                $data['izin'] = $row['izin'];
+                $data['cuti'] = $row['cuti'];
+                $data['absen_yang_dibutuhkan'] = $absen_yang_dibutuhkan;
 
                 array_push($response['absen_hari_ini'], $data);
             }
-
             echo json_encode($response);
         }
     }
@@ -84,4 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $response['message'] = "Akses ditolak, API ini menggunakan metode POST";
     $response['code'] = 400;
     $response['status'] = false;
+
+    echo json_encode($response);
 }

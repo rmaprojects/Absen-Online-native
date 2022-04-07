@@ -14,6 +14,7 @@ import com.otaliastudios.cameraview.controls.PictureFormat
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.databinding.FragmentCameraViewBinding
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
+import java.io.File
 
 class CameraView : Fragment(R.layout.fragment_camera_view) {
 
@@ -30,6 +31,9 @@ class CameraView : Fragment(R.layout.fragment_camera_view) {
             override fun onPictureTaken(result: PictureResult) {
                 super.onPictureTaken(result)
                 viewModel.setResultPicture(result)
+                result.toBitmap {
+                    viewModel.setBitmapImage(it)
+                }
                 findNavController().navigateUp()
             }
         })

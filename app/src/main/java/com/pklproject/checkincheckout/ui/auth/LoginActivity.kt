@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
                                 .setAction("Ok") {}
                                 .show()
                         }
-                    } catch (e: TimeoutException) {
+                    } catch (e: Exception) {
                         Snackbar.make(
                             binding.rootLayout,
                             "Server sedang tidak aktif atau internet anda bermasalah",

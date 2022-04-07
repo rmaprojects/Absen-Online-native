@@ -40,7 +40,11 @@
         tools:layout="@layout/fragment_history"
         android:id="@+id/navigation_history"
         android:name="com.pklproject.checkincheckout.ui.dashboard.history.HistoryFragment"
-        android:label="History" />
+        android:label="History" >
+        <action
+            android:id="@+id/action_navigation_history_to_datePickerDialog"
+            app:destination="@id/datePickerDialog" />
+    </fragment>
     <dialog
         tools:layout="@layout/bottomsheet_jadwal_absen"
         android:id="@+id/bottomsheet_jadwal_absen"
@@ -60,4 +64,9 @@
         tools:layout="@layout/fragment_camera_view"
         android:name="com.pklproject.checkincheckout.ui.dashboard.absen.camera.CameraView"
         android:label="Ambil Foto" />
+    <dialog
+        android:id="@+id/datePickerDialog"
+        tools:layout="@layout/bottom_sheet_date_picker"
+        android:name="com.pklproject.checkincheckout.ui.dashboard.history.dialog.DatePickerDialog"
+        android:label="DatePickerDialog" />
 </navigation>

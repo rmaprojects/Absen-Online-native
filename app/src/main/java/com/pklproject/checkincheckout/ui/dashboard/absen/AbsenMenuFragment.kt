@@ -23,13 +23,15 @@ import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.api.models.Setting
-import com.pklproject.checkincheckout.api.models.TodayAttendanceModel
 import com.pklproject.checkincheckout.databinding.FragmentMenuAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
 import mumayank.com.airlocationlibrary.AirLocation
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -106,7 +108,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                             .setTitle("Yakin ingin izin?")
                             .setMessage("Setelah anda klik 'Ya', maka anda tidak akan bisa absen lagi, lanjutkan?")
                             .setNegativeButton("Tidak") { _, _ -> }
-                            .setPositiveButton("Ya") { _,_ ->
+                            .setPositiveButton("Ya") { _, _ ->
                                 kirimAbsen("5", tinyDB, keterangan.toString())
                             }
                             .show()
@@ -131,29 +133,42 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
     }
 
     private fun kirimAbsen (tipeAbsen: String, tinyDB: TinyDB, keterangan:String) {
+        var jenisAbsen = ""
+
+        if (tipeAbsen == "4") {
+            jenisAbsen = "Cuti"
+        } else if (tipeAbsen == "5") {
+            jenisAbsen = "Izin"
+        }
 
         val api = ApiInterface.createApi()
-        val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
-        val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
-        val longitude = viewModel.getLongitude()?:0.0
-        val latitude = viewModel.getLatitude()?:0.0
+        val username = convertToRequstBody(tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username.toString())
+        val password = convertToRequstBody(tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password.toString())
+        val hariIni = convertToRequstBody(SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()))
+        val jamSekarang = convertToRequstBody(SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date()))
+        val longitude = convertToRequstBody(viewModel.getLongitude().toString())
+        val latitude = convertToRequstBody(viewModel.getLatitude().toString())
+        val absenType = convertToRequstBody(tipeAbsen)
+        val catatan = convertToRequstBody(keterangan)
+        val idAbsensi = convertToRequstBody(tinyDB.getString(AbsenFragment.KEYIDABSEN))
 
         lifecycleScope.launch {
             try {
-                val response = api.kirimAbsen(username.toString(), password.toString(), tipeAbsen, longitude, latitude, null, keterangan)
-                if (response.code == 200) {
-                    Snackbar.make(binding.rootLayout, "Sukses mengirim absen ${response.tipeAbsen}", Snackbar.LENGTH_SHORT)
+                val response = api.kirimAbsen(username, password, absenType, longitude, latitude, null, catatan, jamSekarang, idAbsensi, hariIni)
+                if (response.body()?.status == true) {
+                    Snackbar.make(binding.root, "Berhasil mengajukan $jenisAbsen", Snackbar.LENGTH_SHORT)
                         .setAction("Ok") {}
                         .show()
                     binding.kirim.isEnabled = false
+                    binding.absenpagi.isClickable = false
+                    binding.absensiang.isClickable = false
+                    binding.absenpulang.isClickable = false
                 } else {
-                    Snackbar.make(binding.rootLayout, "Data gagal dikirim", Snackbar.LENGTH_SHORT)
-                        .setAction("Ok") {}
-                        .show()
+                    Toast.makeText(requireContext(), response.body()?.message, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Log.d("Error", e.message.toString())
-                Snackbar.make(binding.rootLayout, "Gagal mengambil data, aktifkan internet anda", Snackbar.LENGTH_SHORT)
+                Log.d("error", e.toString())
+                Snackbar.make(binding.root, "Gagal mengirim absen, coba lagi atau periksa internet anda", Snackbar.LENGTH_SHORT)
                     .setAction("Ok") {}
                     .show()
             }
@@ -164,7 +179,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         lifecycleScope.launch {
             try {
                 val response = api.cekAbsenHariIni(username, password, hariIni)
-                val statusAbsen = response.absenHariIni
+                val listJamMasuk = response.absenHariIni?.get(0)
                 var txtJamAbsenPagi = ""
                 var txtJamAbsenSiang = ""
                 var txtJamAbsenPulang = ""
@@ -180,8 +195,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 } else {
                     viewModel.setTodayAttendance(null)
                 }
-                when (statusAbsen?.get(0)?.tipeAbsen) {
-                    "Data Kosong" -> {
+                Log.d("absen dibutuhkan", listJamMasuk?.absenYangDibutuhkan.toString())
+                when (listJamMasuk?.absenYangDibutuhkan) {
+                    null -> {
                         binding.kirim.isEnabled = true
                         txtJamAbsenPagi = "--:--"
                         txtStatusAbsenPagi = if (checkIfAttendanceIsLate("pagi", settingsAbsen)) {
@@ -210,9 +226,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                             Toast.makeText(requireContext(), "Anda masih belum bisa melakukan absen pulang", Toast.LENGTH_SHORT).show()
                         }
                     }
-                    "pagi" -> {
+                    "siang" -> {
                         binding.kirim.isEnabled = true
-                        txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.waktuAbsen ?: "--:--"
+                        txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
                         txtJamAbsenSiang = "--:--"
                         txtJamAbsenPulang = "--:--"
                         txtStatusAbsenPagi = "Sudah Absen"
@@ -239,11 +255,10 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                             Toast.makeText(requireContext(), "Anda belum bisa melakukan absen pulang", Toast.LENGTH_SHORT).show()
                         }
                     }
-                    "siang" -> {
-                        //ketika datanya pertama siang, bisanya absen pulang doang, pagi dan siang g bisa
+                    "pulang" -> {
                         binding.kirim.isEnabled = true
-                        txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.waktuAbsen ?: "--:--"
-                        txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(1)?.waktuAbsen ?: "--:--"
+                        txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
+                        txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
                         txtJamAbsenPulang = "--:--"
                         txtStatusAbsenPagi = "Sudah Absen"
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
@@ -268,13 +283,12 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.absenpulang.setOnClickListener {
                             goToAbsensi("3")
                         }
-
                     }
-                    "pulang" -> {
+                    "selesai" -> {
                         binding.kirim.isEnabled = false
-                        txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(2)?.waktuAbsen ?: "--:--"
-                        txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(1)?.waktuAbsen ?: "--:--"
-                        txtJamAbsenPulang = viewModel.getTodayAttendance()?.get(0)?.waktuAbsen ?: "--:--"
+                        txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
+                        txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
+                        txtJamAbsenPulang = viewModel.getTodayAttendance()?.get(0)?.jamMasukPulang ?: "--:--"
                         txtStatusAbsenPagi = "Sudah Absen"
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
                         txtStatusAbsenSiang = "Sudah Absen"
@@ -292,34 +306,6 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
                         binding.absenpulang.setOnClickListener {
                             Toast.makeText(requireContext(), "Anda sudah melakukan absen pulang", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    "izin" -> {
-                        binding.kirim.isEnabled = false
-                        binding.absenpagi.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah melakukan absen cuti/izin", Toast.LENGTH_SHORT).show()
-                        }
-
-                        binding.absensiang.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah melakukan absen cuti/izin", Toast.LENGTH_SHORT).show()
-                        }
-
-                        binding.absenpulang.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah melakukan absen cuti/izin", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    "cuti" -> {
-                        binding.absenpagi.isClickable = false
-                        binding.absenpagi.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah melakukan absen cuti/izin", Toast.LENGTH_SHORT).show()
-                        }
-
-                        binding.absensiang.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah melakukan absen cuti/izin", Toast.LENGTH_SHORT).show()
-                        }
-
-                        binding.absenpulang.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah melakukan absen cuti/izin", Toast.LENGTH_SHORT).show()
                         }
                     }
                     else -> {
@@ -358,7 +344,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
     }
 
     private fun checkIfAttendanceIsLate(eventType:String, absenSetings:Setting) : Boolean {
-        val sdf = SimpleDateFormat("HH:mm:ss")
+        val sdf = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         val waktuPagiAkhir = sdf.parse(absenSetings.absenPagiAkhir)
         val waktuSiangAkhir = sdf.parse(absenSetings.absenSiangAkhir)
         val waktuPulangAkhir = sdf.parse(absenSetings.absenPulangAkhir)
@@ -403,5 +389,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
     private fun isLocationEnabled(context: Context): Boolean {
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return LocationManagerCompat.isLocationEnabled(locationManager)
+    }
+
+    private fun convertToRequstBody(value:String) : RequestBody {
+        return  value.toRequestBody("multipart/form-data".toMediaTypeOrNull())
     }
 }
