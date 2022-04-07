@@ -1,49 +1,54 @@
-CREATE TABLE tbl_karyawan(
-    id_karyawan INT(11) AUTO_INCREMENT ,
-    nama_karyawan VARCHAR (60),
-    jabatan VARCHAR (24),
-    departement VARCHAR (24),
-    business_unit VARCHAR(24),
-    status_admin boolean,
-    PRIMARY KEY (id_karyawan)
-);
+CREATE TABLE `tbl_karyawan` (
+ `id_karyawan` int(11) NOT NULL AUTO_INCREMENT,
+ `nama_karyawan` varchar(60) DEFAULT NULL,
+ `jabatan` varchar(24) DEFAULT NULL,
+ `departement` varchar(24) DEFAULT NULL,
+ `business_unit` varchar(24) DEFAULT NULL,
+ `status_admin` tinyint(1) DEFAULT NULL,
+ `status_karyawan` tinyint(1) DEFAULT NULL,
+ `username` varchar(60) DEFAULT NULL,
+ `password` varchar(60) DEFAULT NULL,
+ PRIMARY KEY (`id_karyawan`),
+ UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4
 
-CREATE TABLE tbl_pengaturan_absen (
-    absen_siang_diperlukan boolean,
-    absen_pagi_awal TIME,
-    absen_pagi_akhir TIME,
-    absen_siang_awal TIME,
-    absen_siang_akhir TIME,
-    absen_pulang_awal TIME,
-    absen_pulang_akhir TIME
-);
+CREATE TABLE `tbl_pengaturan_absen` (
+ `id` int(2) NOT NULL,
+ `kunci` varchar(60) DEFAULT NULL,
+ `nilai` varchar(60) DEFAULT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 
-CREATE TABLE tbl_absensi (
-    id_absen INT(5),
-    id_karyawan INT(11),
-    nama_karyawan VARCHAR (60),
-    absen_type ENUM ('absen_pagi', 'absen_siang', 'absen_malam'),
-    waktu_absen TIMESTAMP,
-    FOREIGN KEY (id_karyawan) REFERENCES tbl_karyawan(id_karyawan)
-);
-
-INSERT INTO tbl_absensi (id_karyawan, nama_karyawan, absen_type)
-VALUES (1, "Mamang Sumamang", 'absen_pulang');
-
-ALTER TABLE tbl_pengaturan_absen ADD COLUMN id_pengaturan VARCHAR(1) PRIMARY KEY;
-
-ALTER TABLE tbl_karyawan ADD COLUMN username VARCHAR (60);
-ALTER TABLE tbl_karyawan ADD COLUMN password VARCHAR (60);
-
-INSERT INTO tbl_karyawan(nama_karyawan ,jabatan ,departement ,business_unit ,status_admin)
-VALUES ("Mamang Sumamang", "Manager", "IT", "OMG Indonesia", true);
-
-INSERT INTO tbl_karyawan(nama_karyawan ,jabatan ,departement ,business_unit ,status_admin)
-VALUES ("Sumamang Sumang", "Manager", "IT", "OMG Indonesia", false);
-
-
-INSERT INTO tbl_absensi(id_karyawan, nama_karyawan,absen_pagi ,absen_siang ,absen_pulang ,absen_pagi_awal ,absen_pagi_akhir ,absen_siang_awal ,absen_siang_akhir ,absen_pulang_awal ,absen_pulang_akhir)
-VALUES (1, "Mamang Sumamang", "09:14:00", "15:12:00", "17:00:00", "09:00:00", "15:00:00", "15:00:00", "17:00:00", "17:00:00","22:00:00");
-
-INSERT INTO tbl_pengaturan_absen (absen_siang_diperlukan,absen_pagi_awal,absen_pagi_akhir,absen_siang_awal,absen_siang_akhir,absen_pulang_awal,absen_pulang_akhir, id_pengaturan)
-VALUES (true, "09:00:00", "15:00:00", "15:00:00", "17:00:00", "17:00:00","22:00:00", 1);
+CREATE TABLE `tbl_absensi` (
+ `id_absensi` int(11) NOT NULL AUTO_INCREMENT,
+ `id_karyawan` int(11) DEFAULT NULL,
+ `tanggal` date DEFAULT current_timestamp(),
+ `jam_masuk_pagi` time DEFAULT NULL,
+ `jam_awal_pagi` time DEFAULT NULL,
+ `jam_akhir_pagi` time DEFAULT NULL,
+ `longitude_pagi` varchar(255) DEFAULT NULL,
+ `latitude_pagi` varchar(255) DEFAULT NULL,
+ `photo_pagi` varchar(64) DEFAULT NULL,
+ `jam_masuk_siang` time DEFAULT NULL,
+ `jam_awal_siang` time DEFAULT NULL,
+ `jam_akhir_siang` time DEFAULT NULL,
+ `longitude_siang` varchar(255) DEFAULT NULL,
+ `latitude_siang` varchar(255) DEFAULT NULL,
+ `photo_siang` varchar(64) DEFAULT NULL,
+ `jam_masuk_pulang` time DEFAULT NULL,
+ `jam_awal_pulang` time DEFAULT NULL,
+ `jam_akhir_pulang` time DEFAULT NULL,
+ `longitude_pulang` varchar(255) DEFAULT NULL,
+ `latitude_pulang` varchar(255) DEFAULT NULL,
+ `photo_pulang` varchar(64) DEFAULT NULL,
+ `izin` tinyint(1) DEFAULT NULL,
+ `cuti` tinyint(1) DEFAULT NULL,
+ `keterangan` text DEFAULT NULL,
+ `persentase` float DEFAULT 0,
+ `absen_siang_diperlukan` tinyint(1) DEFAULT NULL,
+ `longitude_izin_cuti` varchar(255) DEFAULT NULL,
+ `latitude_izin_cuti` varchar(255) DEFAULT NULL,
+ PRIMARY KEY (`id_absensi`),
+ KEY `id_karyawan` (`id_karyawan`),
+ CONSTRAINT `tbl_absensi_ibfk_1` FOREIGN KEY (`id_karyawan`) REFERENCES `tbl_karyawan` (`id_karyawan`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
