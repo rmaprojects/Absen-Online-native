@@ -42,6 +42,8 @@
             android:name=".MainActivity"
             android:exported="true" />
         <receiver android:name=".notification.NotificationReceiver"
+            android:enabled="true"/>
+        <receiver android:name=".notification.BootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

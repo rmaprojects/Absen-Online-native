@@ -37,7 +37,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         }
     }
 
-    private fun retrieveHistory(tinyDB: TinyDB) {
+    fun retrieveHistory(tinyDB: TinyDB) {
         val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
         val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
         val currentYear = viewModel.getYear()
@@ -48,7 +48,6 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 val response = api.history(username.toString(), password.toString(), currentYear.toString(), currentMonth.toString())
                 if (response.isSuccessful) {
                     Log.d("History", response.body()?.history.toString())
-                    viewModel.setHistory(response.body()!!)
                     binding.recyclerView.adapter = HistoryItem(response.body()!!)
                 } else {
                     Log.d("History", response.body()?.history.toString())

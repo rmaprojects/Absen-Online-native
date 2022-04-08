@@ -10,6 +10,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.databinding.BottomSheetDatePickerBinding
+import com.pklproject.checkincheckout.ui.history.HistoryFragment
+import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 
 class DatePickerDialog : BottomSheetDialogFragment() {
@@ -30,7 +32,7 @@ class DatePickerDialog : BottomSheetDialogFragment() {
 
         val yearItems = arrayListOf<String>()
 
-        for (i in 2020..2030) {
+        for (i in 2022..2032) {
             yearItems.add(i.toString())
         }
 
@@ -67,6 +69,11 @@ class DatePickerDialog : BottomSheetDialogFragment() {
                 }
                 .create()
                 .show()
+        }
+
+        binding.btnShow.setOnClickListener {
+            HistoryFragment().retrieveHistory(TinyDB(requireContext()))
+            dismiss()
         }
     }
 

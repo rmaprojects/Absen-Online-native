@@ -14,8 +14,6 @@ class ServiceViewModel : ViewModel() {
     private val longitude : MutableLiveData<Double> = MutableLiveData<Double>()
     private val latitude : MutableLiveData<Double> = MutableLiveData<Double>()
 
-    private val history : MutableLiveData<HistoryAbsenModel> = MutableLiveData()
-
     private val resultPicture : MutableLiveData<PictureResult> = MutableLiveData<PictureResult>()
     private val todayAttendance : MutableLiveData<List<AbsenHariIni>> = MutableLiveData<List<AbsenHariIni>>()
 
@@ -55,14 +53,6 @@ class ServiceViewModel : ViewModel() {
 
     fun setResultPicture(resultPicture: PictureResult?) {
         this.resultPicture.value = resultPicture
-    }
-
-    fun getHistory() : HistoryAbsenModel? {
-        return history.value
-    }
-
-    fun setHistory(history : HistoryAbsenModel?) {
-        this.history.value = history
     }
 
     fun getMonth() : String? {
