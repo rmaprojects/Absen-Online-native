@@ -21,6 +21,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
+import com.pklproject.checkincheckout.notification.BootReceiver
 import com.pklproject.checkincheckout.notification.NotificationReceiver
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
@@ -38,6 +39,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         checkTheme()
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
+        BootReceiver().createNotificationChannel(this)
+        BootReceiver().setAlarm(this)
 
         val tinyDb = TinyDB(this)
         retrieveSettingsAbsen(tinyDb)
@@ -111,85 +114,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavView.setupWithNavController(navController)
     }
-
-//    private fun setAlarm(tinyDB: TinyDB) {
-//        val waktuAbsenPagiAkhir = tinyDB.getObject(PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir
-//        val waktuAbsenSiangAkhir = tinyDB.getObject(PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir
-//        val waktuAbsenPulangAkhir = tinyDB.getObject(PENGATURANABSENKEY, Setting::class.java).absenPulangAkhir
-//
-//        triggerSetAlarmPagi(waktuAbsenPagiAkhir)
-//        triggerSetAlarmSiang(waktuAbsenSiangAkhir)
-//        triggerSetAlarmPulang(waktuAbsenPulangAkhir)
-//    }
-
-//    private fun triggerSetAlarmPagi(scheduledTime:String) {
-//
-//        val hour = scheduledTime.split(":")[0].toInt()
-//        val minute = scheduledTime.split(":")[1].toInt()
-//
-//        val calendar = Calendar.getInstance()
-//        calendar[Calendar.HOUR_OF_DAY] = hour
-//        calendar[Calendar.MINUTE] = minute - 5
-//        calendar[Calendar.SECOND] = 0
-//        calendar[Calendar.MILLISECOND] = 0
-//
-//        alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-//        val intent = Intent(this, NotificationReceiver::class.java)
-//        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
-//
-//        alarmManager.setRepeating(
-//            AlarmManager.RTC_WAKEUP,
-//            calendar.timeInMillis,
-//            AlarmManager.INTERVAL_DAY,
-//            pendingIntent
-//        )
-//    }
-
-//    private fun triggerSetAlarmSiang(scheduledTime:String) {
-//
-//        val hour = scheduledTime.split(":")[0].toInt()
-//        val minute = scheduledTime.split(":")[1].toInt()
-//
-//        val calendar = Calendar.getInstance()
-//        calendar[Calendar.HOUR_OF_DAY] = hour
-//        calendar[Calendar.MINUTE] = minute - 5
-//        calendar[Calendar.SECOND] = 0
-//        calendar[Calendar.MILLISECOND] = 0
-//
-//        alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-//        val intent = Intent(this, NotificationReceiver::class.java)
-//        val pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0)
-//
-//        alarmManager.setRepeating (
-//            AlarmManager.RTC_WAKEUP,
-//            calendar.timeInMillis,
-//            AlarmManager.INTERVAL_DAY,
-//            pendingIntent
-//        )
-//    }
-
-//    private fun triggerSetAlarmPulang(scheduledTime:String) {
-//
-//        val hour = scheduledTime.split(":")[0].toInt()
-//        val minute = scheduledTime.split(":")[1].toInt()
-//
-//        val calendar = Calendar.getInstance()
-//        calendar[Calendar.HOUR_OF_DAY] = hour
-//        calendar[Calendar.MINUTE] = minute - 5
-//        calendar[Calendar.SECOND] = 0
-//        calendar[Calendar.MILLISECOND] = 0
-//
-//        alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-//        val intent = Intent(this, NotificationReceiver::class.java)
-//        val pendingIntent = PendingIntent.getBroadcast(this, 2, intent, 0)
-//
-//        alarmManager.setRepeating(
-//            AlarmManager.RTC_WAKEUP,
-//            calendar.timeInMillis,
-//            AlarmManager.INTERVAL_DAY,
-//            pendingIntent
-//        )
-//    }
 
     //Suport for back button
     override fun onSupportNavigateUp(): Boolean {

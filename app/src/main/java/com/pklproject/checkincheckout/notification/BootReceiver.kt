@@ -22,7 +22,7 @@ class BootReceiver: BroadcastReceiver() {
         }
     }
 
-    private fun createNotificationChannel(context: Context) {
+    fun createNotificationChannel(context: Context) {
         //Create notification channel for android O and above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(NotificationReceiver().CHANNEL_ID, NotificationReceiver().CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT).apply {
@@ -36,7 +36,7 @@ class BootReceiver: BroadcastReceiver() {
         }
     }
 
-    private fun setAlarm(context: Context) {
+    fun setAlarm(context: Context) {
         val tinyDB = TinyDB(context)
         val waktuAbsenPagiAkhir =
             tinyDB.getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir
