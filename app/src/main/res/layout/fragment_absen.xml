@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/batasWaktuText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Segera absen sebelum jam: 15:00"

@@ -11,9 +11,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
+import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.api.models.LoginModel
+import com.pklproject.checkincheckout.api.models.Setting
 import com.pklproject.checkincheckout.databinding.FragmentAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.TinyDB
@@ -38,8 +40,18 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
         val absen = arguments?.getString(ABSEN_TYPE)
         val tinyDB = TinyDB(requireContext())
-        binding.kirimabsen.isEnabled = viewModel.getResultPicture() != null
-        binding.kirimabsen.isEnabled = viewModel.getLatitude() != 0.0 && viewModel.getLongitude() != 0.0
+
+        when (absen) {
+            "1" -> {
+                binding.batasWaktuText.text = "Segera absen sebelum ${tinyDB.getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir}"
+            }
+            "2" -> {
+                binding.batasWaktuText.text = "Segera absen sebelum ${tinyDB.getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir}"
+            }
+            "3" -> {
+                binding.batasWaktuText.text = "Segera absen sebelum ${tinyDB.getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenPulangAkhir}"
+            }
+        }
 
         val cameraResult = viewModel.getResultPicture()
         if (cameraResult == null) {
@@ -60,20 +72,27 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
     }
 
     private fun initialisation(tinyDB: TinyDB, absen: String) {
+        if (viewModel.getResultPicture() != null && viewModel.getLatitude() != null) {
+            binding.kirimabsen.isEnabled = true
+            binding.kirimabsen.isEnabled = true
 
-        binding.ambilfoto.setOnClickListener {
-            findNavController().navigate(R.id.action_absenFragment_to_cameraView)
-        }
+            binding.ambilfoto.setOnClickListener {
+                findNavController().navigate(R.id.action_absenFragment_to_cameraView)
+            }
 
-        val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
-        val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
-        val keterangan = binding.keterangan.text
+            val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
+            val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
+            val keterangan = binding.keterangan.text
 
-        binding.kirimabsen.setOnClickListener {
-            val longitude = viewModel.getLongitude() ?: 0.0
-            val latitude = viewModel.getLatitude() ?: 0.0
-            val jamSekarang = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
-            kirimAbsen(username!!, password!!, absen, keterangan.toString(), longitude, latitude, jamSekarang)
+            binding.kirimabsen.setOnClickListener {
+                val longitude = viewModel.getLongitude() ?: 0.0
+                val latitude = viewModel.getLatitude() ?: 0.0
+                val jamSekarang = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+                kirimAbsen(username!!, password!!, absen, keterangan.toString(), longitude, latitude, jamSekarang)
+            }
+        } else {
+            binding.kirimabsen.isEnabled = false
+            binding.kirimabsen.isEnabled = false
         }
     }
 

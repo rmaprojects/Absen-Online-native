@@ -119,7 +119,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     binding.absensi.isVisible = false
                     binding.kirim.setOnClickListener {
                         MaterialAlertDialogBuilder(requireContext())
-                            .setTitle("Yakin ingin izin?")
+                            .setTitle("Yakin ingin cuti?")
                             .setMessage("Setelah anda klik 'Ya', maka anda tidak akan bisa absen lagi, lanjutkan?")
                             .setNegativeButton("Tidak") { _, _ -> }
                             .setPositiveButton("Ya") { _, _ ->
@@ -178,8 +178,8 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
     private fun cekAbsenToday(api: ApiInterface, username:String, password:String, hariIni:String, settingsAbsen:Setting) {
         lifecycleScope.launch {
             try {
-                val response = api.cekAbsenHariIni(username, password, hariIni)
-                val listJamMasuk = response.absenHariIni?.get(0)
+                val responseCatch = api.cekAbsenHariIni(username, password, hariIni)
+                val listJamMasuk = responseCatch.absenHariIni?.get(0)
                 var txtJamAbsenPagi = ""
                 var txtJamAbsenSiang = ""
                 var txtJamAbsenPulang = ""
@@ -190,8 +190,8 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 val statusImageSiang = binding.statusIconNoon
                 val statusImagePulang = binding.statusIconPulang
 
-                if (response.code == 200) {
-                    viewModel.setTodayAttendance(response.absenHariIni)
+                if (responseCatch.code == 200) {
+                    viewModel.setTodayAttendance(responseCatch.absenHariIni)
                 } else {
                     viewModel.setTodayAttendance(null)
                 }
@@ -393,5 +393,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
     private fun convertToRequstBody(value:String) : RequestBody {
         return  value.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
     }
 }

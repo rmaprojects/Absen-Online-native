@@ -30,5 +30,8 @@
         <item name="containerColor">@color/containerColourDark</item>
         <item name="colorBottomNavText">@color/colorBottomNavTextDark</item>
         <item name="colorBottomNavBackground">@color/colorBottomNavBackGroundDark</item>
+
+        <item name="colorIzinOrCutiContainer">#4fd8eb</item>
+        <item name="colorIzinOrCutiText">#00363d</item>
     </style>
 </resources>

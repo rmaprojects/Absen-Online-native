@@ -37,62 +37,69 @@ class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<History
             binding.jamSiang.text = history?.jamMasukSiang
             binding.jamPulang.text = history?.jamMasukPulang
 
-            if (history?.jamMasukPagi == "Data Belum Ada") {
-                binding.noDataCardView.isVisible
-                !binding.cardViewData.isVisible
+            if (history?.tanggal == "Data Belum Ada") {
+                binding.cardViewData.isVisible = false
+                binding.noDataCardView.isVisible = true
             } else {
-                !binding.noDataCardView.isVisible
-                binding.cardViewData.isVisible
-            }
+                binding.cardViewData.isVisible = true
+                binding.noDataCardView.isVisible = false
+                if (history?.absenSiangDiperlukan == "1") {
+                    binding.jamSiang.isVisible
+                } else {
+                    !binding.jamSiang.isVisible
+                }
+                if (history?.izin == "1" || history?.cuti == "1") {
+                    binding.cardViewData.isVisible = false
+                    binding.noDataCardView.isVisible = false
+                    binding.izinCardView.isVisible = true
+                } else {
+                    binding.izinCardView.isVisible = false
+                    binding.cardViewData.isVisible = true
+                    binding.noDataCardView.isVisible = false
+                    when {
+                        history?.statusKeterlambatanPagi == "Terlambat" -> {
+                            binding.statusIconDay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_telat, 0, 0, 0)
+                            binding.jamPagi.text = history.jamMasukPagi
+                        }
+                        history?.statusKeterlambatanPagi == "Hadir" -> {
+                            binding.statusIconDay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sudah_absen, 0, 0, 0)
+                            binding.jamPagi.text = history.jamMasukPagi
+                        }
+                        history?.jamMasukPagi == null -> {
+                            binding.jamPagi.text = "--/--"
+                            binding.statusIconDay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_not_available_24, 0, 0, 0)
+                        }
+                    }
 
-            if (history?.absenSiangDiperlukan == "1") {
-                binding.jamSiang.isVisible
-            } else {
-                !binding.jamSiang.isVisible
-            }
+                    when {
+                        history?.statusKeterlambatanSiang == "Terlambat" -> {
+                            binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_telat, 0, 0, 0)
+                            binding.jamSiang.text = history.jamMasukSiang
+                        }
+                        history?.statusKeterlambatanSiang == "Hadir" -> {
+                            binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sudah_absen, 0, 0, 0)
+                            binding.jamSiang.text = history.jamMasukSiang
+                        }
+                        history?.jamMasukSiang == null -> {
+                            binding.jamSiang.text = "--/--"
+                            binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_not_available_24, 0, 0, 0)
+                        }
+                    }
 
-            when {
-                history?.statusKeterlambatanPagi == "Terlambat" -> {
-                    binding.statusIconDay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_telat, 0, 0, 0)
-                    binding.jamPagi.text = history.jamMasukPagi
-                }
-                history?.statusKeterlambatanPagi == "Hadir" -> {
-                    binding.statusIconDay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sudah_absen, 0, 0, 0)
-                    binding.jamPagi.text = history.jamMasukPagi
-                }
-                history?.jamMasukPagi == null -> {
-                    binding.jamPagi.text = "--/--"
-                    binding.statusIconDay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_not_available_24, 0, 0, 0)
-                }
-            }
-
-            when {
-                history?.statusKeterlambatanSiang == "Terlambat" -> {
-                    binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_telat, 0, 0, 0)
-                    binding.jamSiang.text = history.jamMasukSiang
-                }
-                history?.statusKeterlambatanSiang == "Hadir" -> {
-                    binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sudah_absen, 0, 0, 0)
-                    binding.jamSiang.text = history.jamMasukSiang
-                }
-                history?.jamMasukSiang == null -> {
-                    binding.jamSiang.text = "--/--"
-                    binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_not_available_24, 0, 0, 0)
-                }
-            }
-
-            when {
-                history?.statusKeterlambatanPulang == "Terlambat" -> {
-                    binding.statusIconHome.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_telat, 0, 0, 0)
-                    binding.jamPulang.text = history.jamMasukPulang
-                }
-                history?.statusKeterlambatanPulang == "Hadir" -> {
-                    binding.statusIconHome.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sudah_absen, 0, 0, 0)
-                    binding.jamPulang.text = history.jamMasukPulang
-                }
-                history?.jamMasukPulang == null -> {
-                    binding.jamPulang.text = "--/--"
-                    binding.statusIconHome.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_not_available_24, 0, 0, 0)
+                    when {
+                        history?.statusKeterlambatanPulang == "Terlambat" -> {
+                            binding.statusIconHome.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_telat, 0, 0, 0)
+                            binding.jamPulang.text = history.jamMasukPulang
+                        }
+                        history?.statusKeterlambatanPulang == "Hadir" -> {
+                            binding.statusIconHome.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sudah_absen, 0, 0, 0)
+                            binding.jamPulang.text = history.jamMasukPulang
+                        }
+                        history?.jamMasukPulang == null -> {
+                            binding.jamPulang.text = "--/--"
+                            binding.statusIconHome.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_not_available_24, 0, 0, 0)
+                        }
+                    }
                 }
             }
         }
@@ -117,6 +124,7 @@ class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<History
                 else -> "Data Kosong"
             }
             binding.tanggalAbsen.text = "$day $properMonth $year"
+            binding.tanggalIzin.text = "$day $properMonth $year"
         }
     }
 }

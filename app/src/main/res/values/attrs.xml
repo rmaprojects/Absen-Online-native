@@ -3,4 +3,7 @@
     <attr name="colorBottomNavBackground" type="color" format="color"/>
     <attr name="colorBottomNavText" type="color" format="color"/>
     <attr name="containerColor" type="color" format="color"/>
+
+    <attr name="colorIzinOrCutiContainer" type="color" format="color"/>
+    <attr name="colorIzinOrCutiText" type="color" format="color"/>
 </resources>
