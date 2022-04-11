@@ -60,4 +60,9 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:29.2.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    def work_version = "2.7.1"
+
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    implementation "androidx.work:work-multiprocess:$work_version"
 }

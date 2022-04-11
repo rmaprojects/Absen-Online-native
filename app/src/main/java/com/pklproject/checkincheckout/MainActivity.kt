@@ -1,10 +1,5 @@
 package com.pklproject.checkincheckout
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -17,15 +12,19 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
+import com.pklproject.checkincheckout.api.models.Setting
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
-import com.pklproject.checkincheckout.notification.BootReceiver
-import com.pklproject.checkincheckout.notification.NotificationReceiver
+import com.pklproject.checkincheckout.notification.NotificationWorker
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import kotlinx.coroutines.launch
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -39,12 +38,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         checkTheme()
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
-        BootReceiver().createNotificationChannel(this)
-        BootReceiver().setAlarm(this)
+        notificationWorkerPagi()
+        notificationWorkerSiang()
+        notificationWorkerPulang()
 
         val tinyDb = TinyDB(this)
         retrieveSettingsAbsen(tinyDb)
-//        setAlarm(tinyDb)
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -113,6 +112,75 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavView.setupWithNavController(navController)
+    }
+
+    private fun notificationWorkerPagi() {
+
+        val waktuAkhirAbsenPagi = TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir
+        Log.d("waktuAkhirAbsenPagi", waktuAkhirAbsenPagi)
+
+        val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
+        val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
+        val jamPagiAkhir = waktuAkhirAbsenPagi.split(":")[0].toInt()
+        val menitPagiAkhir = waktuAkhirAbsenPagi.split(":")[1].toInt()
+        val hariIni = Calendar.getInstance()
+
+        val calendarJamPagiAkhir = Calendar.getInstance()
+        calendarJamPagiAkhir.set(tahunIni, bulanIni, hariIni.get(Calendar.DAY_OF_MONTH), jamPagiAkhir, menitPagiAkhir)
+
+        val delay = calendarJamPagiAkhir.timeInMillis - hariIni.timeInMillis
+
+        val request = OneTimeWorkRequestBuilder<NotificationWorker>()
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            .build()
+
+        WorkManager.getInstance(this).enqueue(request)
+    }
+
+    private fun notificationWorkerSiang() {
+
+        val waktuAkhirAbsenSiang = TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir
+        Log.d("waktuAkhirAbsenSore", waktuAkhirAbsenSiang)
+
+        val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
+        val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
+        val jamSiangAkhir = waktuAkhirAbsenSiang.split(":")[0].toInt()
+        val menitSiangAkhir = waktuAkhirAbsenSiang.split(":")[1].toInt()
+        val hariIni = Calendar.getInstance()
+
+        val calendarJamSiangAKhir = Calendar.getInstance()
+        calendarJamSiangAKhir.set(tahunIni, bulanIni, hariIni.get(Calendar.DAY_OF_MONTH), jamSiangAkhir, menitSiangAkhir)
+
+        val delay = calendarJamSiangAKhir.timeInMillis - hariIni.timeInMillis
+
+        val request = OneTimeWorkRequestBuilder<NotificationWorker>()
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            .build()
+
+        WorkManager.getInstance(this).enqueue(request)
+    }
+
+    private fun notificationWorkerPulang() {
+
+        val waktuAkhirAbsenPulang = TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPulangAkhir
+        Log.d("waktuAkhirAbsenMalam", waktuAkhirAbsenPulang)
+
+        val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
+        val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
+        val jamPulangAkhir = waktuAkhirAbsenPulang.split(":")[0].toInt()
+        val menitPulangAkhir = waktuAkhirAbsenPulang.split(":")[1].toInt()
+        val hariIni = Calendar.getInstance()
+
+        val calendarJamPulangAkhir = Calendar.getInstance()
+        calendarJamPulangAkhir.set(tahunIni, bulanIni, hariIni.get(Calendar.DAY_OF_MONTH), jamPulangAkhir, menitPulangAkhir)
+
+        val delay = calendarJamPulangAkhir.timeInMillis - hariIni.timeInMillis
+
+        val request = OneTimeWorkRequestBuilder<NotificationWorker>()
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            .build()
+
+        WorkManager.getInstance(this).enqueue(request)
     }
 
     //Suport for back button
