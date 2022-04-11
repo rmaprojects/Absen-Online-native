@@ -19,22 +19,38 @@ import com.pklproject.checkincheckout.R
 class NotificationWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
     override fun doWork(): Result {
 
-        showNotification()
+        val jam = inputData.getString("jam")
+        val tipeAbsen = inputData.getInt("tanggal", 0)
+
+        showNotification(jam, tipeAbsen)
 
         Log.d("NotificationWorker", "Performing long running task in scheduled job")
         return Result.success()
     }
 
-    private fun showNotification() {
+    private fun showNotification(jam:String?, tipeAbsen:Int?) {
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 
         val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, 0)
+        var namaAbsen = ""
+
+        when (tipeAbsen) {
+            0 -> {
+                namaAbsen = "Pagi"
+            }
+            1 -> {
+                namaAbsen = "Siang"
+            }
+            2 -> {
+                namaAbsen = "Pulang"
+            }
+        }
 
         val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-            .setContentTitle("Sudah melakukan absen?")
-            .setContentText("Segera absen sekarang jika belum")
+            .setContentTitle("Sudah melakukan absen $namaAbsen?")
+            .setContentText("Segera absen sebelum jam $jam")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

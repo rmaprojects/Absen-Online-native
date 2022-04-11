@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import androidx.work.workDataOf
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
@@ -28,7 +29,7 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private val binding:ActivityMainBinding by viewBinding()
+    private val binding: ActivityMainBinding by viewBinding()
     private lateinit var appBarConfiguration: AppBarConfiguration
 //    private lateinit var alarmManager: AlarmManager
 
@@ -49,14 +50,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_dashboard, R.id.navigation_absen, R.id.navigation_history, R.id.navigation_settings, R.id.navigation_profile
+                R.id.navigation_dashboard,
+                R.id.navigation_absen,
+                R.id.navigation_history,
+                R.id.navigation_settings,
+                R.id.navigation_profile
             )
         )
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            var showBottomNav:Boolean
+            var showBottomNav: Boolean
             var showTopAppBar = true
-            var showImage:Boolean
+            var showImage: Boolean
             var showTitle = ""
             when (destination.id) {
                 R.id.navigation_dashboard -> {
@@ -64,44 +69,44 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     showTopAppBar = true
                     showImage = true
                     showTitle = Preferences(this).employeeName.toString()
-                    binding.fragmentContainer.setPadding(0,0,0,128)
+                    binding.fragmentContainer.setPadding(0, 0, 0, 128)
                 }
                 R.id.navigation_absen -> {
                     showBottomNav = true
-                    showTopAppBar =  true
-                    showImage =  false
+                    showTopAppBar = true
+                    showImage = false
                     binding.toolBar.subtitle = null
                     showTitle = "Absen"
-                    binding.fragmentContainer.setPadding(0,0,0,128)
+                    binding.fragmentContainer.setPadding(0, 0, 0, 128)
                 }
                 R.id.navigation_history -> {
                     showBottomNav = true
                     showTopAppBar = true
-                    showImage =  false
+                    showImage = false
                     binding.toolBar.subtitle = null
                     showTitle = "History"
-                    binding.fragmentContainer.setPadding(0,0,0,128)
+                    binding.fragmentContainer.setPadding(0, 0, 0, 128)
                 }
                 R.id.navigation_settings -> {
                     showBottomNav = true
                     showTopAppBar = true
-                    showImage =  false
+                    showImage = false
                     binding.toolBar.subtitle = null
                     showTitle = "Pengaturan"
-                    binding.fragmentContainer.setPadding(0,0,0,128)
+                    binding.fragmentContainer.setPadding(0, 0, 0, 128)
                 }
                 R.id.navigation_profile -> {
                     showBottomNav = true
                     showTopAppBar = true
-                    showImage =  false
+                    showImage = false
                     binding.toolBar.subtitle = null
                     showTitle = "Profile"
-                    binding.fragmentContainer.setPadding(0,0,0,128)
+                    binding.fragmentContainer.setPadding(0, 0, 0, 128)
                 }
                 else -> {
                     showImage = false
                     showBottomNav = false
-                    binding.fragmentContainer.setPadding(0,0,0,0)
+                    binding.fragmentContainer.setPadding(0, 0, 0, 0)
                 }
             }
             binding.bottomNavView.isVisible = showBottomNav
@@ -116,8 +121,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun notificationWorkerPagi() {
 
-        val waktuAkhirAbsenPagi = TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir
-        Log.d("waktuAkhirAbsenPagi", waktuAkhirAbsenPagi)
+        val waktuAkhirAbsenPagi =
+            TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir
 
         val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
         val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
@@ -126,12 +131,24 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val hariIni = Calendar.getInstance()
 
         val calendarJamPagiAkhir = Calendar.getInstance()
-        calendarJamPagiAkhir.set(tahunIni, bulanIni, hariIni.get(Calendar.DAY_OF_MONTH), jamPagiAkhir, menitPagiAkhir)
+        calendarJamPagiAkhir.set(
+            tahunIni,
+            bulanIni,
+            hariIni.get(Calendar.DAY_OF_MONTH),
+            jamPagiAkhir,
+            menitPagiAkhir
+        )
 
         val delay = calendarJamPagiAkhir.timeInMillis - hariIni.timeInMillis
 
         val request = OneTimeWorkRequestBuilder<NotificationWorker>()
             .setInitialDelay(delay, TimeUnit.SECONDS)
+            .setInputData(
+                workDataOf(
+                    "jam" to waktuAkhirAbsenPagi,
+                    "tipeAbsen" to 0
+                )
+            )
             .build()
 
         WorkManager.getInstance(this).enqueue(request)
@@ -139,8 +156,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun notificationWorkerSiang() {
 
-        val waktuAkhirAbsenSiang = TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir
-        Log.d("waktuAkhirAbsenSore", waktuAkhirAbsenSiang)
+        val waktuAkhirAbsenSiang =
+            TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir
 
         val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
         val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
@@ -149,12 +166,24 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val hariIni = Calendar.getInstance()
 
         val calendarJamSiangAKhir = Calendar.getInstance()
-        calendarJamSiangAKhir.set(tahunIni, bulanIni, hariIni.get(Calendar.DAY_OF_MONTH), jamSiangAkhir, menitSiangAkhir)
+        calendarJamSiangAKhir.set(
+            tahunIni,
+            bulanIni,
+            hariIni.get(Calendar.DAY_OF_MONTH),
+            jamSiangAkhir,
+            menitSiangAkhir
+        )
 
         val delay = calendarJamSiangAKhir.timeInMillis - hariIni.timeInMillis
 
         val request = OneTimeWorkRequestBuilder<NotificationWorker>()
             .setInitialDelay(delay, TimeUnit.SECONDS)
+            .setInputData(
+                workDataOf(
+                    "jam" to waktuAkhirAbsenSiang,
+                    "tipeAbsen" to 1
+                )
+            )
             .build()
 
         WorkManager.getInstance(this).enqueue(request)
@@ -162,7 +191,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun notificationWorkerPulang() {
 
-        val waktuAkhirAbsenPulang = TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPulangAkhir
+        val waktuAkhirAbsenPulang =
+            TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPulangAkhir
         Log.d("waktuAkhirAbsenMalam", waktuAkhirAbsenPulang)
 
         val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
@@ -172,12 +202,24 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val hariIni = Calendar.getInstance()
 
         val calendarJamPulangAkhir = Calendar.getInstance()
-        calendarJamPulangAkhir.set(tahunIni, bulanIni, hariIni.get(Calendar.DAY_OF_MONTH), jamPulangAkhir, menitPulangAkhir)
+        calendarJamPulangAkhir.set(
+            tahunIni,
+            bulanIni,
+            hariIni.get(Calendar.DAY_OF_MONTH),
+            jamPulangAkhir,
+            menitPulangAkhir
+        )
 
         val delay = calendarJamPulangAkhir.timeInMillis - hariIni.timeInMillis
 
         val request = OneTimeWorkRequestBuilder<NotificationWorker>()
             .setInitialDelay(delay, TimeUnit.SECONDS)
+            .setInputData(
+                workDataOf(
+                    "jam" to waktuAkhirAbsenPulang,
+                    "tipeAbsen" to 2
+                )
+            )
             .build()
 
         WorkManager.getInstance(this).enqueue(request)
@@ -205,7 +247,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 } else {
                     Snackbar.make(binding.root, response.message, Snackbar.LENGTH_LONG).show()
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.d("Error", e.message.toString())
             }
         }
