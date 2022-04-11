@@ -1,6 +1,7 @@
 package com.pklproject.checkincheckout.ui.settings
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
@@ -102,7 +103,14 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 }
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            Snackbar.make(
+                requireActivity().findViewById(R.id.container),
+                "Gagal mengubah pengaturan absen siang",
+                Snackbar.LENGTH_SHORT
+            ).setAction("Ok") {
+                binding.switchAbsenSiangDiperlukan.isChecked = !binding.switchAbsenSiangDiperlukan.isChecked
+            }.show()
+            Log.d("Error", e.message.toString())
         }
     }
 

@@ -27,17 +27,21 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val tinyDb = TinyDB(requireContext())
 
-        retrieveHistory(tinyDb)
+        retrieveHistory(TinyDB(requireContext()))
+
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         binding.selectMonthButton.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_history_to_datePickerDialog)
         }
+
+        binding.selectMonthButton.text = "${getProperMonth(viewModel.getMonth())} ${viewModel.getYear()}"
+
+        binding.recyclerView.adapter = HistoryItem(viewModel.getHistoryData())
     }
 
-    fun retrieveHistory(tinyDB: TinyDB) {
+    private fun retrieveHistory(tinyDB: TinyDB) {
         val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
         val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
         val currentYear = viewModel.getYear()
@@ -48,7 +52,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 val response = api.history(username.toString(), password.toString(), currentYear.toString(), currentMonth.toString())
                 if (response.isSuccessful) {
                     Log.d("History", response.body()?.history.toString())
-                    binding.recyclerView.adapter = HistoryItem(response.body()!!)
+                    viewModel.setHistoryData(response.body()!!)
                 } else {
                     Log.d("History", response.body()?.history.toString())
                 }
@@ -58,6 +62,24 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                     .setAction("Ok") {}
                     .show()
             }
+        }
+    }
+
+    private fun getProperMonth(month:String?) : String {
+        return when(month?.toInt()) {
+            1 -> "Januari"
+            2 -> "Februari"
+            3 -> "Maret"
+            4 -> "April"
+            5 -> "Mei"
+            6 -> "Juni"
+            7 -> "Juli"
+            8 -> "Agustus"
+            9 -> "September"
+            10 -> "Oktober"
+            11 -> "November"
+            12 -> "Desember"
+            else -> "Unknown Month"
         }
     }
 

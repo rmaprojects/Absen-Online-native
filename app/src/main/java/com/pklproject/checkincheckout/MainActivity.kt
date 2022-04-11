@@ -3,6 +3,7 @@ package com.pklproject.checkincheckout
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.core.view.isVisible
@@ -18,11 +19,14 @@ import androidx.work.workDataOf
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
+import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.api.models.Setting
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
 import com.pklproject.checkincheckout.notification.NotificationWorker
+import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
+import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -31,7 +35,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding: ActivityMainBinding by viewBinding()
     private lateinit var appBarConfiguration: AppBarConfiguration
-//    private lateinit var alarmManager: AlarmManager
+    private val viewModel:ServiceViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +43,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         checkTheme()
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
+
         notificationWorkerPagi()
         notificationWorkerSiang()
         notificationWorkerPulang()
 
         val tinyDb = TinyDB(this)
         retrieveSettingsAbsen(tinyDb)
+
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

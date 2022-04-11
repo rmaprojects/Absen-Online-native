@@ -22,6 +22,16 @@ class ServiceViewModel : ViewModel() {
 
     private val bitmapImage: MutableLiveData<Bitmap> = MutableLiveData()
 
+    private val historyData : MutableLiveData<HistoryAbsenModel> = MutableLiveData()
+
+    fun getHistoryData() : HistoryAbsenModel? {
+        return historyData.value
+    }
+
+    fun setHistoryData(historyData: HistoryAbsenModel){
+        this.historyData.value = historyData
+    }
+
 
     fun getTodayAttendance() : List<AbsenHariIni>? {
         return todayAttendance.value

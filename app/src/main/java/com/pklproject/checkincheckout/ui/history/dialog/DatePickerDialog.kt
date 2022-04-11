@@ -8,11 +8,15 @@ import androidx.fragment.app.activityViewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.databinding.BottomSheetDatePickerBinding
 import com.pklproject.checkincheckout.ui.history.HistoryFragment
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DatePickerDialog : BottomSheetDialogFragment() {
 
@@ -42,6 +46,7 @@ class DatePickerDialog : BottomSheetDialogFragment() {
                 .setItems(yearItems.toTypedArray()) { _, item ->
                     val tahun = yearItems[item]
                     viewModel.setYear(tahun)
+                    binding.buttonYear.text = tahun
                 }
                 .create()
                 .show()
@@ -61,18 +66,23 @@ class DatePickerDialog : BottomSheetDialogFragment() {
             "November",
             "Desember"
         )
+        val monthNow = SimpleDateFormat("MM", Locale.getDefault()).format(System.currentTimeMillis())
+        val yearNow = SimpleDateFormat("yyyy", Locale.getDefault()).format(System.currentTimeMillis())
+        binding.buttonMonth.text = months[monthNow.toInt() - 1]
+        binding.buttonYear.text = yearNow
+
         binding.buttonMonth.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Pilih Bulan")
                 .setItems(months.toTypedArray()) { _, item ->
                     getMonthNametoNumber(months[item])
+                    binding.buttonMonth.text = months[item]
                 }
                 .create()
                 .show()
         }
 
         binding.btnShow.setOnClickListener {
-            HistoryFragment().retrieveHistory(TinyDB(requireContext()))
             dismiss()
         }
     }
