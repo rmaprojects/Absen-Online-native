@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
         val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
         val jamPagiAkhir = waktuAkhirAbsenPagi.split(":")[0].toInt()
-        val menitPagiAkhir = waktuAkhirAbsenPagi.split(":")[1].toInt()
+        val menitPagiAkhir = waktuAkhirAbsenPagi.split(":")[1].toInt() - 10
         val hariIni = Calendar.getInstance()
 
         val calendarJamPagiAkhir = Calendar.getInstance()
@@ -162,7 +162,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
         val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
         val jamSiangAkhir = waktuAkhirAbsenSiang.split(":")[0].toInt()
-        val menitSiangAkhir = waktuAkhirAbsenSiang.split(":")[1].toInt()
+        val menitSiangAkhir = waktuAkhirAbsenSiang.split(":")[1].toInt() - 10
         val hariIni = Calendar.getInstance()
 
         val calendarJamSiangAKhir = Calendar.getInstance()
@@ -198,7 +198,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
         val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
         val jamPulangAkhir = waktuAkhirAbsenPulang.split(":")[0].toInt()
-        val menitPulangAkhir = waktuAkhirAbsenPulang.split(":")[1].toInt()
+        val menitPulangAkhir = waktuAkhirAbsenPulang.split(":")[1].toInt() - 10
         val hariIni = Calendar.getInstance()
 
         val calendarJamPulangAkhir = Calendar.getInstance()
