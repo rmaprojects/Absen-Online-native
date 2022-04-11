@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val delay = calendarJamPagiAkhir.timeInMillis - hariIni.timeInMillis
 
         val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            .setInitialDelay(delay, TimeUnit.SECONDS)
             .build()
 
         WorkManager.getInstance(this).enqueue(request)
@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val delay = calendarJamSiangAKhir.timeInMillis - hariIni.timeInMillis
 
         val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            .setInitialDelay(delay, TimeUnit.SECONDS)
             .build()
 
         WorkManager.getInstance(this).enqueue(request)
@@ -177,7 +177,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val delay = calendarJamPulangAkhir.timeInMillis - hariIni.timeInMillis
 
         val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            .setInitialDelay(delay, TimeUnit.SECONDS)
             .build()
 
         WorkManager.getInstance(this).enqueue(request)

@@ -33,7 +33,7 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
 
         val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-            .setContentTitle("Sudah absen?")
+            .setContentTitle("Sudah melakukan absen?")
             .setContentText("Segera absen sekarang jika belum")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)

@@ -74,7 +74,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
     private fun initialisation(tinyDB: TinyDB, absen: String) {
         if (viewModel.getResultPicture() != null && viewModel.getLatitude() != null) {
             binding.kirimabsen.isEnabled = true
-            binding.kirimabsen.isEnabled = true
 
             binding.ambilfoto.setOnClickListener {
                 findNavController().navigate(R.id.action_absenFragment_to_cameraView)
@@ -92,7 +91,9 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             }
         } else {
             binding.kirimabsen.isEnabled = false
-            binding.kirimabsen.isEnabled = false
+            binding.ambilfoto.setOnClickListener {
+                findNavController().navigate(R.id.action_absenFragment_to_cameraView)
+            }
         }
     }
 

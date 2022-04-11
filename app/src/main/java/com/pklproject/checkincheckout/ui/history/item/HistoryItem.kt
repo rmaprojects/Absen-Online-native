@@ -40,6 +40,7 @@ class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<History
             if (history?.tanggal == "Data Belum Ada") {
                 binding.cardViewData.isVisible = false
                 binding.noDataCardView.isVisible = true
+                binding.izinCardView.isVisible = false
             } else {
                 binding.cardViewData.isVisible = true
                 binding.noDataCardView.isVisible = false
