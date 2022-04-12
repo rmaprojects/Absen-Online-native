@@ -1,21 +1,26 @@
 package com.pklproject.checkincheckout.ui.history.dialog
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
+import com.pklproject.checkincheckout.api.`interface`.ApiInterface
+import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.BottomSheetDatePickerBinding
+import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.history.HistoryFragment
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
-import java.text.SimpleDateFormat
+import kotlinx.coroutines.launch
 import java.util.*
 
 class DatePickerDialog : BottomSheetDialogFragment() {
@@ -66,10 +71,9 @@ class DatePickerDialog : BottomSheetDialogFragment() {
             "November",
             "Desember"
         )
-        val monthNow = SimpleDateFormat("MM", Locale.getDefault()).format(System.currentTimeMillis())
-        val yearNow = SimpleDateFormat("yyyy", Locale.getDefault()).format(System.currentTimeMillis())
-        binding.buttonMonth.text = months[monthNow.toInt() - 1]
-        binding.buttonYear.text = yearNow
+
+        binding.buttonMonth.text = months[viewModel.getMonth()?.toInt()?.minus(1) ?: Calendar.getInstance()[Calendar.MONTH] -1]
+        binding.buttonYear.text = viewModel.getYear()
 
         binding.buttonMonth.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
@@ -83,7 +87,34 @@ class DatePickerDialog : BottomSheetDialogFragment() {
         }
 
         binding.btnShow.setOnClickListener {
+            viewModel.listener?.invoke()
             dismiss()
+        }
+    }
+
+    private fun retrieveHistory(tinyDB: TinyDB) {
+        val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
+        val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
+        val currentYear = viewModel.getYear()
+        val currentMonth = viewModel.getMonth()
+        val api = ApiInterface.createApi()
+        lifecycleScope.launch {
+            try {
+                val response = api.history(username.toString(), password.toString(), currentYear.toString(), currentMonth.toString())
+                if (response.isSuccessful) {
+                    Log.d("History", response.body()?.history.toString())
+                    viewModel.setHistoryData(response.body()!!)
+                    true
+                } else {
+                    Log.d("History", response.body()?.history.toString())
+                    false
+                }
+            } catch (e:Exception) {
+                Log.d("Error", e.toString())
+                Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data riwayat", Snackbar.LENGTH_LONG)
+                    .setAction("Ok") {}
+                    .show()
+            }
         }
     }
 

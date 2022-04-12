@@ -28,12 +28,15 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        retrieveHistory(TinyDB(requireContext()))
-
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         binding.selectMonthButton.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_history_to_datePickerDialog)
+        }
+
+        viewModel.listener = {
+            retrieveHistory(TinyDB(requireContext()))
+            binding.selectMonthButton.text = "${getProperMonth(viewModel.getMonth())} ${viewModel.getYear()}"
         }
 
         binding.selectMonthButton.text = "${getProperMonth(viewModel.getMonth())} ${viewModel.getYear()}"
@@ -53,6 +56,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 if (response.isSuccessful) {
                     Log.d("History", response.body()?.history.toString())
                     viewModel.setHistoryData(response.body()!!)
+                    binding.recyclerView.adapter = HistoryItem(viewModel.getHistoryData())
                 } else {
                     Log.d("History", response.body()?.history.toString())
                 }

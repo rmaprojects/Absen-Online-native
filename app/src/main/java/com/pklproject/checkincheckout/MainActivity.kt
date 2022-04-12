@@ -13,9 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.workDataOf
+import androidx.work.*
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding: ActivityMainBinding by viewBinding()
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val viewModel:ServiceViewModel by viewModels()
+    private val viewModel: ServiceViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +48,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         val tinyDb = TinyDB(this)
         retrieveSettingsAbsen(tinyDb)
+        retrieveHistory(tinyDb)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
@@ -146,18 +145,39 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
 
         val delay = calendarJamPagiAkhir.timeInMillis - hariIni.timeInMillis
+        Log.d("delay Pagi", delay.toString())
 
-        val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInitialDelay(delay, TimeUnit.SECONDS)
-            .setInputData(
-                workDataOf(
-                    "jam" to waktuAkhirAbsenPagi,
-                    "tipeAbsen" to 0
-                )
+        if (delay < 0) {
+            val calendar = Calendar.getInstance()
+            calendar.set(
+                tahunIni,
+                bulanIni,
+                hariIni.get(Calendar.DAY_OF_MONTH) + 1,
+                jamPagiAkhir,
+                menitPagiAkhir
             )
-            .build()
-
-        WorkManager.getInstance(this).enqueue(request)
+            val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .setInputData(
+                    workDataOf(
+                        "jam" to waktuAkhirAbsenPagi,
+                        "tipeAbsen" to 1
+                    )
+                )
+                .build()
+            WorkManager.getInstance(this).enqueueUniqueWork("absenWorkPagi", ExistingWorkPolicy.REPLACE, workRequest)
+        } else {
+            val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .setInputData(
+                    workDataOf(
+                        "jam" to waktuAkhirAbsenPagi,
+                        "tipeAbsen" to 1
+                    )
+                )
+                .build()
+            WorkManager.getInstance(this).enqueueUniqueWork("absenWorkPagi", ExistingWorkPolicy.REPLACE, workRequest)
+        }
     }
 
     private fun notificationWorkerSiang() {
@@ -181,18 +201,39 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
 
         val delay = calendarJamSiangAKhir.timeInMillis - hariIni.timeInMillis
+        Log.d("delay Siang", delay.toString())
 
-        val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInitialDelay(delay, TimeUnit.SECONDS)
-            .setInputData(
-                workDataOf(
-                    "jam" to waktuAkhirAbsenSiang,
-                    "tipeAbsen" to 1
-                )
+        if (delay < 0) {
+            val calendar = Calendar.getInstance()
+            calendar.set(
+                tahunIni,
+                bulanIni,
+                hariIni.get(Calendar.DAY_OF_MONTH) + 1,
+                jamSiangAkhir,
+                menitSiangAkhir
             )
-            .build()
-
-        WorkManager.getInstance(this).enqueue(request)
+            val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .setInputData(
+                    workDataOf(
+                        "jam" to waktuAkhirAbsenSiang,
+                        "tipeAbsen" to 1
+                    )
+                )
+                .build()
+            WorkManager.getInstance(this).enqueueUniqueWork("absenWorkSiang", ExistingWorkPolicy.REPLACE, workRequest)
+        } else {
+            val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .setInputData(
+                    workDataOf(
+                        "jam" to waktuAkhirAbsenSiang,
+                        "tipeAbsen" to 1
+                    )
+                )
+                .build()
+            WorkManager.getInstance(this).enqueueUniqueWork("absenWorkSiang", ExistingWorkPolicy.REPLACE, workRequest)
+        }
     }
 
     private fun notificationWorkerPulang() {
@@ -217,18 +258,72 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
 
         val delay = calendarJamPulangAkhir.timeInMillis - hariIni.timeInMillis
+        Log.d("delay pulang", delay.toString())
 
-        val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInitialDelay(delay, TimeUnit.SECONDS)
-            .setInputData(
-                workDataOf(
-                    "jam" to waktuAkhirAbsenPulang,
-                    "tipeAbsen" to 2
-                )
+        if (delay < 0) {
+            val calendar = Calendar.getInstance()
+            calendar.set(
+                tahunIni,
+                bulanIni,
+                hariIni.get(Calendar.DAY_OF_MONTH) + 1,
+                jamPulangAkhir,
+                menitPulangAkhir
             )
-            .build()
+            val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .setInputData(
+                    workDataOf(
+                        "jam" to waktuAkhirAbsenPulang,
+                        "tipeAbsen" to 1
+                    )
+                )
+                .build()
+            WorkManager.getInstance(this).enqueueUniqueWork("absenWorkPulang", ExistingWorkPolicy.REPLACE, workRequest)
+        } else {
+            val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .setInputData(
+                    workDataOf(
+                        "jam" to waktuAkhirAbsenPulang,
+                        "tipeAbsen" to 1
+                    )
+                )
+                .build()
+            WorkManager.getInstance(this).enqueueUniqueWork("absenWorkPulang", ExistingWorkPolicy.REPLACE, workRequest)
+        }
+    }
 
-        WorkManager.getInstance(this).enqueue(request)
+    private fun retrieveHistory(tinyDB: TinyDB) {
+        val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
+        val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
+        val currentYear = viewModel.getYear()
+        val currentMonth = viewModel.getMonth()
+        val api = ApiInterface.createApi()
+        lifecycleScope.launch {
+            try {
+                val response = api.history(
+                    username.toString(),
+                    password.toString(),
+                    currentYear.toString(),
+                    currentMonth.toString()
+                )
+                if (response.isSuccessful) {
+                    Log.d("History", response.body()?.history.toString())
+                    viewModel.setHistoryData(response.body()!!)
+                } else {
+                    Log.d("History", response.body()?.history.toString())
+                }
+            } catch (e: Exception) {
+                Log.d("Error", e.toString())
+                Snackbar.make(
+                    binding.container,
+                    "Gagal mengambil data riwayat",
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("Ok") {}
+                    .show()
+            }
+        }
     }
 
     //Suport for back button

@@ -20,11 +20,11 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
     override fun doWork(): Result {
 
         val jam = inputData.getString("jam")
-        val tipeAbsen = inputData.getInt("tanggal", 0)
+        val tipeAbsen = inputData.getInt("tipeAbsen", 0)
 
         showNotification(jam, tipeAbsen)
-
         Log.d("NotificationWorker", "Performing long running task in scheduled job")
+
         return Result.success()
     }
 

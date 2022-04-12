@@ -24,6 +24,8 @@ class ServiceViewModel : ViewModel() {
 
     private val historyData : MutableLiveData<HistoryAbsenModel> = MutableLiveData()
 
+    var listener :(() -> Unit)? = null
+
     fun getHistoryData() : HistoryAbsenModel? {
         return historyData.value
     }
