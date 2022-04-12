@@ -43,13 +43,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
-        notificationWorkerPagi()
-        notificationWorkerSiang()
-        notificationWorkerPulang()
-
         val tinyDb = TinyDB(this)
         retrieveSettingsAbsen(tinyDb)
         retrieveHistory(tinyDb)
+        notificationWorkerPagi()
+        notificationWorkerSiang()
+        notificationWorkerPulang()
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
@@ -129,6 +128,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         val waktuAkhirAbsenPagi =
             TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir
+        Log.d("waktuAkhirAbsenPagi", waktuAkhirAbsenPagi)
 
         val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
         val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
@@ -145,41 +145,44 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             menitPagiAkhir
         )
 
-        val delay = calendarJamPagiAkhir.timeInMillis - hariIni.timeInMillis
-        Log.d("delay Pagi", delay.toString())
+        var delay = calendarJamPagiAkhir.timeInMillis - hariIni.timeInMillis
 
-        if (delay <= 0L) {
-            val calendar = Calendar.getInstance()
-            calendar.set(
+        if (delay < 6000) {
+            calendarJamPagiAkhir.set(
                 tahunIni,
                 bulanIni,
                 hariIni.get(Calendar.DAY_OF_MONTH) + 1,
                 jamPagiAkhir,
                 menitPagiAkhir
             )
-            val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(
-                1, TimeUnit.DAYS
-            )
-                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            delay = calendarJamPagiAkhir.timeInMillis - hariIni.timeInMillis
+            val request = OneTimeWorkRequestBuilder<NotificationWorker>()
                 .setInputData(
                     workDataOf(
                         "jam" to waktuAkhirAbsenPagi,
-                        "tipeAbsen" to 0
+                        "tipeAbsen" to "pagi"
                     )
                 )
+                .setInitialDelay(delay, TimeUnit.SECONDS)
                 .build()
-            WorkManager.getInstance(this).enqueueUniquePeriodicWork("absenWork", ExistingPeriodicWorkPolicy.REPLACE, workRequest)
+
+            WorkManager.getInstance(this)
+                .enqueueUniqueWork("workPagi", ExistingWorkPolicy.APPEND, request)
+            Log.d("DELAYPAGI", delay.toString())
         } else {
-            val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
-                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            val request = OneTimeWorkRequestBuilder<NotificationWorker>()
                 .setInputData(
                     workDataOf(
                         "jam" to waktuAkhirAbsenPagi,
-                        "tipeAbsen" to 0
+                        "tipeAbsen" to "pagi"
                     )
                 )
+                .setInitialDelay(delay, TimeUnit.SECONDS)
                 .build()
-            WorkManager.getInstance(this).enqueueUniquePeriodicWork("absenWork", ExistingPeriodicWorkPolicy.REPLACE, workRequest)
+            Log.d("DELAYPAGI", delay.toString())
+
+            WorkManager.getInstance(this)
+                .enqueueUniqueWork("workPagi", ExistingWorkPolicy.APPEND, request)
         }
     }
 
@@ -187,6 +190,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         val waktuAkhirAbsenSiang =
             TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir
+        Log.d("waktuAkhirAbsenSore", waktuAkhirAbsenSiang)
 
         val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
         val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
@@ -204,38 +208,42 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
 
         val delay = calendarJamSiangAKhir.timeInMillis - hariIni.timeInMillis
-        Log.d("delay Siang", delay.toString())
 
-        if (delay <= 0L) {
-            val calendar = Calendar.getInstance()
-            calendar.set(
+        if (delay < 6000) {
+            calendarJamSiangAKhir.set(
                 tahunIni,
                 bulanIni,
                 hariIni.get(Calendar.DAY_OF_MONTH) + 1,
                 jamSiangAkhir,
                 menitSiangAkhir
             )
-            val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
-                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            Log.d("DELAYSIANG", delay.toString())
+            val request = OneTimeWorkRequestBuilder<NotificationWorker>()
                 .setInputData(
                     workDataOf(
                         "jam" to waktuAkhirAbsenSiang,
-                        "tipeAbsen" to 1
+                        "tipeAbsen" to "siang"
                     )
                 )
+                .setInitialDelay(delay, TimeUnit.SECONDS)
                 .build()
-            WorkManager.getInstance(this).enqueueUniquePeriodicWork("absenWork", ExistingPeriodicWorkPolicy.REPLACE, workRequest)
+
+            WorkManager.getInstance(this)
+                .enqueueUniqueWork("workSiang", ExistingWorkPolicy.APPEND, request)
         } else {
-            val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
-                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            Log.d("DELAYSIANG", delay.toString())
+            val request = OneTimeWorkRequestBuilder<NotificationWorker>()
                 .setInputData(
                     workDataOf(
                         "jam" to waktuAkhirAbsenSiang,
-                        "tipeAbsen" to 1
+                        "tipeAbsen" to "siang"
                     )
                 )
+                .setInitialDelay(delay, TimeUnit.SECONDS)
                 .build()
-            WorkManager.getInstance(this).enqueueUniquePeriodicWork("absenWork", ExistingPeriodicWorkPolicy.REPLACE, workRequest)
+
+            WorkManager.getInstance(this)
+                .enqueueUniqueWork("workSiang", ExistingWorkPolicy.APPEND, request)
         }
     }
 
@@ -261,38 +269,42 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
 
         val delay = calendarJamPulangAkhir.timeInMillis - hariIni.timeInMillis
-        Log.d("delay pulang", delay.toString())
 
-        if (delay <= 0L) {
-            val calendar = Calendar.getInstance()
-            calendar.set(
+        if (delay < 6000) {
+            calendarJamPulangAkhir.set(
                 tahunIni,
                 bulanIni,
                 hariIni.get(Calendar.DAY_OF_MONTH) + 1,
                 jamPulangAkhir,
                 menitPulangAkhir
             )
-            val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
-                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            Log.d("DELAYPULANG", delay.toString())
+            val request = OneTimeWorkRequestBuilder<NotificationWorker>()
                 .setInputData(
                     workDataOf(
                         "jam" to waktuAkhirAbsenPulang,
-                        "tipeAbsen" to 2
+                        "tipeAbsen" to "pulang"
                     )
                 )
+                .setInitialDelay(delay, TimeUnit.SECONDS)
                 .build()
-            WorkManager.getInstance(this).enqueueUniquePeriodicWork("absenWork", ExistingPeriodicWorkPolicy.REPLACE, workRequest)
+
+            WorkManager.getInstance(this)
+                .enqueueUniqueWork("workPulang", ExistingWorkPolicy.APPEND, request)
         } else {
-            val workRequest = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
-                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            Log.d("DELAYPULANG", delay.toString())
+            val request = OneTimeWorkRequestBuilder<NotificationWorker>()
                 .setInputData(
                     workDataOf(
                         "jam" to waktuAkhirAbsenPulang,
-                        "tipeAbsen" to 2
+                        "tipeAbsen" to "pulang"
                     )
                 )
+                .setInitialDelay(delay, TimeUnit.SECONDS)
                 .build()
-            WorkManager.getInstance(this).enqueueUniquePeriodicWork("absenWork", ExistingPeriodicWorkPolicy.REPLACE, workRequest)
+
+            WorkManager.getInstance(this)
+                .enqueueUniqueWork("workPulang", ExistingWorkPolicy.APPEND, request)
         }
     }
 
