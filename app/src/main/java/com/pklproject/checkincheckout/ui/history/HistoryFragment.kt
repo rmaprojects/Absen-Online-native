@@ -29,6 +29,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        retrieveHistory(TinyDB(requireContext()))
 
         binding.selectMonthButton.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_history_to_datePickerDialog)

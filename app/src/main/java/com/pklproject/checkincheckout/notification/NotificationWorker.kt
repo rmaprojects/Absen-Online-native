@@ -23,7 +23,7 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
         val tipeAbsen = inputData.getInt("tipeAbsen", 0)
 
         showNotification(jam, tipeAbsen)
-        Log.d("NotificationWorker", "Performing long running task in scheduled job")
+        Log.d("NotificationWorker", "Notification sent")
 
         return Result.success()
     }
