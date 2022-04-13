@@ -3,7 +3,6 @@ package com.pklproject.checkincheckout
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.core.view.isVisible
@@ -13,7 +12,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.*
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
@@ -22,7 +24,6 @@ import com.pklproject.checkincheckout.databinding.ActivityMainBinding
 import com.pklproject.checkincheckout.notification.NotificationWorker
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
-import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -41,9 +42,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         val tinyDb = TinyDB(this)
         retrieveSettingsAbsen(tinyDb)
-        notificationWorkerPagi()
-        notificationWorkerSiang()
-        notificationWorkerPulang()
+
+        if (tinyDb.getObject(PENGATURANABSENKEY, Setting::class.java) != null) {
+            notificationWorkerPagi()
+            notificationWorkerSiang()
+            notificationWorkerPulang()
+        }
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each

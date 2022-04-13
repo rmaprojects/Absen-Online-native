@@ -35,13 +35,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 .setTitle("Konfirmasi")
                 .setMessage("Apakah anda yakin ingin keluar?")
                 .setPositiveButton("Ya"){ _, _ ->
-                    requireActivity().startActivity(Intent(requireContext(), LoginActivity::class.java))
                     tinyDB.clear()
-                    Preferences(requireContext()).isLoggedIn
+                    Preferences(requireContext()).isLoggedIn = false
+                    requireActivity().startActivity(Intent(requireContext(), LoginActivity::class.java))
                     requireActivity().finish()
                 }
                 .setNegativeButton("Tidak"){ _, _ ->
-                    LoginActivity
                 }
                 .create()
                 .show()

@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         val api = ApiInterface.createApi()
+        MainActivity().retrieveSettingsAbsen(TinyDB(this))
 
         binding.masuk.setOnClickListener {
             val username = binding.username.editText?.text

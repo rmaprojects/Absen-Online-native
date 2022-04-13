@@ -2,7 +2,8 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginHorizontal="16dp"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="6dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -32,6 +33,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_title_mode_gelap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center|start"
@@ -55,6 +57,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/ukuranFonttxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -65,16 +68,15 @@
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
             <com.google.android.material.slider.Slider
-                android:id="@+id/ubahfont"
+                android:id="@+id/ubahfontSlider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="Slider pengganti ukuran font"
                 android:stepSize="1.0"
                 android:valueFrom="0"
-                android:valueTo="5"
+                android:valueTo="2"
                 app:labelBehavior="floating"
-                app:labelStyle="@style/TextAppearance.Material3.LabelSmall"
-                app:thumbColor="?colorSecondary" />
+                />
         </LinearLayout>
 
         <LinearLayout

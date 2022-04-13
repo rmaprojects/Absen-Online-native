@@ -1,5 +1,7 @@
 package com.pklproject.checkincheckout.ui.settings
 
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,7 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.R.style.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
@@ -32,6 +36,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         val isAdmin = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).statusAdmin
 
         initialisation(tinyDB)
+        setTextAppearance(requireContext())
 
         binding.adminOnlyArea.isVisible = isAdmin == "1"
     }
@@ -80,6 +85,67 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         binding.darkModeSwitcher.setOnClickListener {
             changeThemeDialog()
         }
+
+        binding.ubahfontSlider.setLabelFormatter { value:Float ->
+            when (value) {
+                0F -> "Kecil"
+                1F -> "Normal"
+                2F -> "Besar"
+                else -> "Kecil"
+            }
+        }
+
+        binding.ubahfontSlider.addOnChangeListener { _, value, _ ->
+            val ukuran: String
+            when (value) {
+                0F -> {
+                    ukuran = "kecil"
+                    Preferences(requireContext()).textSize = ukuran
+                }
+                1F -> {
+                    ukuran = "normal"
+                    Preferences(requireContext()).textSize = ukuran
+                }
+                2F -> {
+                    ukuran = "besar"
+                    Preferences(requireContext()).textSize = ukuran
+                }
+            }
+        }
+
+        binding.ubahfontSlider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
+            override fun onStartTrackingTouch(slider: Slider) {
+                setTextAppearance(requireContext())
+            }
+
+            override fun onStopTrackingTouch(slider: Slider) {
+                val appearanceSettings = Preferences(requireContext()).textSize
+                when (slider.value) {
+                    0F -> {
+                        Preferences(requireContext()).textSize = "kecil"
+                    }
+                    1F -> {
+                        Preferences(requireContext()).textSize = "normal"
+                    }
+                    2F -> {
+                        Preferences(requireContext()).textSize = "besar"
+                    }
+                }
+                when (appearanceSettings) {
+                    "kecil" -> {
+                        setTextAppearance(requireContext())
+                    }
+                    "normal" -> {
+                        binding.ubahfontSlider.value = 1F
+                        setTextAppearance(requireContext())
+                    }
+                    "besar" -> {
+                        binding.ubahfontSlider.value = 2F
+                        setTextAppearance(requireContext())
+                    }
+                }
+            }
+        })
     }
 
     private fun changeIfAbsenSiangDiperlukan(tinyDB: TinyDB) {
@@ -145,6 +211,51 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
             .create()
             .show()
+    }
+
+    //TODO:
+    //  Ganti tampilan ukuran font semua layout di aplikasi ini menggunakan kriteria dibawah ini:
+    // jika titleLarge : {kecil: Body1, normal: Large, besar: Display1}
+    // jika titleMedium : {kecil: Body2, normal: Medium, besar: Large}
+    // textAppearance bisa dilihat di layout
+    // Contoh ada dibawah, admin only g ush diganti, pertama kasih ID dulu semua TextView nya,
+
+    private fun setTextAppearance(context:Context) {
+        val appearanceSettings = Preferences(context).textSize
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            when (appearanceSettings) {
+                "kecil" -> {
+                    binding.ubahfontSlider.value = 0F
+                }
+                "normal" -> {
+                    binding.ubahfontSlider.value = 1F
+                }
+                "besar" -> {
+                    binding.ubahfontSlider.value = 2F
+                }
+            }
+        } else {
+            when (appearanceSettings) {
+                "kecil" -> {
+                    binding.ubahfontSlider.value = 0F
+                    binding.txtTitleModeGelap.setTextAppearance(TextAppearance_AppCompat_Body1)
+                    binding.currentThemeTxt.setTextAppearance(TextAppearance_AppCompat_Body2)
+                    binding.ukuranFonttxt.setTextAppearance(TextAppearance_AppCompat_Body1)
+                }
+                "normal" -> {
+                    binding.ubahfontSlider.value = 1F
+                    binding.txtTitleModeGelap.setTextAppearance(TextAppearance_AppCompat_Large)
+                    binding.currentThemeTxt.setTextAppearance(TextAppearance_AppCompat_Medium)
+                    binding.ukuranFonttxt.setTextAppearance(TextAppearance_AppCompat_Large)
+                }
+                "besar" -> {
+                    binding.ubahfontSlider.value = 2F
+                    binding.txtTitleModeGelap.setTextAppearance(TextAppearance_AppCompat_Display1)
+                    binding.currentThemeTxt.setTextAppearance(TextAppearance_AppCompat_Large)
+                    binding.ukuranFonttxt.setTextAppearance(TextAppearance_AppCompat_Display1)
+                }
+            }
+        }
     }
 
     companion object{

@@ -9,6 +9,7 @@ class Preferences (context: Context) {
         const val LOGIN_KEY = "LOGINKEYVALUE"
         const val THEME_KEY = "THEMEKEYVALUE"
         const val NAME_EMPLOYEE_KEY = "NAMEEMPLOYEEKEYVALUE"
+        const val TEXT_SIZE_KEY = "TEXTSIZEKEYVALUE"
     }
 
     private val loggedIn = PreferenceManager.getDefaultSharedPreferences(context)
@@ -22,4 +23,8 @@ class Preferences (context: Context) {
     private val nameEmployee = PreferenceManager.getDefaultSharedPreferences(context)
     var employeeName = nameEmployee.getString(NAME_EMPLOYEE_KEY, "404 Not Found")
         set(value) = nameEmployee.edit().putString(NAME_EMPLOYEE_KEY, value).apply()
+
+    private val globalTextSize = PreferenceManager.getDefaultSharedPreferences(context)
+    var textSize = globalTextSize.getString(TEXT_SIZE_KEY, "normal")
+        set(value) = globalTextSize.edit().putString(TEXT_SIZE_KEY, value).apply()
 }

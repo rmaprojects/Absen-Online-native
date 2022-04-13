@@ -7,13 +7,14 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.l4digital.fastscroll.FastScroller
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.models.History
 import com.pklproject.checkincheckout.api.models.HistoryAbsenModel
 import com.pklproject.checkincheckout.databinding.ItemHistoryBinding
 import com.pklproject.checkincheckout.ui.history.item.HistoryItem.HistoryItemViewHolder
 
-class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<HistoryItemViewHolder>() {
+class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<HistoryItemViewHolder>(), FastScroller.SectionIndexer {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryItemViewHolder {
@@ -23,6 +24,10 @@ class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<History
     override fun onBindViewHolder(holder: HistoryItemViewHolder, position: Int) {
         val history = historyModel?.history?.get(position)
         holder.bindView(history)
+
+        val tanggalAbsen = history?.tanggal?: "Data Kosong"
+        holder.binding.tanggalAbsen.text = getProperMonth(tanggalAbsen)
+        holder.binding.tanggalIzin.text = getProperMonth(tanggalAbsen)
     }
 
     override fun getItemCount(): Int {
@@ -32,11 +37,8 @@ class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<History
     class HistoryItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding:ItemHistoryBinding by viewBinding()
         fun bindView(history: History?) {
-            val tanggalAbsen = history?.tanggal?: "Data Kosong"
-            getProperMonth(tanggalAbsen)
             binding.jamSiang.text = history?.jamMasukSiang
             binding.jamPulang.text = history?.jamMasukPulang
-
             if (history?.tanggal == "Data Belum Ada") {
                 binding.cardViewData.isVisible = false
                 binding.noDataCardView.isVisible = true
@@ -104,28 +106,31 @@ class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<History
                 }
             }
         }
+    }
 
-        private fun getProperMonth(tanggalAbsen: String) {
-            val month = tanggalAbsen.substring(5, 7)
-            val year = tanggalAbsen.substring(0, 4)
-            val day = tanggalAbsen.substring(8, 10)
-            val properMonth = when (month) {
-                "01" -> "Januari"
-                "02" -> "Februari"
-                "03" -> "Maret"
-                "04" -> "April"
-                "05" -> "Mei"
-                "06" -> "Juni"
-                "07" -> "Juli"
-                "08" -> "Agustus"
-                "09" -> "September"
-                "10" -> "Oktober"
-                "11" -> "November"
-                "12" -> "Desember"
-                else -> "Data Kosong"
-            }
-            binding.tanggalAbsen.text = "$day $properMonth $year"
-            binding.tanggalIzin.text = "$day $properMonth $year"
+    private fun getProperMonth(tanggalAbsen: String) : String {
+        val month = tanggalAbsen.substring(5, 7)
+        val year = tanggalAbsen.substring(0, 4)
+        val day = tanggalAbsen.substring(8, 10)
+        val properMonth = when (month) {
+            "01" -> "Januari"
+            "02" -> "Februari"
+            "03" -> "Maret"
+            "04" -> "April"
+            "05" -> "Mei"
+            "06" -> "Juni"
+            "07" -> "Juli"
+            "08" -> "Agustus"
+            "09" -> "September"
+            "10" -> "Oktober"
+            "11" -> "November"
+            "12" -> "Desember"
+            else -> "Data Kosong"
         }
+        return "$day $properMonth $year"
+    }
+
+    override fun getSectionText(position: Int): CharSequence {
+        return getProperMonth(historyModel?.history?.get(position)?.tanggal.toString())
     }
 }
