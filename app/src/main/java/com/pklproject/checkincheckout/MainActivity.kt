@@ -17,24 +17,20 @@ import androidx.work.*
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
-import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.api.models.Setting
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
 import com.pklproject.checkincheckout.notification.NotificationWorker
-import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.time.toDuration
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding: ActivityMainBinding by viewBinding()
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val viewModel: ServiceViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +41,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         val tinyDb = TinyDB(this)
         retrieveSettingsAbsen(tinyDb)
-        retrieveHistory(tinyDb)
         notificationWorkerPagi()
         notificationWorkerSiang()
         notificationWorkerPulang()
@@ -305,39 +300,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
             WorkManager.getInstance(this)
                 .enqueueUniqueWork("workPulang", ExistingWorkPolicy.APPEND, request)
-        }
-    }
-
-    private fun retrieveHistory(tinyDB: TinyDB) {
-        val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
-        val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
-        val currentYear = viewModel.getYear()
-        val currentMonth = viewModel.getMonth()
-        val api = ApiInterface.createApi()
-        lifecycleScope.launch {
-            try {
-                val response = api.history(
-                    username.toString(),
-                    password.toString(),
-                    currentYear.toString(),
-                    currentMonth.toString()
-                )
-                if (response.isSuccessful) {
-                    Log.d("History", response.body()?.history.toString())
-                    viewModel.setHistoryData(response.body()!!)
-                } else {
-                    Log.d("History", response.body()?.history.toString())
-                }
-            } catch (e: Exception) {
-                Log.d("Error", e.toString())
-                Snackbar.make(
-                    binding.container,
-                    "Gagal mengambil data riwayat",
-                    Snackbar.LENGTH_LONG
-                )
-                    .setAction("Ok") {}
-                    .show()
-            }
         }
     }
 
