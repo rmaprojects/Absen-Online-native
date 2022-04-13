@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .setInputData(
                     workDataOf(
                         "jam" to waktuAkhirAbsenPagi,
-                        "tipeAbsen" to "pagi"
+                        "tipeAbsen" to 0
                     )
                 )
                 .setInitialDelay(delay, TimeUnit.SECONDS)
@@ -174,7 +174,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .setInputData(
                     workDataOf(
                         "jam" to waktuAkhirAbsenPagi,
-                        "tipeAbsen" to "pagi"
+                        "tipeAbsen" to 0
                     )
                 )
                 .setInitialDelay(delay, TimeUnit.SECONDS)
@@ -222,7 +222,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .setInputData(
                     workDataOf(
                         "jam" to waktuAkhirAbsenSiang,
-                        "tipeAbsen" to "siang"
+                        "tipeAbsen" to 1
                     )
                 )
                 .setInitialDelay(delay, TimeUnit.SECONDS)
@@ -236,7 +236,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .setInputData(
                     workDataOf(
                         "jam" to waktuAkhirAbsenSiang,
-                        "tipeAbsen" to "siang"
+                        "tipeAbsen" to 1
                     )
                 )
                 .setInitialDelay(delay, TimeUnit.SECONDS)
@@ -283,7 +283,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .setInputData(
                     workDataOf(
                         "jam" to waktuAkhirAbsenPulang,
-                        "tipeAbsen" to "pulang"
+                        "tipeAbsen" to 2
                     )
                 )
                 .setInitialDelay(delay, TimeUnit.SECONDS)
@@ -297,7 +297,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .setInputData(
                     workDataOf(
                         "jam" to waktuAkhirAbsenPulang,
-                        "tipeAbsen" to "pulang"
+                        "tipeAbsen" to 2
                     )
                 )
                 .setInitialDelay(delay, TimeUnit.SECONDS)

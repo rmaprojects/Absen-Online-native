@@ -25,6 +25,7 @@
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_current_clock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

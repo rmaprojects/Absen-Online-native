@@ -6,30 +6,20 @@ import android.preference.PreferenceManager
 class Preferences (context: Context) {
 
     private companion object {
-        const val LOGINKEY = "LOGINKEYVALUE"
-        const val THEMEKEY = "THEMEKEYVALUE"
-        const val NAMEEMPLOYEEKEY = "NAMEEMPLOYEEKEYVALUE"
-        const val USERNAMEKEY = "USERNAMEKEYVALUE"
-        const val PASSWORDKEY = "PASSWORDKEYVALUE"
+        const val LOGIN_KEY = "LOGINKEYVALUE"
+        const val THEME_KEY = "THEMEKEYVALUE"
+        const val NAME_EMPLOYEE_KEY = "NAMEEMPLOYEEKEYVALUE"
     }
 
     private val loggedIn = PreferenceManager.getDefaultSharedPreferences(context)
-    var isLoggedIn = loggedIn.getBoolean(LOGINKEY, false)
-        set(value) = loggedIn.edit().putBoolean(LOGINKEY, value).apply()
+    var isLoggedIn = loggedIn.getBoolean(LOGIN_KEY, false)
+        set(value) = loggedIn.edit().putBoolean(LOGIN_KEY, value).apply()
 
     private val changedTheme = PreferenceManager.getDefaultSharedPreferences(context)
-    var changeTheme = changedTheme.getInt(THEMEKEY, 0)
-        set(value) = changedTheme.edit().putInt(THEMEKEY, value).apply()
+    var changeTheme = changedTheme.getInt(THEME_KEY, 0)
+        set(value) = changedTheme.edit().putInt(THEME_KEY, value).apply()
 
-    private val nameEmpoyee = PreferenceManager.getDefaultSharedPreferences(context)
-    var employeeName = nameEmpoyee.getString(NAMEEMPLOYEEKEY, "404 Not Found")
-        set(value) = nameEmpoyee.edit().putString(NAMEEMPLOYEEKEY, value).apply()
-
-    private val usernameStorage = PreferenceManager.getDefaultSharedPreferences(context)
-    var username = usernameStorage.getString("username", "404 Not Found")
-        set(value) = usernameStorage.edit().putString(USERNAMEKEY, value).apply()
-
-    private val passwordStorage = PreferenceManager.getDefaultSharedPreferences(context)
-    var password = passwordStorage.getString("password", "404 Not Found")
-        set(value) = passwordStorage.edit().putString(PASSWORDKEY, value).apply()
+    private val nameEmployee = PreferenceManager.getDefaultSharedPreferences(context)
+    var employeeName = nameEmployee.getString(NAME_EMPLOYEE_KEY, "404 Not Found")
+        set(value) = nameEmployee.edit().putString(NAME_EMPLOYEE_KEY, value).apply()
 }
