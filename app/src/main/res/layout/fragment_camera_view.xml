@@ -34,15 +34,20 @@
             android:focusable="true"
             android:src="@drawable/ic_baseline_camera_24"
             app:tint="@color/material_on_primary_emphasis_high_type" />
+
         <ImageView
-            android:background="?selectableItemBackground"
             android:id="@+id/switchCameraButton"
-            android:layout_gravity="end"
-            android:layout_margin="16dp"
             android:layout_width="64dp"
+            android:layout_height="128dp"
             android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="?selectableItemBackground"
             android:src="@drawable/ic_baseline_flip_camera_ios_24"
-            android:layout_height="128dp"/>
+            app:tint="@color/material_on_primary_emphasis_high_type" />
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

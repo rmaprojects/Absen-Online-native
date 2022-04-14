@@ -21,6 +21,7 @@ import com.pklproject.checkincheckout.ui.history.item.HistoryItem
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
+import com.google.android.material.R.style.*
 import kotlinx.coroutines.launch
 
 class HistoryFragment : Fragment(R.layout.fragment_history) {
@@ -31,8 +32,9 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.setLayoutManager(LinearLayoutManager(requireContext()))
         retrieveHistory(TinyDB(requireContext()))
+        setTextAppearance(requireContext())
 
         binding.selectMonthButton.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_history_to_datePickerDialog)
@@ -45,40 +47,40 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
         binding.selectMonthButton.text = "${getProperMonth(viewModel.getMonth())} ${viewModel.getYear()}"
 
-        binding.recyclerView.adapter = HistoryItem(viewModel.getHistoryData())
-
-        setTextAppearance(requireContext())
+        binding.recyclerView.setAdapter(HistoryItem(viewModel.getHistoryData()))
     }
+
     private fun setTextAppearance(context: Context) {
         val appearanceSettings = Preferences(context).textSize
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             when (appearanceSettings) {
-                 "kecil" -> {
-                    binding.filter1.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                "kecil" -> {
+                    binding.filter1.setTextAppearance(requireContext(),TextAppearance_AppCompat_Body1)
+                    binding.selectMonthButton.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
                 }
                 "normal" -> {
-                    binding.filter1.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.filter1.setTextAppearance(requireContext(), TextAppearance_AppCompat_Large)
+                    binding.selectMonthButton.setTextAppearance(requireContext(), TextAppearance_Material3_HeadlineSmall)
+
                 }
                 "besar" -> {
-                    binding.filter1.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.filter1.setTextAppearance(requireContext(),TextAppearance_AppCompat_Display1)
+                    binding.selectMonthButton.setTextAppearance(requireContext(), TextAppearance_Material3_HeadlineLarge)
                 }
             }
         } else {
             when (appearanceSettings) {
                 "kecil" -> {
-//                    binding.ubahfontSlider.value = 0F
-                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.selectMonthButton.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.filter1.setTextAppearance(TextAppearance_Material3_TitleLarge)
+                    binding.selectMonthButton.setTextAppearance(TextAppearance_Material3_TitleMedium)
                 }
                 "normal" -> {
-//                    binding.ubahfontSlider.value = 1F
-                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.selectMonthButton.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+                    binding.filter1.setTextAppearance(TextAppearance_Material3_TitleLarge)
+                    binding.selectMonthButton.setTextAppearance(TextAppearance_Material3_HeadlineSmall)
                 }
                 "besar" -> {
-//                    binding.ubahfontSlider.value = 2F
-                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.selectMonthButton.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.filter1.setTextAppearance(TextAppearance_Material3_TitleLarge)
+                    binding.selectMonthButton.setTextAppearance(TextAppearance_Material3_HeadlineLarge)
                 }
             }
         }
@@ -96,7 +98,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 if (response.isSuccessful) {
                     Log.d("History", response.body()?.history.toString())
                     viewModel.setHistoryData(response.body()!!)
-                    binding.recyclerView.adapter = HistoryItem(viewModel.getHistoryData())
+                    binding.recyclerView.setAdapter(HistoryItem(viewModel.getHistoryData()))
                 } else {
                     Log.d("History", response.body()?.history.toString())
                 }

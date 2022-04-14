@@ -2,12 +2,13 @@ package com.pklproject.checkincheckout.ui.profile
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.R.style.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pklproject.checkincheckout.BuildConfig
 import com.pklproject.checkincheckout.R
@@ -15,7 +16,6 @@ import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.FragmentProfileBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
-import com.pklproject.checkincheckout.ui.settings.SettingsFragment
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -26,6 +26,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
 
         val tinyDB = TinyDB(requireContext())
+        setTextAppearance(requireContext())
 
         binding.name.text = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).namaKaryawan
         binding.jabatan.text = tinyDB.getObject(LoginActivity.KEYSIGNIN,LoginModel::class.java).jabatan
@@ -48,51 +49,93 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 .create()
                 .show()
         }
-        setTextAppearance(requireContext())
     }
 
     private fun setTextAppearance(context: Context) {
         val appearanceSettings = Preferences(context).textSize
+        val boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-           when (appearanceSettings) {
+            when (appearanceSettings) {
                 "kecil" -> {
-                    binding.name.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.jabatan.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.departemen.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.unit.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.name.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
+                    binding.name.typeface = boldTypeface
+                    binding.jabatan.setTextAppearance(requireContext(), TextAppearance_Material3_TitleSmall)
+                    binding.jabatan.typeface = boldTypeface
+                    binding.departemen.setTextAppearance(requireContext(), TextAppearance_Material3_TitleSmall)
+                    binding.departemen.typeface = boldTypeface
+                    binding.unit.setTextAppearance(requireContext(), TextAppearance_Material3_TitleSmall)
+                    binding.unit.typeface = boldTypeface
+                    binding.txtJabatan.setTextAppearance(requireContext(), TextAppearance_Material3_TitleSmall)
+                    binding.txtDepartemen.setTextAppearance(requireContext(), TextAppearance_Material3_TitleSmall)
+                    binding.txtBisnisUnit.setTextAppearance(requireContext(), TextAppearance_Material3_TitleSmall)
                 }
                 "normal" -> {
-                    binding.name.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.jabatan.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
-                    binding.departemen.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
-                    binding.unit.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+                    binding.name.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
+                    binding.name.typeface = boldTypeface
+                    binding.jabatan.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
+                    binding.jabatan.typeface = boldTypeface
+                    binding.departemen.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
+                    binding.departemen.typeface = boldTypeface
+                    binding.unit.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
+                    binding.unit.typeface = boldTypeface
+                    binding.txtJabatan.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
+                    binding.txtDepartemen.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
+                    binding.txtBisnisUnit.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
                 }
                 "besar" -> {
-                    binding.name.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.jabatan.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.departemen.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.unit.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.name.setTextAppearance(requireContext(), TextAppearance_Material3_HeadlineSmall)
+                    binding.name.typeface = boldTypeface
+                    binding.jabatan.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
+                    binding.jabatan.typeface = boldTypeface
+                    binding.departemen.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
+                    binding.departemen.typeface = boldTypeface
+                    binding.unit.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
+                    binding.unit.typeface = boldTypeface
+                    binding.txtJabatan.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
+                    binding.txtDepartemen.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
+                    binding.txtBisnisUnit.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
                 }
             }
         } else {
             when (appearanceSettings) {
                 "kecil" -> {
-                    binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.name.setTextAppearance(TextAppearance_Material3_TitleMedium)
+                    binding.name.typeface = boldTypeface
+                    binding.jabatan.setTextAppearance(TextAppearance_Material3_TitleSmall)
+                    binding.jabatan.typeface = boldTypeface
+                    binding.departemen.setTextAppearance(TextAppearance_Material3_TitleSmall)
+                    binding.departemen.typeface = boldTypeface
+                    binding.unit.setTextAppearance(TextAppearance_Material3_TitleSmall)
+                    binding.unit.typeface = boldTypeface
+                    binding.txtJabatan.setTextAppearance(TextAppearance_Material3_TitleSmall)
+                    binding.txtDepartemen.setTextAppearance(TextAppearance_Material3_TitleSmall)
+                    binding.txtBisnisUnit.setTextAppearance(TextAppearance_Material3_TitleSmall)
                 }
                 "normal" -> {
-                    binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
-                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
-                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+                    binding.name.setTextAppearance(TextAppearance_Material3_TitleLarge)
+                    binding.name.typeface = boldTypeface
+                    binding.jabatan.setTextAppearance(TextAppearance_Material3_TitleMedium)
+                    binding.jabatan.typeface = boldTypeface
+                    binding.departemen.setTextAppearance(TextAppearance_Material3_TitleMedium)
+                    binding.departemen.typeface = boldTypeface
+                    binding.unit.setTextAppearance(TextAppearance_Material3_TitleMedium)
+                    binding.unit.typeface = boldTypeface
+                    binding.txtJabatan.setTextAppearance(TextAppearance_Material3_TitleMedium)
+                    binding.txtDepartemen.setTextAppearance(TextAppearance_Material3_TitleMedium)
+                    binding.txtBisnisUnit.setTextAppearance(TextAppearance_Material3_TitleMedium)
                 }
                 "besar" -> {
-                    binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.name.setTextAppearance(TextAppearance_Material3_HeadlineSmall)
+                    binding.name.typeface = boldTypeface
+                    binding.jabatan.setTextAppearance(TextAppearance_Material3_TitleLarge)
+                    binding.jabatan.typeface = boldTypeface
+                    binding.departemen.setTextAppearance(TextAppearance_Material3_TitleLarge)
+                    binding.departemen.typeface = boldTypeface
+                    binding.unit.setTextAppearance(TextAppearance_Material3_TitleLarge)
+                    binding.unit.typeface = boldTypeface
+                    binding.txtJabatan.setTextAppearance(TextAppearance_Material3_TitleLarge)
+                    binding.txtDepartemen.setTextAppearance(TextAppearance_Material3_TitleLarge)
+                    binding.txtBisnisUnit.setTextAppearance(TextAppearance_Material3_TitleLarge)
                 }
             }
         }

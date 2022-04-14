@@ -18,7 +18,7 @@
             android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/waktutersisa"
+            android:id="@+id/waktutTersisaTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -37,7 +37,7 @@
             app:icon="@drawable/ic_baseline_camera_alt_24" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/Preview"
+            android:id="@+id/previewTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

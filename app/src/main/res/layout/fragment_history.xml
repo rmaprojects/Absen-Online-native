@@ -46,11 +46,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.l4digital.fastscroll.FastScrollRecyclerView
+        <com.l4digital.fastscroll.FastScrollView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:bubbleSize="small"
+            app:bubbleColor="?colorPrimary"
+            app:bubbleTextColor="?colorOnPrimary"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_history" />
     </FrameLayout>

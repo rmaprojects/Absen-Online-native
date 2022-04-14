@@ -112,16 +112,16 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/kehadiran1"
+                    android:id="@+id/ketidakhadiran"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:gravity="center"
-                    android:text="Kehadiran"
+                    android:text="Ketidakhadiran"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/persenkehadiran1"
+                    android:id="@+id/persenKetidakhadiran"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"

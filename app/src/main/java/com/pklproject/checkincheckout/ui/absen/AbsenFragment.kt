@@ -21,7 +21,6 @@ import com.pklproject.checkincheckout.api.models.Setting
 import com.pklproject.checkincheckout.databinding.FragmentAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
-import com.pklproject.checkincheckout.ui.settings.SettingsFragment
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
@@ -33,6 +32,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+import com.google.android.material.R.style.*
+import kotlin.time.Duration.Companion.minutes
 
 class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
@@ -47,13 +48,28 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
         when (absen) {
             "1" -> {
-                binding.batasWaktuText.text = "Segera absen sebelum ${tinyDB.getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir}"
+                binding.batasWaktuText.text = "Segera absen sebelum ${
+                    tinyDB.getObject(
+                        MainActivity.PENGATURANABSENKEY,
+                        Setting::class.java
+                    ).absenPagiAkhir
+                }"
             }
             "2" -> {
-                binding.batasWaktuText.text = "Segera absen sebelum ${tinyDB.getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir}"
+                binding.batasWaktuText.text = "Segera absen sebelum ${
+                    tinyDB.getObject(
+                        MainActivity.PENGATURANABSENKEY,
+                        Setting::class.java
+                    ).absenSiangAkhir
+                }"
             }
             "3" -> {
-                binding.batasWaktuText.text = "Segera absen sebelum ${tinyDB.getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenPulangAkhir}"
+                binding.batasWaktuText.text = "Segera absen sebelum ${
+                    tinyDB.getObject(
+                        MainActivity.PENGATURANABSENKEY,
+                        Setting::class.java
+                    ).absenPulangAkhir
+                }"
             }
         }
 
@@ -71,53 +87,80 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 binding.cauctionTxt.isVisible = true
             }
         }
-
-        initialisation(tinyDB, absen.toString())
         setTextAppearance(requireContext())
+        initialisation(tinyDB, absen.toString())
     }
 
     private fun setTextAppearance(context: Context) {
         val appearanceSettings = Preferences(context).textSize
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-           when (appearanceSettings) {
-               "kecil" -> {
-                    binding.batasWaktuText.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.waktutersisa.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.Preview.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+            when (appearanceSettings) {
+                "kecil" -> {
+                    binding.batasWaktuText.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Body1
+                    )
+                    binding.waktutTersisaTxt.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Body2
+                    )
+                    binding.previewTxt.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Body1
+                    )
                 }
                 "normal" -> {
-                    binding.batasWaktuText.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.waktutersisa.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
-                    binding.Preview.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.batasWaktuText.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Large
+                    )
+                    binding.waktutTersisaTxt.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Medium
+                    )
+                    binding.previewTxt.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Large
+                    )
                 }
                 "besar" -> {
-                    binding.batasWaktuText.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.waktutersisa.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.Preview.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.batasWaktuText.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Display1
+                    )
+                    binding.waktutTersisaTxt.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Large
+                    )
+                    binding.previewTxt.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Display1
+                    )
                 }
-        }
+            }
         } else {
             when (appearanceSettings) {
                 "kecil" -> {
-                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.batasWaktuText.setTextAppearance(TextAppearance_AppCompat_Body1)
+                    binding.waktutTersisaTxt.setTextAppearance(TextAppearance_AppCompat_Body2)
+                    binding.previewTxt.setTextAppearance(TextAppearance_AppCompat_Body1)
                 }
                 "normal" -> {
-                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
-                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.batasWaktuText.setTextAppearance(TextAppearance_AppCompat_Large)
+                    binding.waktutTersisaTxt.setTextAppearance(TextAppearance_AppCompat_Medium)
+                    binding.previewTxt.setTextAppearance(TextAppearance_AppCompat_Large)
                 }
                 "besar" -> {
-                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.batasWaktuText.setTextAppearance(TextAppearance_AppCompat_Display1)
+                    binding.waktutTersisaTxt.setTextAppearance(TextAppearance_AppCompat_Large)
+                    binding.previewTxt.setTextAppearance(TextAppearance_AppCompat_Display1)
                 }
             }
         }
     }
 
     private fun initialisation(tinyDB: TinyDB, absen: String) {
+        countDelayWaktuTersisa(absen)
         if (viewModel.getResultPicture() != null && viewModel.getLatitude() != null) {
             binding.kirimabsen.isEnabled = true
 
@@ -125,20 +168,102 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 findNavController().navigate(R.id.action_absenFragment_to_cameraView)
             }
 
-            val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
-            val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
+            val username =
+                tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
+            val password =
+                tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
             val keterangan = binding.keterangan.text
 
             binding.kirimabsen.setOnClickListener {
                 val longitude = viewModel.getLongitude() ?: 0.0
                 val latitude = viewModel.getLatitude() ?: 0.0
                 val jamSekarang = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
-                kirimAbsen(username!!, password!!, absen, keterangan.toString(), longitude, latitude, jamSekarang)
+                kirimAbsen(
+                    username!!,
+                    password!!,
+                    absen,
+                    keterangan.toString(),
+                    longitude,
+                    latitude,
+                    jamSekarang
+                )
             }
         } else {
             binding.kirimabsen.isEnabled = false
             binding.ambilfoto.setOnClickListener {
                 findNavController().navigate(R.id.action_absenFragment_to_cameraView)
+            }
+        }
+    }
+
+    private fun countDelayWaktuTersisa(tipeAbsen: String) {
+        val waktuSekarang = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date()).split(":")
+        val jam = waktuSekarang[0].toInt()
+        val menit = waktuSekarang[1].toInt()
+        val detik = waktuSekarang[2].toInt()
+
+        val jamSekarang = Calendar.getInstance()
+        jamSekarang.set(Calendar.HOUR_OF_DAY, jam)
+        jamSekarang.set(Calendar.MINUTE, menit)
+        jamSekarang.set(Calendar.SECOND, detik)
+
+        when (tipeAbsen) {
+            "1" -> {
+                val waktuAkhirAbsenPagi = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir.split(":")
+                val jamAbsenTerakhir = waktuAkhirAbsenPagi[0].toInt()
+                val menitAbsenTerakhir = waktuAkhirAbsenPagi[1].toInt()
+                val detikAbsenTerakhir = waktuAkhirAbsenPagi[2].toInt()
+
+                val jamAbsenTerakhirCalendar = Calendar.getInstance()
+                jamAbsenTerakhirCalendar.set(Calendar.HOUR_OF_DAY, jamAbsenTerakhir)
+                jamAbsenTerakhirCalendar.set(Calendar.MINUTE, menitAbsenTerakhir)
+                jamAbsenTerakhirCalendar.set(Calendar.SECOND, detikAbsenTerakhir)
+
+                val delay = jamAbsenTerakhirCalendar.timeInMillis - jamSekarang.timeInMillis
+
+                if (delay < 6000) {
+                    binding.waktutTersisaTxt.text = "Anda terlambat"
+                } else {
+                    binding.waktutTersisaTxt.text = "Waktu tersisa: ${delay / 1000 / 60} menit"
+                }
+            }
+            "2" -> {
+                val waktuAkhirAbsenSiang = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir.split(":")
+                val jamAbsenTerakhir = waktuAkhirAbsenSiang[0].toInt()
+                val menitAbsenTerakhir = waktuAkhirAbsenSiang[1].toInt()
+                val detikAbsenTerakhir = waktuAkhirAbsenSiang[2].toInt()
+
+                val jamAbsenTerakhirCalendar = Calendar.getInstance()
+                jamAbsenTerakhirCalendar.set(Calendar.HOUR_OF_DAY, jamAbsenTerakhir)
+                jamAbsenTerakhirCalendar.set(Calendar.MINUTE, menitAbsenTerakhir)
+                jamAbsenTerakhirCalendar.set(Calendar.SECOND, detikAbsenTerakhir)
+
+                val delay = jamAbsenTerakhirCalendar.timeInMillis - jamSekarang.timeInMillis
+
+                if (delay < 6000) {
+                    binding.waktutTersisaTxt.text = "Anda terlambat"
+                } else {
+                    binding.waktutTersisaTxt.text = "Waktu tersisa: ${delay / 1000 / 60} menit"
+                }
+            }
+            "3" -> {
+                val waktuAkhirAbsenPulang = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenPulangAkhir.split(":")
+                val jamAbsenTerakhir = waktuAkhirAbsenPulang[0].toInt()
+                val menitAbsenTerakhir = waktuAkhirAbsenPulang[1].toInt()
+                val detikAbsenTerakhir = waktuAkhirAbsenPulang[2].toInt()
+
+                val jamAbsenTerakhirCalendar = Calendar.getInstance()
+                jamAbsenTerakhirCalendar.set(Calendar.HOUR_OF_DAY, jamAbsenTerakhir)
+                jamAbsenTerakhirCalendar.set(Calendar.MINUTE, menitAbsenTerakhir)
+                jamAbsenTerakhirCalendar.set(Calendar.SECOND, detikAbsenTerakhir)
+
+                val delay = jamAbsenTerakhirCalendar.timeInMillis - jamSekarang.timeInMillis
+
+                if (delay < 6000) {
+                    binding.waktutTersisaTxt.text = "Anda terlambat"
+                } else {
+                    binding.waktutTersisaTxt.text = "Waktu tersisa: ${delay / 1000 / 60} menit"
+                }
             }
         }
     }
@@ -179,7 +304,18 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             Log.d("gambar", imageBodyPart.toString())
             lifecycleScope.launch {
                 try {
-                    val response = api.kirimAbsen(reqBodyUsername, reqBodyPassword, reqBodyTipeAbsen, reqBodyLongitude, reqBodyLatitude, imageBodyPart, reqBodyKeterangan, reqBodyJamSekarang, idAbsensiReqBody, reqBodyTanggalSekarang)
+                    val response = api.kirimAbsen(
+                        reqBodyUsername,
+                        reqBodyPassword,
+                        reqBodyTipeAbsen,
+                        reqBodyLongitude,
+                        reqBodyLatitude,
+                        imageBodyPart,
+                        reqBodyKeterangan,
+                        reqBodyJamSekarang,
+                        idAbsensiReqBody,
+                        reqBodyTanggalSekarang
+                    )
                     if (response.isSuccessful) {
                         Log.d("response", response.body().toString())
                         if (response.body()?.code == 200) {
@@ -209,7 +345,11 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                     }
                 } catch (e: Exception) {
                     Log.d("Error", e.message.toString())
-                    Snackbar.make(binding.root, "Gagal Absen, silahkan periksa internet anda lalu coba lagi!", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        binding.root,
+                        "Gagal Absen, silahkan periksa internet anda lalu coba lagi!",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
             }
         } else {
@@ -222,7 +362,18 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             Log.d("ID", tinyDB.getString(KEYIDABSEN))
             lifecycleScope.launch {
                 try {
-                    val response = api.kirimAbsen(reqBodyUsername, reqBodyPassword, reqBodyTipeAbsen, reqBodyLongitude, reqBodyLatitude, imageBodyPart, reqBodyKeterangan, reqBodyJamSekarang, idAbsensiReqBody, reqBodyTanggalSekarang)
+                    val response = api.kirimAbsen(
+                        reqBodyUsername,
+                        reqBodyPassword,
+                        reqBodyTipeAbsen,
+                        reqBodyLongitude,
+                        reqBodyLatitude,
+                        imageBodyPart,
+                        reqBodyKeterangan,
+                        reqBodyJamSekarang,
+                        idAbsensiReqBody,
+                        reqBodyTanggalSekarang
+                    )
                     Log.d("response", response.body().toString())
                     if (response.body()?.code == 200) {
                         viewModel.setResultPicture(null)
@@ -249,7 +400,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         }
     }
 
-    private fun buildImageBodyPart(fileName:String, bitmap: Bitmap) : MultipartBody.Part {
+    private fun buildImageBodyPart(fileName: String, bitmap: Bitmap): MultipartBody.Part {
         val leftImageFile = convertBitmapToFile(fileName, bitmap)
 //        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), leftImageFile)
         val requestFile = leftImageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -278,8 +429,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         return file
     }
 
-    private fun convertToRequstBody(value:String) : RequestBody {
-        return  value.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+    private fun convertToRequstBody(value: String): RequestBody {
+        return value.toRequestBody("multipart/form-data".toMediaTypeOrNull())
     }
 
     companion object {
