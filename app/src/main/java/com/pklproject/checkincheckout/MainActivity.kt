@@ -242,7 +242,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .build()
 
             WorkManager.getInstance(this)
-                .enqueueUniqueWork("workSiang", ExistingWorkPolicy.APPEND, request)
+                .enqueueUniqueWork("workSiang", ExistingWorkPolicy.KEEP, request)
         }
     }
 
@@ -289,7 +289,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .build()
 
             WorkManager.getInstance(this)
-                .enqueueUniqueWork("workPulang", ExistingWorkPolicy.APPEND, request)
+                .enqueueUniqueWork("workPulang", ExistingWorkPolicy.KEEP, request)
         } else {
             Log.d("DELAYPULANG", delay.toString())
             val request = OneTimeWorkRequestBuilder<NotificationWorker>()
@@ -303,7 +303,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .build()
 
             WorkManager.getInstance(this)
-                .enqueueUniqueWork("workPulang", ExistingWorkPolicy.APPEND, request)
+                .enqueueUniqueWork("workPulang", ExistingWorkPolicy.KEEP, request)
         }
     }
 

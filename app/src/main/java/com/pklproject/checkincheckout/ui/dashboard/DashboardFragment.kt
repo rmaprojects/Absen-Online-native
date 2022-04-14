@@ -39,7 +39,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     binding.kehadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleSmall)
                     binding.persenkehadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
                     binding.ketidakhadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleSmall)
-                    binding.persenKetidakhadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleSmall)
+                    binding.persenKetidakhadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
                     binding.terlambat.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
                     binding.terlambat.setTextColor(resources.getColor(design_default_color_error))
                 }
@@ -75,7 +75,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     binding.kehadiran.setTextAppearance(TextAppearance_Material3_TitleSmall)
                     binding.persenkehadiran.setTextAppearance(TextAppearance_Material3_TitleMedium)
                     binding.ketidakhadiran.setTextAppearance(TextAppearance_Material3_TitleSmall)
-                    binding.persenKetidakhadiran.setTextAppearance(TextAppearance_Material3_TitleSmall)
+                    binding.persenKetidakhadiran.setTextAppearance(TextAppearance_Material3_TitleMedium)
                     binding.terlambat.setTextAppearance(TextAppearance_Material3_TitleMedium)
                     binding.terlambat.setTextColor(resources.getColor(design_default_color_error))
                 }
@@ -86,7 +86,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     binding.kehadiran.setTextAppearance(TextAppearance_Material3_TitleMedium)
                     binding.persenkehadiran.setTextAppearance(TextAppearance_Material3_TitleLarge)
                     binding.ketidakhadiran.setTextAppearance(TextAppearance_Material3_TitleMedium)
-                    binding.persenKetidakhadiran.setTextAppearance(TextAppearance_Material3_TitleMedium)
+                    binding.persenKetidakhadiran.setTextAppearance(TextAppearance_Material3_TitleLarge)
                     binding.terlambat.setTextAppearance(TextAppearance_Material3_TitleLarge)
                     binding.terlambat.setTextColor(resources.getColor(design_default_color_error))
                 }
@@ -97,7 +97,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     binding.kehadiran.setTextAppearance(TextAppearance_Material3_HeadlineSmall)
                     binding.persenkehadiran.setTextAppearance(TextAppearance_Material3_HeadlineLarge)
                     binding.ketidakhadiran.setTextAppearance(TextAppearance_Material3_HeadlineSmall)
-                    binding.persenKetidakhadiran.setTextAppearance(TextAppearance_Material3_HeadlineSmall)
+                    binding.persenKetidakhadiran.setTextAppearance(TextAppearance_Material3_HeadlineLarge)
                     binding.terlambat.setTextAppearance(TextAppearance_Material3_HeadlineLarge)
                     binding.terlambat.setTextColor(resources.getColor(design_default_color_error))
                 }
