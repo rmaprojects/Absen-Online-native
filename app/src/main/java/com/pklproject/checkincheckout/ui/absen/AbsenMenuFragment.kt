@@ -86,38 +86,35 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val appearanceSettings = Preferences(context).textSize
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             when (appearanceSettings) {
-//                "kecil" -> {
-//                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-//                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-//                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-//                }
-//                "normal" -> {
-//                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-//                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-//                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-//                }
-//                "besar" -> {
-//                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-//                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-//                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-//                }
+                "kecil" -> {
+                    binding.AbsenPagi.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.Absensiang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.Absenpulang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                }
+                "normal" -> {
+                    binding.AbsenPagi.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.Absensiang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.Absenpulang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                }
+                "besar" -> {
+                    binding.AbsenPagi.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.Absensiang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.Absenpulang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                }
             }
         } else {
             when (appearanceSettings) {
                 "kecil" -> {
-//                    binding.ubahfontSlider.value = 0F
                     binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
                     binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
                     binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
                 }
                 "normal" -> {
-//                    binding.ubahfontSlider.value = 1F
                     binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
                     binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
                     binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
                 }
                 "besar" -> {
-//                    binding.ubahfontSlider.value = 2F
                     binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
                     binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
                     binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
