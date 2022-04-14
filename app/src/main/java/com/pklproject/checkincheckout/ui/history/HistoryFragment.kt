@@ -1,5 +1,7 @@
 package com.pklproject.checkincheckout.ui.history
 
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,6 +18,7 @@ import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.FragmentHistoryBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.history.item.HistoryItem
+import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
@@ -43,6 +46,42 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         binding.selectMonthButton.text = "${getProperMonth(viewModel.getMonth())} ${viewModel.getYear()}"
 
         binding.recyclerView.adapter = HistoryItem(viewModel.getHistoryData())
+
+        setTextAppearance(requireContext())
+    }
+    private fun setTextAppearance(context: Context) {
+        val appearanceSettings = Preferences(context).textSize
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            when (appearanceSettings) {
+//                "kecil" -> {
+//                    binding.ubahfontSlider.value = 0F
+//                }
+//                "normal" -> {
+//                    binding.ubahfontSlider.value = 1F
+//                }
+//                "besar" -> {
+//                    binding.ubahfontSlider.value = 2F
+//                }
+            }
+        } else {
+            when (appearanceSettings) {
+                "kecil" -> {
+//                    binding.ubahfontSlider.value = 0F
+                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.selectMonthButton.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                }
+                "normal" -> {
+//                    binding.ubahfontSlider.value = 1F
+                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.selectMonthButton.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                }
+                "besar" -> {
+//                    binding.ubahfontSlider.value = 2F
+                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.selectMonthButton.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                }
+            }
+        }
     }
 
     private fun retrieveHistory(tinyDB: TinyDB) {

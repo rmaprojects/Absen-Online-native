@@ -1,6 +1,8 @@
 package com.pklproject.checkincheckout.ui.absen
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,6 +20,8 @@ import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.api.models.Setting
 import com.pklproject.checkincheckout.databinding.FragmentAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
+import com.pklproject.checkincheckout.ui.settings.Preferences
+import com.pklproject.checkincheckout.ui.settings.SettingsFragment
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
@@ -69,6 +73,45 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         }
 
         initialisation(tinyDB, absen.toString())
+        setTextAppearance(requireContext())
+    }
+
+    private fun setTextAppearance(context: Context) {
+        val appearanceSettings = Preferences(context).textSize
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+           when (appearanceSettings) {
+//                "kecil" -> {
+//                    binding.ubahfontSlider.value = 0F
+//                }
+//                "normal" -> {
+//                    binding.ubahfontSlider.value = 1F
+//                }
+//                "besar" -> {
+//                    binding.ubahfontSlider.value = 2F
+//               }
+        }
+        } else {
+            when (appearanceSettings) {
+                "kecil" -> {
+//                    binding.ubahfontSlider.value = 0F
+                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                }
+                "normal" -> {
+//                    binding.ubahfontSlider.value = 1F
+                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                }
+                "besar" -> {
+//                    binding.ubahfontSlider.value = 2F
+                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                }
+            }
+        }
     }
 
     private fun initialisation(tinyDB: TinyDB, absen: String) {

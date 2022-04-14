@@ -1,6 +1,8 @@
 package com.pklproject.checkincheckout.ui.profile
 
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,6 +15,7 @@ import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.FragmentProfileBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
+import com.pklproject.checkincheckout.ui.settings.SettingsFragment
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -44,6 +47,48 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 }
                 .create()
                 .show()
+        }
+        setTextAppearance(requireContext())
+    }
+
+    private fun setTextAppearance(context: Context) {
+        val appearanceSettings = Preferences(context).textSize
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+           when (appearanceSettings) {
+//                "kecil" -> {
+//                    binding.ubahfontSlider.value = 0F
+//                }
+//                "normal" -> {
+//                    binding.ubahfontSlider.value = 1F
+//                }
+//                "besar" -> {
+//                    binding.ubahfontSlider.value = 2F
+//                }
+            }
+        } else {
+            when (appearanceSettings) {
+                "kecil" -> {
+//                    binding.ubahfontSlider.value = 0F
+                    binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                }
+                "normal" -> {
+//                    binding.ubahfontSlider.value = 1F
+                    binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                }
+                "besar" -> {
+//                    binding.ubahfontSlider.value = 2F
+                    binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                }
+            }
         }
     }
 

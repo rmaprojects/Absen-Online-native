@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -25,6 +26,8 @@ import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.api.models.Setting
 import com.pklproject.checkincheckout.databinding.FragmentMenuAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
+import com.pklproject.checkincheckout.ui.settings.Preferences
+import com.pklproject.checkincheckout.ui.settings.SettingsFragment
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
@@ -75,8 +78,68 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val tinyDB = TinyDB(requireContext())
 
         initialisation(tinyDB)
-
+        setTextAppearance(requireContext())
     }
+
+    private fun setTextAppearance(context: Context) {
+        val appearanceSettings = Preferences(context).textSize
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            when (appearanceSettings) {
+//                "kecil" -> {
+//                    binding.ubahfontSlider.value = 0F
+//                }
+//                "normal" -> {
+//                    binding.ubahfontSlider.value = 1F
+//                }
+//                "besar" -> {
+//                    binding.ubahfontSlider.value = 2F
+//                }
+            }
+        } else {
+            when (appearanceSettings) {
+                "kecil" -> {
+//                    binding.ubahfontSlider.value = 0F
+                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtJamAbsenDay.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtJamAbsenNoon.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtJamAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtStatusDay.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtStatusNoon.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtStatusPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.kirim.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                }
+                "normal" -> {
+//                    binding.ubahfontSlider.value = 1F
+                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtJamAbsenDay.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtJamAbsenNoon.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtJamAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtStatusDay.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtStatusNoon.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtStatusPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.kirim.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                }
+                "besar" -> {
+//                    binding.ubahfontSlider.value = 2F
+                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtJamAbsenDay.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtJamAbsenNoon.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtJamAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtStatusDay.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtStatusNoon.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtStatusPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.kirim.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                }
+            }
+        }
+    }
+
 
     private fun initialisation(tinyDB: TinyDB) {
         binding.pilihanAbsen.check(R.id.absen)

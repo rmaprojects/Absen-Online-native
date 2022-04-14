@@ -75,6 +75,7 @@
                         android:layout_height="match_parent">
 
                         <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/AbsenPagi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
@@ -144,6 +145,7 @@
                         android:layout_height="match_parent">
 
                         <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/Absensiang"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
@@ -214,6 +216,7 @@
                         android:layout_height="match_parent">
 
                         <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/Absenpulang"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
