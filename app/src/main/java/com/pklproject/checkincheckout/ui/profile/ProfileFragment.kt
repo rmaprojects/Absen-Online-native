@@ -57,12 +57,24 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
            when (appearanceSettings) {
 //                "kecil" -> {
 //                    binding.ubahfontSlider.value = 0F
+//                    binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+//                    binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+//                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+//                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
 //                }
 //                "normal" -> {
 //                    binding.ubahfontSlider.value = 1F
+//                    binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+//                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+//                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
 //                }
 //                "besar" -> {
 //                    binding.ubahfontSlider.value = 2F
+//                    binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+//                    binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
 //                }
             }
         } else {
@@ -71,22 +83,22 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 //                    binding.ubahfontSlider.value = 0F
                     binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
                     binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
                 }
                 "normal" -> {
 //                    binding.ubahfontSlider.value = 1F
                     binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
                     binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
-                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
                 }
                 "besar" -> {
 //                    binding.ubahfontSlider.value = 2F
-                    binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
-                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.name.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.jabatan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.departemen.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.unit.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
                 }
             }
         }

@@ -34,12 +34,36 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             when (appearanceSettings) {
 //                "kecil" -> {
 //                    binding.ubahfontSlider.value = 0F
+//                    binding.jamSekarang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+//                    binding.txtCurrentClock.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+//                    binding.filter.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+//                    binding.kehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+//                    binding.persenkehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+//                    binding.kehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+//                    binding.persenkehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+//                    binding.terlambat.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
 //                }
 //                "normal" -> {
 //                    binding.ubahfontSlider.value = 1F
+//                    binding.jamSekarang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.txtCurrentClock.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.filter.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.kehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+//                    binding.persenkehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.kehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+//                    binding.persenkehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.terlambat.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
 //                }
 //                "besar" -> {
 //                    binding.ubahfontSlider.value = 2F
+//                    binding.jamSekarang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+//                    binding.txtCurrentClock.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+//                    binding.filter.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+//                    binding.kehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.persenkehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+//                    binding.kehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.persenkehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+//                    binding.terlambat.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
 //                }
             }
         } else {
@@ -47,38 +71,35 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 "kecil" -> {
 //                    binding.ubahfontSlider.value = 0F
                     binding.jamSekarang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtCurrentClock.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.txtCurrentClock.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
                     binding.filter.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.Pekan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.kehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.kehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
                     binding.persenkehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.kehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.kehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
                     binding.persenkehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
                     binding.terlambat.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
                 }
                 "normal" -> {
 //                    binding.ubahfontSlider.value = 1F
-                    binding.jamSekarang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtCurrentClock.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.filter.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.Pekan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.kehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.persenkehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.kehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.persenkehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.terlambat.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.jamSekarang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.txtCurrentClock.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.filter.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.kehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+                    binding.persenkehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.kehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+                    binding.persenkehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.terlambat.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
                 }
                 "besar" -> {
 //                    binding.ubahfontSlider.value = 2F
-                    binding.jamSekarang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtCurrentClock.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.filter.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.Pekan.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.kehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.persenkehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.kehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.persenkehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.terlambat.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.jamSekarang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.txtCurrentClock.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.filter.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.kehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.persenkehadiran.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.kehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.persenkehadiran1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.terlambat.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
                 }
             }
         }

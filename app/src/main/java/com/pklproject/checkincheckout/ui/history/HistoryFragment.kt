@@ -53,14 +53,17 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         val appearanceSettings = Preferences(context).textSize
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             when (appearanceSettings) {
-//                "kecil" -> {
+//                 "kecil" -> {
 //                    binding.ubahfontSlider.value = 0F
+//                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
 //                }
 //                "normal" -> {
-//                    binding.ubahfontSlider.value = 1F
+////                    binding.ubahfontSlider.value = 1F
+//                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
 //                }
 //                "besar" -> {
-//                    binding.ubahfontSlider.value = 2F
+//                   binding.ubahfontSlider.value = 2F
+//                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
 //                }
             }
         } else {
@@ -68,17 +71,14 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
                 "kecil" -> {
 //                    binding.ubahfontSlider.value = 0F
                     binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.selectMonthButton.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
                 }
                 "normal" -> {
 //                    binding.ubahfontSlider.value = 1F
-                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.selectMonthButton.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
                 }
                 "besar" -> {
 //                    binding.ubahfontSlider.value = 2F
-                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.selectMonthButton.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.filter1.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
                 }
             }
         }

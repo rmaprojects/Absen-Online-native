@@ -80,15 +80,24 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         val appearanceSettings = Preferences(context).textSize
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
            when (appearanceSettings) {
-//                "kecil" -> {
+//               "kecil" -> {
 //                    binding.ubahfontSlider.value = 0F
+//                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+//                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+//                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
 //                }
 //                "normal" -> {
 //                    binding.ubahfontSlider.value = 1F
+//                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+//                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
 //                }
 //                "besar" -> {
 //                    binding.ubahfontSlider.value = 2F
-//               }
+//                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+//                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+//                }
         }
         } else {
             when (appearanceSettings) {
@@ -100,15 +109,15 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 }
                 "normal" -> {
 //                    binding.ubahfontSlider.value = 1F
-                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Medium)
+                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
                 }
                 "besar" -> {
 //                    binding.ubahfontSlider.value = 2F
-                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.batasWaktuText.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.waktutersisa.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.Preview.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
                 }
             }
         }

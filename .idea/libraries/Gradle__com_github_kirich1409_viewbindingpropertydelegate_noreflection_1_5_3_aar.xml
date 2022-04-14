@@ -4,9 +4,10 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/29f3c15a3eea0d67accea533dcbd1a1a/transformed/viewbindingpropertydelegate-noreflection-1.5.3/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ec4c8c436f3adff03fa35dc76acdb754/transformed/viewbindingpropertydelegate-noreflection-1.5.3/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d7da03c9f0e13b3bdd232e033b551148/transformed/viewbindingpropertydelegate-noreflection-1.5.3/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/cad49ada5e2c6202fdaccd1bf1203cc3/transformed/viewbindingpropertydelegate-noreflection-1.5.3/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/cad49ada5e2c6202fdaccd1bf1203cc3/transformed/viewbindingpropertydelegate-noreflection-1.5.3/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/cad49ada5e2c6202fdaccd1bf1203cc3/transformed/viewbindingpropertydelegate-noreflection-1.5.3/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1a683744ba949a76592e642e74d1548a/transformed/viewbindingpropertydelegate-noreflection-1.5.3/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1a683744ba949a76592e642e74d1548a/transformed/viewbindingpropertydelegate-noreflection-1.5.3/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/1a683744ba949a76592e642e74d1548a/transformed/viewbindingpropertydelegate-noreflection-1.5.3/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

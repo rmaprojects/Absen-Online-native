@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.location.LocationManagerCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -86,13 +87,19 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             when (appearanceSettings) {
 //                "kecil" -> {
-//                    binding.ubahfontSlider.value = 0F
+//                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+//                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+//                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
 //                }
 //                "normal" -> {
-//                    binding.ubahfontSlider.value = 1F
+//                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+//                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
 //                }
 //                "besar" -> {
-//                    binding.ubahfontSlider.value = 2F
+//                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+//                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+//                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
 //                }
             }
         } else {
@@ -100,41 +107,20 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 "kecil" -> {
 //                    binding.ubahfontSlider.value = 0F
                     binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
+                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
                     binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtJamAbsenDay.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtJamAbsenNoon.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtJamAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtStatusDay.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtStatusNoon.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtStatusPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.kirim.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
                 }
                 "normal" -> {
 //                    binding.ubahfontSlider.value = 1F
-                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtJamAbsenDay.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtJamAbsenNoon.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtJamAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtStatusDay.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtStatusNoon.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtStatusPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.kirim.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
                 }
                 "besar" -> {
 //                    binding.ubahfontSlider.value = 2F
-                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body2)
-                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtJamAbsenDay.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtJamAbsenNoon.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtJamAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtStatusDay.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtStatusNoon.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtStatusPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.kirim.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
                 }
             }
         }
