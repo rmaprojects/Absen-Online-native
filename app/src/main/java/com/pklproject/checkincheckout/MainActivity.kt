@@ -43,11 +43,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val tinyDb = TinyDB(this)
         retrieveSettingsAbsen(tinyDb)
 
-        if (tinyDb.getObject(PENGATURANABSENKEY, Setting::class.java) != null) {
-            notificationWorkerPagi()
-            notificationWorkerSiang()
-            notificationWorkerPulang()
-        }
+        notificationWorkerPagi()
+        notificationWorkerSiang()
+        notificationWorkerPulang()
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
