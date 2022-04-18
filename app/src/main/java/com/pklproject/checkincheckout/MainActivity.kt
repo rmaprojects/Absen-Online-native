@@ -12,10 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.workDataOf
+import androidx.work.*
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
@@ -43,9 +40,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val tinyDb = TinyDB(this)
         retrieveSettingsAbsen(tinyDb)
 
-        notificationWorkerPagi()
-        notificationWorkerSiang()
-        notificationWorkerPulang()
+        notificationWorker()
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
@@ -121,188 +116,39 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         binding.bottomNavView.setupWithNavController(navController)
     }
 
-    private fun notificationWorkerPagi() {
+    private fun notificationWorker() {
 
-        val waktuAkhirAbsenPagi =
-            TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir
+        val waktuAkhirAbsenPagi = TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir
         Log.d("waktuAkhirAbsenPagi", waktuAkhirAbsenPagi)
+        val waktuAkhirAbsenSiang = TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir
+        Log.d("waktuAkhirAbsenSiang", waktuAkhirAbsenSiang)
+        val waktuAkhirAbsenPulang = TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPulangAkhir
+        Log.d("waktuAkhirAbsenPulang", waktuAkhirAbsenPulang)
 
-        val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
-        val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
-        val jamPagiAkhir = waktuAkhirAbsenPagi.split(":")[0].toInt()
-        val menitPagiAkhir = waktuAkhirAbsenPagi.split(":")[1].toInt()
-        val hariIni = Calendar.getInstance()
+        val workerPagi = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
+            .setInputData(workDataOf(
+                "jam" to waktuAkhirAbsenPagi,
+                "tipeAbsen" to 0
+            ))
+            .build()
 
-        val calendarJamPagiAkhir = Calendar.getInstance()
-        calendarJamPagiAkhir.set(
-            tahunIni,
-            bulanIni,
-            hariIni.get(Calendar.DAY_OF_MONTH),
-            jamPagiAkhir,
-            menitPagiAkhir
-        )
+        val workerSiang = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
+            .setInputData(workDataOf(
+                "jam" to waktuAkhirAbsenSiang,
+                "tipeAbsen" to 1
+            ))
+            .build()
 
-        var delay = calendarJamPagiAkhir.timeInMillis - hariIni.timeInMillis
+        val workerPulang = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
+            .setInputData(workDataOf(
+                "jam" to waktuAkhirAbsenPulang,
+                "tipeAbsen" to 2
+            ))
+            .build()
 
-        if (delay < 6000) {
-            calendarJamPagiAkhir.set(
-                tahunIni,
-                bulanIni,
-                hariIni.get(Calendar.DAY_OF_MONTH) + 1,
-                jamPagiAkhir,
-                menitPagiAkhir
-            )
-            delay = calendarJamPagiAkhir.timeInMillis - hariIni.timeInMillis
-            val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-                .setInputData(
-                    workDataOf(
-                        "jam" to waktuAkhirAbsenPagi,
-                        "tipeAbsen" to 0
-                    )
-                )
-                .setInitialDelay(delay, TimeUnit.SECONDS)
-                .build()
-
-            WorkManager.getInstance(this)
-                .enqueueUniqueWork("workPagi", ExistingWorkPolicy.APPEND, request)
-            Log.d("DELAYPAGI", delay.toString())
-        } else {
-            val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-                .setInputData(
-                    workDataOf(
-                        "jam" to waktuAkhirAbsenPagi,
-                        "tipeAbsen" to 0
-                    )
-                )
-                .setInitialDelay(delay, TimeUnit.SECONDS)
-                .build()
-            Log.d("DELAYPAGI", delay.toString())
-
-            WorkManager.getInstance(this)
-                .enqueueUniqueWork("workPagi", ExistingWorkPolicy.APPEND, request)
-        }
-    }
-
-    private fun notificationWorkerSiang() {
-
-        val waktuAkhirAbsenSiang =
-            TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir
-        Log.d("waktuAkhirAbsenSore", waktuAkhirAbsenSiang)
-
-        val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
-        val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
-        val jamSiangAkhir = waktuAkhirAbsenSiang.split(":")[0].toInt()
-        val menitSiangAkhir = waktuAkhirAbsenSiang.split(":")[1].toInt()
-        val hariIni = Calendar.getInstance()
-
-        val calendarJamSiangAKhir = Calendar.getInstance()
-        calendarJamSiangAKhir.set(
-            tahunIni,
-            bulanIni,
-            hariIni.get(Calendar.DAY_OF_MONTH),
-            jamSiangAkhir,
-            menitSiangAkhir
-        )
-
-        val delay = calendarJamSiangAKhir.timeInMillis - hariIni.timeInMillis
-
-        if (delay < 6000) {
-            calendarJamSiangAKhir.set(
-                tahunIni,
-                bulanIni,
-                hariIni.get(Calendar.DAY_OF_MONTH) + 1,
-                jamSiangAkhir,
-                menitSiangAkhir
-            )
-            Log.d("DELAYSIANG", delay.toString())
-            val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-                .setInputData(
-                    workDataOf(
-                        "jam" to waktuAkhirAbsenSiang,
-                        "tipeAbsen" to 1
-                    )
-                )
-                .setInitialDelay(delay, TimeUnit.SECONDS)
-                .build()
-
-            WorkManager.getInstance(this)
-                .enqueueUniqueWork("workSiang", ExistingWorkPolicy.APPEND, request)
-        } else {
-            Log.d("DELAYSIANG", delay.toString())
-            val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-                .setInputData(
-                    workDataOf(
-                        "jam" to waktuAkhirAbsenSiang,
-                        "tipeAbsen" to 1
-                    )
-                )
-                .setInitialDelay(delay, TimeUnit.SECONDS)
-                .build()
-
-            WorkManager.getInstance(this)
-                .enqueueUniqueWork("workSiang", ExistingWorkPolicy.KEEP, request)
-        }
-    }
-
-    private fun notificationWorkerPulang() {
-
-        val waktuAkhirAbsenPulang =
-            TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPulangAkhir
-        Log.d("waktuAkhirAbsenMalam", waktuAkhirAbsenPulang)
-
-        val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
-        val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
-        val jamPulangAkhir = waktuAkhirAbsenPulang.split(":")[0].toInt()
-        val menitPulangAkhir = waktuAkhirAbsenPulang.split(":")[1].toInt()
-        val hariIni = Calendar.getInstance()
-
-        val calendarJamPulangAkhir = Calendar.getInstance()
-        calendarJamPulangAkhir.set(
-            tahunIni,
-            bulanIni,
-            hariIni.get(Calendar.DAY_OF_MONTH),
-            jamPulangAkhir,
-            menitPulangAkhir
-        )
-
-        val delay = calendarJamPulangAkhir.timeInMillis - hariIni.timeInMillis
-
-        if (delay < 6000) {
-            calendarJamPulangAkhir.set(
-                tahunIni,
-                bulanIni,
-                hariIni.get(Calendar.DAY_OF_MONTH) + 1,
-                jamPulangAkhir,
-                menitPulangAkhir
-            )
-            Log.d("DELAYPULANG", delay.toString())
-            val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-                .setInputData(
-                    workDataOf(
-                        "jam" to waktuAkhirAbsenPulang,
-                        "tipeAbsen" to 2
-                    )
-                )
-                .setInitialDelay(delay, TimeUnit.SECONDS)
-                .build()
-
-            WorkManager.getInstance(this)
-                .enqueueUniqueWork("workPulang", ExistingWorkPolicy.KEEP, request)
-        } else {
-            Log.d("DELAYPULANG", delay.toString())
-            val request = OneTimeWorkRequestBuilder<NotificationWorker>()
-                .setInputData(
-                    workDataOf(
-                        "jam" to waktuAkhirAbsenPulang,
-                        "tipeAbsen" to 2
-                    )
-                )
-                .setInitialDelay(delay, TimeUnit.SECONDS)
-                .build()
-
-            WorkManager.getInstance(this)
-                .enqueueUniqueWork("workPulang", ExistingWorkPolicy.KEEP, request)
-        }
+        WorkManager.getInstance(this).enqueue(workerPagi)
+        WorkManager.getInstance(this).enqueue(workerSiang)
+        WorkManager.getInstance(this).enqueue(workerPulang)
     }
 
     //Suport for back button

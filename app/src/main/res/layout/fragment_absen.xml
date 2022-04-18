@@ -91,10 +91,19 @@
             android:layout_width="match_parent"
             android:text="Kirim"
             android:enabled="false"
-            app:iconGravity="textEnd"
             android:layout_gravity="center"
-            android:layout_margin="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
             android:layout_height="56dp"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtSendError"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="?colorError"
+            android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+            android:gravity="center"
+            android:text="Lokasi anda belum ditemukan, atau foto belum diambil coba tutup aplikasi lalu coba lagi"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

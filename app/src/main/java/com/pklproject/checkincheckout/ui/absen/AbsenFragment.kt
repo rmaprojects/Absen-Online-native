@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.R.style.*
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
@@ -32,8 +33,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
-import com.google.android.material.R.style.*
-import kotlin.time.Duration.Companion.minutes
 
 class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
@@ -163,6 +162,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         countDelayWaktuTersisa(absen)
         if (viewModel.getResultPicture() != null && viewModel.getLatitude() != null) {
             binding.kirimabsen.isEnabled = true
+            binding.txtSendError.isVisible = false
 
             binding.ambilfoto.setOnClickListener {
                 findNavController().navigate(R.id.action_absenFragment_to_cameraView)
@@ -193,6 +193,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             binding.ambilfoto.setOnClickListener {
                 findNavController().navigate(R.id.action_absenFragment_to_cameraView)
             }
+            binding.txtSendError.text = "Lokasi anda belum ditemukan, atau foto belum diambil coba tutup aplikasi lalu coba lagi"
+            binding.txtSendError.isVisible = true
         }
     }
 

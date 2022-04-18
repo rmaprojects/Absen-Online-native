@@ -1,9 +1,6 @@
 package com.pklproject.checkincheckout.notification
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -15,6 +12,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
+import java.util.*
 
 class NotificationWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
 
@@ -33,41 +31,53 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 
-        val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, 0)
-        var namaAbsen = ""
+        val tahunIni = Calendar.getInstance().get(Calendar.YEAR)
+        val bulanIni = Calendar.getInstance().get(Calendar.MONTH)
+        val hariIni = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
 
         when (tipeAbsen) {
             0 -> {
-                namaAbsen = "Pagi"
+                val jamPagiAkhir = jam?.split(":")?.get(0)?.toInt()
+                val menitPagiAkhir = jam?.split(":")?.get(1)?.toInt()
+
+                val jamPagi = Calendar.getInstance()
+                jamPagi.set(tahunIni, bulanIni, hariIni, jamPagiAkhir!!, menitPagiAkhir!!)
+
+                val alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val intentAlarm = Intent(applicationContext, AlarmReceiver::class.java)
+                intentAlarm.putExtra("tipeAbsen", 0.toInt())
+                val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intentAlarm, 0)
+
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, jamPagi.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
             }
             1 -> {
-                namaAbsen = "Siang"
+                val jamSiangAkhir = jam?.split(":")?.get(0)?.toInt()
+                val menitSiangAkhir = jam?.split(":")?.get(1)?.toInt()
+
+                val jamSiang = Calendar.getInstance()
+                jamSiang.set(tahunIni, bulanIni, hariIni, jamSiangAkhir!!, menitSiangAkhir!!)
+
+                val alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val intentAlarm = Intent(applicationContext, AlarmReceiver::class.java)
+                intentAlarm.putExtra("tipeAbsen", 1.toInt())
+                val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intentAlarm, 0)
+
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, jamSiang.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
             }
             2 -> {
-                namaAbsen = "Pulang"
+                val jamPulangAkhir = jam?.split(":")?.get(0)?.toInt()
+                val menitPulangAkhir = jam?.split(":")?.get(1)?.toInt()
+
+                val jamPulang = Calendar.getInstance()
+                jamPulang.set(tahunIni, bulanIni, hariIni, jamPulangAkhir!!, menitPulangAkhir!!)
+
+                val alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val intentAlarm = Intent(applicationContext, AlarmReceiver::class.java)
+                intentAlarm.putExtra("tipeAbsen", 2.toInt())
+                val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intentAlarm, 0)
+
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, jamPulang.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
             }
-        }
-
-        val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-            .setContentTitle("Sudah melakukan absen $namaAbsen?")
-            .setContentText("Segera absen sebelum jam $jam")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            builder.setChannelId(CHANNEL_ID)
-            val channel = NotificationChannel(CHANNEL_ID, "Pengingat Absen", NotificationManager.IMPORTANCE_DEFAULT)
-            channel.lightColor = Color.RED
-            channel.description = "Pengingat absen untuk aplikasi Check In Check Out"
-            channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-            val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-
-        with (NotificationManagerCompat.from(applicationContext)) {
-            notify(NOTIFICATION_ID, builder.build())
         }
     }
 
