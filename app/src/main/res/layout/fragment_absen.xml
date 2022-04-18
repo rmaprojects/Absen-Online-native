@@ -103,6 +103,12 @@
             android:gravity="center"
             android:text="Lokasi anda belum ditemukan, atau foto belum diambil coba tutup aplikasi lalu coba lagi"
             android:layout_height="wrap_content"/>
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressIndicator"
+            android:indeterminate="true"
+            android:layout_width="match_parent"
+            android:layout_margin="16dp"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

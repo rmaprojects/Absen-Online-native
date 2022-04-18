@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.R.style.*
 import com.google.android.material.snackbar.Snackbar
+import com.musfick.requestbodywithprogress.ReqBodyWithProgress
 import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
@@ -24,7 +25,9 @@ import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -187,19 +190,25 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                     latitude,
                     jamSekarang
                 )
+                binding.kirimabsen.isVisible = false
+                binding.progressIndicator.isVisible = true
             }
+            binding.progressIndicator.isVisible = false
         } else {
             binding.kirimabsen.isEnabled = false
             binding.ambilfoto.setOnClickListener {
                 findNavController().navigate(R.id.action_absenFragment_to_cameraView)
             }
-            binding.txtSendError.text = "Lokasi anda belum ditemukan, atau foto belum diambil coba tutup aplikasi dan nyalakan GPS anda lalu coba lagi"
+            binding.txtSendError.text =
+                "Lokasi anda belum ditemukan, atau foto belum diambil coba tutup aplikasi dan nyalakan GPS anda lalu coba lagi"
             binding.txtSendError.isVisible = true
+            binding.progressIndicator.isVisible = false
         }
     }
 
     private fun countDelayWaktuTersisa(tipeAbsen: String) {
-        val waktuSekarang = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date()).split(":")
+        val waktuSekarang =
+            SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date()).split(":")
         val jam = waktuSekarang[0].toInt()
         val menit = waktuSekarang[1].toInt()
         val detik = waktuSekarang[2].toInt()
@@ -211,7 +220,10 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
         when (tipeAbsen) {
             "1" -> {
-                val waktuAkhirAbsenPagi = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir.split(":")
+                val waktuAkhirAbsenPagi = TinyDB(requireContext()).getObject(
+                    MainActivity.PENGATURANABSENKEY,
+                    Setting::class.java
+                ).absenPagiAkhir.split(":")
                 val jamAbsenTerakhir = waktuAkhirAbsenPagi[0].toInt()
                 val menitAbsenTerakhir = waktuAkhirAbsenPagi[1].toInt()
                 val detikAbsenTerakhir = waktuAkhirAbsenPagi[2].toInt()
@@ -230,7 +242,10 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 }
             }
             "2" -> {
-                val waktuAkhirAbsenSiang = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir.split(":")
+                val waktuAkhirAbsenSiang = TinyDB(requireContext()).getObject(
+                    MainActivity.PENGATURANABSENKEY,
+                    Setting::class.java
+                ).absenSiangAkhir.split(":")
                 val jamAbsenTerakhir = waktuAkhirAbsenSiang[0].toInt()
                 val menitAbsenTerakhir = waktuAkhirAbsenSiang[1].toInt()
                 val detikAbsenTerakhir = waktuAkhirAbsenSiang[2].toInt()
@@ -249,7 +264,10 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 }
             }
             "3" -> {
-                val waktuAkhirAbsenPulang = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java).absenPulangAkhir.split(":")
+                val waktuAkhirAbsenPulang = TinyDB(requireContext()).getObject(
+                    MainActivity.PENGATURANABSENKEY,
+                    Setting::class.java
+                ).absenPulangAkhir.split(":")
                 val jamAbsenTerakhir = waktuAkhirAbsenPulang[0].toInt()
                 val menitAbsenTerakhir = waktuAkhirAbsenPulang[1].toInt()
                 val detikAbsenTerakhir = waktuAkhirAbsenPulang[2].toInt()
@@ -284,7 +302,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         val photo = viewModel.getBitmapImage()
         val dateNow = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         val namaUser = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).namaKaryawan
-
         val imageBodyPart = buildImageBodyPart("$namaUser-$tipeAbsen-$dateNow", photo!!)
         val reqBodyUsername = convertToRequstBody(username)
         val reqBodyPassword = convertToRequstBody(password)
@@ -322,6 +339,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                     if (response.isSuccessful) {
                         Log.d("response", response.body().toString())
                         if (response.body()?.code == 200) {
+                            binding.progressIndicator.isVisible = false
                             tinyDB.putString(KEYIDABSEN, response.body()?.idAbsensi)
                             viewModel.setResultPicture(null)
                             viewModel.setBitmapImage(null)
@@ -348,6 +366,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                             Log.d("gambar", imageBodyPart.toString())
                         }
                     } else {
+                        binding.progressIndicator.isVisible = false
                         Snackbar.make(
                             binding.root,
                             "Gagal melakukan absen, silahkan coba lagi",
@@ -363,6 +382,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                         Log.d("gambar", imageBodyPart.toString())
                     }
                 } catch (e: Exception) {
+                    binding.progressIndicator.isVisible = false
                     Log.d("Error", e.message.toString())
                     Snackbar.make(
                         binding.root,
@@ -395,6 +415,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                     )
                     Log.d("response", response.body().toString())
                     if (response.body()?.code == 200) {
+                        binding.progressIndicator.isVisible = false
                         viewModel.setResultPicture(null)
                         findNavController().navigateUp()
                         Snackbar.make(
@@ -404,6 +425,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                         ).show()
                         Log.d("response", response.toString())
                     } else {
+                        binding.progressIndicator.isVisible = false
                         Snackbar.make(
                             binding.root,
                             "Gagal absen, silahkan coba lagi",
@@ -412,6 +434,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                         Log.d("response", response.toString())
                     }
                 } catch (e: Exception) {
+                    binding.progressIndicator.isVisible = false
                     Log.d("Error", e.toString())
                     Snackbar.make(binding.root, "Gagal", Snackbar.LENGTH_SHORT).show()
                 }
