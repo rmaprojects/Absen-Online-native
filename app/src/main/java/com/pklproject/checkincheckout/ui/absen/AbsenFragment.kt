@@ -193,7 +193,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             binding.ambilfoto.setOnClickListener {
                 findNavController().navigate(R.id.action_absenFragment_to_cameraView)
             }
-            binding.txtSendError.text = "Lokasi anda belum ditemukan, atau foto belum diambil coba tutup aplikasi lalu coba lagi"
+            binding.txtSendError.text = "Lokasi anda belum ditemukan, atau foto belum diambil coba tutup aplikasi dan nyalakan GPS anda lalu coba lagi"
             binding.txtSendError.isVisible = true
         }
     }
@@ -283,8 +283,9 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         val api = ApiInterface.createApi()
         val photo = viewModel.getBitmapImage()
         val dateNow = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val namaUser = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).namaKaryawan
 
-        val imageBodyPart = buildImageBodyPart("$username-$tipeAbsen-$dateNow", photo!!)
+        val imageBodyPart = buildImageBodyPart("$namaUser-$tipeAbsen-$dateNow", photo!!)
         val reqBodyUsername = convertToRequstBody(username)
         val reqBodyPassword = convertToRequstBody(password)
         val reqBodyTipeAbsen = convertToRequstBody(tipeAbsen)
@@ -333,10 +334,18 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                         } else {
                             Snackbar.make(
                                 binding.root,
-                                "Gagal absen, silahkan coba lagi",
+                                "Gagal menginput absen, silahkan coba lagi!",
                                 Snackbar.LENGTH_SHORT
                             ).show()
                             Log.d("response", response.toString())
+                            Log.d("longitude", longitude.toString())
+                            Log.d("latitude", latitude.toString())
+                            Log.d("username", username)
+                            Log.d("password", password)
+                            Log.d("tipeAbsen", tipeAbsen)
+                            Log.d("keterangan", keterangan)
+                            Log.d("jamSekarang", jamSekarang)
+                            Log.d("gambar", imageBodyPart.toString())
                         }
                     } else {
                         Snackbar.make(
@@ -344,6 +353,14 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                             "Gagal melakukan absen, silahkan coba lagi",
                             Snackbar.LENGTH_SHORT
                         ).show()
+                        Log.d("longitude", longitude.toString())
+                        Log.d("latitude", latitude.toString())
+                        Log.d("username", username)
+                        Log.d("password", password)
+                        Log.d("tipeAbsen", tipeAbsen)
+                        Log.d("keterangan", keterangan)
+                        Log.d("jamSekarang", jamSekarang)
+                        Log.d("gambar", imageBodyPart.toString())
                     }
                 } catch (e: Exception) {
                     Log.d("Error", e.message.toString())
@@ -404,7 +421,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
     private fun buildImageBodyPart(fileName: String, bitmap: Bitmap): MultipartBody.Part {
         val leftImageFile = convertBitmapToFile(fileName, bitmap)
-//        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), leftImageFile)
         val requestFile = leftImageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
         return MultipartBody.Part.createFormData("photo_absen", "$fileName.jpg", requestFile)
     }
@@ -413,7 +429,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         val file = File(requireContext().cacheDir, fileName)
         file.createNewFile()
         val bos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 75 /*ignored for PNG*/, bos)
         val bitMapData = bos.toByteArray()
         var fos: FileOutputStream? = null
         try {

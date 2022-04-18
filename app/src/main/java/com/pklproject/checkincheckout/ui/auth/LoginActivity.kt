@@ -76,32 +76,34 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginKeDashBoard(response: LoginModel) {
-        Snackbar.make(binding.rootLayout, "Login Berhasil!", Snackbar.LENGTH_SHORT)
-            .setAction("Ok") {}
-            .show()
-
-        TinyDB(this@LoginActivity).putObject(
-            KEYSIGNIN,
-            LoginModel(
-                response.businessUnit,
-                response.code,
-                response.departement,
-                response.idKaryawan,
-                response.jabatan,
-                response.message,
-                response.namaKaryawan,
-                response.status,
-                response.statusAdmin,
-                response.statusKaryawan,
-                response.username,
-                response.password
+        if (response.statusKaryawan == "0") {
+            Snackbar.make(binding.rootLayout, "Anda tidak bisa melanjutkan, anda bukanlah karyawan lagi", Snackbar.LENGTH_INDEFINITE)
+                .setAction("Ok") {}
+                .show()
+        } else {
+            TinyDB(this@LoginActivity).putObject(
+                KEYSIGNIN,
+                LoginModel(
+                    response.businessUnit,
+                    response.code,
+                    response.departement,
+                    response.idKaryawan,
+                    response.jabatan,
+                    response.message,
+                    response.namaKaryawan,
+                    response.status,
+                    response.statusAdmin,
+                    response.statusKaryawan,
+                    response.username,
+                    response.password
+                )
             )
-        )
-        Preferences(this@LoginActivity).isLoggedIn = true
-        Preferences(this@LoginActivity).employeeName = response.namaKaryawan
+            Preferences(this@LoginActivity).isLoggedIn = true
+            Preferences(this@LoginActivity).employeeName = response.namaKaryawan
 
-        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-        finish()
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            finish()
+        }
     }
 
     companion object {

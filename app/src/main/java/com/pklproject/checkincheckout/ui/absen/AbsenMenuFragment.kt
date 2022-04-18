@@ -236,6 +236,29 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 val statusImageSiang = binding.statusIconNoon
                 val statusImagePulang = binding.statusIconPulang
 
+                val waktuAbsenPagi = settingsAbsen.absenPagiAwal
+                val splittedWaktuAbsenPagi = waktuAbsenPagi.split(":")
+                val jamAbsenPagi = Calendar.getInstance()
+                jamAbsenPagi.set(Calendar.HOUR_OF_DAY, splittedWaktuAbsenPagi[0].toInt())
+                jamAbsenPagi.set(Calendar.MINUTE, splittedWaktuAbsenPagi[1].toInt())
+                jamAbsenPagi.set(Calendar.SECOND, splittedWaktuAbsenPagi[2].toInt())
+
+                val waktuAbsenSiang = settingsAbsen.absenSiangAwal
+                val splittedWaktuAbsenSiang = waktuAbsenSiang.split(":")
+                val jamAbsenSiang = Calendar.getInstance()
+                jamAbsenSiang.set(Calendar.HOUR_OF_DAY, splittedWaktuAbsenSiang[0].toInt())
+                jamAbsenSiang.set(Calendar.MINUTE, splittedWaktuAbsenSiang[1].toInt())
+                jamAbsenSiang.set(Calendar.SECOND, splittedWaktuAbsenSiang[2].toInt())
+
+                val waktuAbsenPulang = settingsAbsen.absenPulangAwal
+                val splittedWaktuAbsenPulang = waktuAbsenPulang.split(":")
+                val jamAbsenPulang = Calendar.getInstance()
+                jamAbsenPulang.set(Calendar.HOUR_OF_DAY, splittedWaktuAbsenPulang[0].toInt())
+                jamAbsenPulang.set(Calendar.MINUTE, splittedWaktuAbsenPulang[1].toInt())
+                jamAbsenPulang.set(Calendar.SECOND, splittedWaktuAbsenPulang[2].toInt())
+
+                val timeNow = Calendar.getInstance()
+
                 if (responseCatch.code == 200) {
                     viewModel.setTodayAttendance(responseCatch.absenHariIni)
                 } else {
@@ -261,7 +284,15 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         statusImagePulang.isVisible = false
 
                         binding.absenpagi.setOnClickListener {
-                            goToAbsensi("1")
+                            if (timeNow.timeInMillis < jamAbsenPagi.timeInMillis) {
+                                Snackbar.make(
+                                    binding.root,
+                                    "Absen pagi belum tersedia, silahkan tunggu sampai jam ${settingsAbsen.absenPagiAwal}",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                goToAbsensi("1")
+                            }
                         }
 
                         binding.absensiang.setOnClickListener {
@@ -294,7 +325,15 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         }
 
                         binding.absensiang.setOnClickListener {
-                            goToAbsensi("2")
+                            if (timeNow.timeInMillis < jamAbsenSiang.timeInMillis) {
+                                Snackbar.make(
+                                    binding.root,
+                                    "Absen siang belum tersedia, silahkan tunggu sampai jam ${settingsAbsen.absenSiangAwal}",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                goToAbsensi("2")
+                            }
                         }
 
                         binding.absenpulang.setOnClickListener {
@@ -327,7 +366,15 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         }
 
                         binding.absenpulang.setOnClickListener {
-                            goToAbsensi("3")
+                            if (timeNow.timeInMillis < jamAbsenPulang.timeInMillis) {
+                                Snackbar.make(
+                                    binding.root,
+                                    "Absen pulang belum tersedia, silahkan tunggu sampai jam ${settingsAbsen.absenPulangAwal}",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                goToAbsensi("3")
+                            }
                         }
                     }
                     "selesai" -> {

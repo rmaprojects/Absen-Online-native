@@ -65,7 +65,7 @@ interface ApiInterface {
     ):UpdateSettingsAbsenModel
 
     companion object {
-        private const val BASE_URL: String = "http://10.10.22.147/api_absen/"
+        private const val BASE_URL: String = "KEPO"
 
         fun createApi(): ApiInterface {
             return Retrofit.Builder()
