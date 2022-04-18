@@ -61,19 +61,33 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         val isAbsenSiangEnabled:Boolean = listAbsenSettings.absenSiangDiperlukan == "1"
 
         binding.switchAbsenSiangDiperlukan.isChecked = isAbsenSiangEnabled
-
-        binding.switchAbsenSiangDiperlukan.setOnClickListener {
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Konfirmasi")
-                .setMessage("Apakah anda yakin ingin mengubah pengaturan absen siang?")
-                .setPositiveButton("Ya") { _, _ ->
-                    changeIfAbsenSiangDiperlukan(tinyDB)
-                }
-                .setNegativeButton("Tidak") { _, _ ->
-                    binding.switchAbsenSiangDiperlukan.isChecked = isAbsenSiangEnabled
-                }
-                .create()
-                .show()
+        
+        binding.switchAbsenSiangDiperlukan.setOnCheckedChangeListener { buttonView, _ ->
+            if (buttonView.isChecked || buttonView.isPressed) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Konfirmasi")
+                    .setMessage("Apakah anda yakin ingin mengubah pengaturan absen siang?")
+                    .setPositiveButton("Ya") { _, _ ->
+                        changeIfAbsenSiangDiperlukan(tinyDB)
+                    }
+                    .setNegativeButton("Tidak") { _, _ ->
+                        binding.switchAbsenSiangDiperlukan.isChecked = isAbsenSiangEnabled
+                    }
+                    .create()
+                    .show()
+            } else if (!buttonView.isChecked) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Konfirmasi")
+                    .setMessage("Apakah anda yakin ingin mengubah pengaturan absen siang?")
+                    .setPositiveButton("Ya") { _, _ ->
+                        changeIfAbsenSiangDiperlukan(tinyDB)
+                    }
+                    .setNegativeButton("Tidak") { _, _ ->
+                        binding.switchAbsenSiangDiperlukan.isChecked = isAbsenSiangEnabled
+                    }
+                    .create()
+                    .show()
+            }
         }
 
         when (Preferences(requireContext()).changeTheme) {
@@ -212,13 +226,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             .create()
             .show()
     }
-
-    //TODO:
-    //  Ganti tampilan ukuran font semua layout di aplikasi ini menggunakan kriteria dibawah ini:
-    // jika titleLarge : {kecil: Body1, normal: Large, besar: Display1}
-    // jika titleMedium : {kecil: Body2, normal: Medium, besar: Large}
-    // textAppearance bisa dilihat di layout
-    // Contoh ada dibawah, admin only g ush diganti, pertama kasih ID dulu semua TextView nya,
 
     private fun setTextAppearance(context:Context) {
         val appearanceSettings = Preferences(context).textSize
