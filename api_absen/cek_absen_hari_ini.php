@@ -28,8 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $id_karyawan = mysqli_fetch_assoc($exec_getId)['id_karyawan'];
 
-        $query_cek_absen = "SELECT tanggal, jam_masuk_pagi, jam_masuk_siang, jam_masuk_pulang, izin, cuti, absen_siang_diperlukan FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' AND tanggal >= '$hari_ini' ORDER BY tanggal DESC";
+        $query_cek_absen = "SELECT tanggal, jam_masuk_pagi, jam_masuk_siang, jam_masuk_pulang, izin, cuti FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' AND tanggal >= '$hari_ini' ORDER BY tanggal DESC";
         $exec_cek_absen = mysqli_query($_AUTH, $query_cek_absen);
+
+        $getPengaturanCekAbsenSiang = "SELECT nilai FROM tbl_pengaturan_absen WHERE id = '1'";
+        $exec_getPengaturanCekAbsenSiang = mysqli_query($_AUTH, $getPengaturanCekAbsenSiang);
 
         $query_cek_jumlah_absen = "SELECT COUNT(*) 'jumlah_absen' FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' AND tanggal >= '$hari_ini'";
         $exec_cek_jumlah_absen = mysqli_fetch_assoc(mysqli_query($_AUTH, $query_cek_jumlah_absen));
@@ -61,16 +64,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             while ($row = mysqli_fetch_array($exec_cek_absen)) {
 
                 $data = array();
+                $isAbsenSiangDiperlukan = mysqli_fetch_assoc($exec_getPengaturanCekAbsenSiang)['nilai'];
 
                 $absen_yang_dibutuhkan = "pagi";
 
                 if (isset($row['jam_masuk_pagi'])) {
-                    if ($row['absen_siang_diperlukan'] == "1") {
+                    if ($isAbsenSiangDiperlukan == "0") {
                         $absen_yang_dibutuhkan = "pulang-siang-tidak-perlu";
                         if (isset($row['jam_masuk_pulang'])) {
                             $absen_yang_dibutuhkan = "selesai";
                         }
-                    } else {
+                    } else if ($isAbsenSiangDiperlukan == "1") {
                         $absen_yang_dibutuhkan = "siang";
                         if (isset($row['jam_masuk_siang'])) {
                             $absen_yang_dibutuhkan = "pulang";
