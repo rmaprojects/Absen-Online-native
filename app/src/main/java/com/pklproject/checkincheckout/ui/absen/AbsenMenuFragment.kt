@@ -87,37 +87,37 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             when (appearanceSettings) {
                 "kecil" -> {
-                    binding.AbsenPagi.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.Absensiang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.Absenpulang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtAbsenPagi.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtAbsenSiang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtAbsenPulang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
                 }
                 "normal" -> {
-                    binding.AbsenPagi.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.Absensiang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.Absenpulang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.txtAbsenPagi.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.txtAbsenSiang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.txtAbsenPulang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
                 }
                 "besar" -> {
-                    binding.AbsenPagi.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.Absensiang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.Absenpulang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.txtAbsenPagi.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.txtAbsenSiang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.txtAbsenPulang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
                 }
             }
         } else {
             when (appearanceSettings) {
                 "kecil" -> {
-                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtAbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtAbsenSiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
                 }
                 "normal" -> {
-                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.txtAbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.txtAbsenSiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.txtAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
                 }
                 "besar" -> {
-                    binding.AbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.Absensiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.Absenpulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.txtAbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.txtAbsenSiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.txtAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
                 }
             }
         }
@@ -206,9 +206,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         .setAction("Ok") {}
                         .show()
                     binding.kirim.isEnabled = false
-                    binding.absenpagi.isClickable = false
-                    binding.absensiang.isClickable = false
-                    binding.absenpulang.isClickable = false
+                    binding.absenPagi.isClickable = false
+                    binding.absenSiang.isClickable = false
+                    binding.absenPulang.isClickable = false
                 } else {
                     Toast.makeText(requireContext(), response.body()?.message, Toast.LENGTH_SHORT).show()
                 }
@@ -283,7 +283,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         txtStatusAbsenPulang = "Belum Tersedia"
                         statusImagePulang.isVisible = false
 
-                        binding.absenpagi.setOnClickListener {
+                        binding.absenPagi.setOnClickListener {
                             if (timeNow.timeInMillis < jamAbsenPagi.timeInMillis) {
                                 Snackbar.make(
                                     binding.root,
@@ -295,11 +295,11 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                             }
                         }
 
-                        binding.absensiang.setOnClickListener {
+                        binding.absenSiang.setOnClickListener {
                             Toast.makeText(requireContext(), "Anda masih belum bisa melakukan absen siang", Toast.LENGTH_SHORT).show()
                         }
 
-                        binding.absenpulang.setOnClickListener {
+                        binding.absenPulang.setOnClickListener {
                             Toast.makeText(requireContext(), "Anda masih belum bisa melakukan absen pulang", Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -320,11 +320,11 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         txtStatusAbsenPulang = "Belum Tersedia"
                         statusImagePulang.isVisible = false
 
-                        binding.absenpagi.setOnClickListener {
+                        binding.absenPagi.setOnClickListener {
                             Toast.makeText(requireContext(), "Anda sudah absen pagi, silahkan absen siang", Toast.LENGTH_SHORT).show()
                         }
 
-                        binding.absensiang.setOnClickListener {
+                        binding.absenSiang.setOnClickListener {
                             if (timeNow.timeInMillis < jamAbsenSiang.timeInMillis) {
                                 Snackbar.make(
                                     binding.root,
@@ -336,8 +336,40 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                             }
                         }
 
-                        binding.absenpulang.setOnClickListener {
+                        binding.absenPulang.setOnClickListener {
                             Toast.makeText(requireContext(), "Anda belum bisa melakukan absen pulang", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    "pulang-siang-tidak-perlu" -> {
+                        binding.kirim.isEnabled = true
+                        txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
+                        txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
+                        binding.absenSiang.isVisible = false
+                        txtJamAbsenPulang = "--:--"
+                        txtStatusAbsenPagi = "Sudah Absen"
+                        statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
+                        if (checkIfAttendanceIsLate("pulang", settingsAbsen)) {
+                            txtStatusAbsenPulang = "Terlambat"
+                            statusImagePulang.setImageResource(R.drawable.ic_telat)
+                        } else {
+                            txtStatusAbsenPulang = "Belum Absen"
+                            statusImagePulang.setImageResource(R.drawable.ic_baseline_not_available_24)
+                        }
+
+                        binding.absenPagi.setOnClickListener {
+                            Toast.makeText(requireContext(), "Anda sudah melakukan absen pagi", Toast.LENGTH_SHORT).show()
+                        }
+
+                        binding.absenPulang.setOnClickListener {
+                            if (timeNow.timeInMillis < jamAbsenPulang.timeInMillis) {
+                                Snackbar.make(
+                                    binding.root,
+                                    "Absen pulang belum tersedia, silahkan tunggu sampai jam ${settingsAbsen.absenPulangAwal}",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                goToAbsensi("3")
+                            }
                         }
                     }
                     "pulang" -> {
@@ -357,15 +389,15 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                             statusImagePulang.setImageResource(R.drawable.ic_baseline_not_available_24)
                         }
 
-                        binding.absenpagi.setOnClickListener {
+                        binding.absenPagi.setOnClickListener {
                             Toast.makeText(requireContext(), "Anda sudah melakukan absen pagi", Toast.LENGTH_SHORT).show()
                         }
 
-                        binding.absensiang.setOnClickListener {
+                        binding.absenPulang.setOnClickListener {
                             Toast.makeText(requireContext(), "Anda sudah melakukan absen siang", Toast.LENGTH_SHORT).show()
                         }
 
-                        binding.absenpulang.setOnClickListener {
+                        binding.absenPulang.setOnClickListener {
                             if (timeNow.timeInMillis < jamAbsenPulang.timeInMillis) {
                                 Snackbar.make(
                                     binding.root,
@@ -389,22 +421,22 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         txtStatusAbsenPulang = "Sudah Absen"
                         statusImagePulang.setImageResource(R.drawable.ic_sudah_absen)
 
-                        binding.absenpagi.setOnClickListener {
+                        binding.absenPagi.setOnClickListener {
                             Toast.makeText(requireContext(), "Anda sudah melakukan absen pagi", Toast.LENGTH_SHORT).show()
                         }
 
-                        binding.absensiang.setOnClickListener {
+                        binding.absenSiang.setOnClickListener {
                             Toast.makeText(requireContext(), "Anda sudah melakukan absen siang", Toast.LENGTH_SHORT).show()
                         }
 
-                        binding.absenpulang.setOnClickListener {
+                        binding.absenPulang.setOnClickListener {
                             Toast.makeText(requireContext(), "Anda sudah melakukan absen pulang", Toast.LENGTH_SHORT).show()
                         }
                     }
                     else -> {
-                        binding.absenpagi.isClickable = false
-                        binding.absensiang.isClickable = false
-                        binding.absenpulang.isClickable = false
+                        binding.absenPagi.isClickable = false
+                        binding.absenSiang.isClickable = false
+                        binding.absenPulang.isClickable = false
                         binding.kirim.isEnabled = false
                     }
                 }
@@ -423,9 +455,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     .setMessage("Gagal mengambil data, aktifkan internet anda, atau cobalah untuk membuka ulang aplikasi")
                     .setPositiveButton("Ok") { _, _ -> }
                     .create().show()
-                binding.absenpagi.isClickable = false
-                binding.absensiang.isClickable = false
-                binding.absenpulang.isClickable = false
+                binding.absenPagi.isClickable = false
+                binding.absenSiang.isClickable = false
+                binding.absenPulang.isClickable = false
                 binding.kirim.isEnabled = false
             }
         }
