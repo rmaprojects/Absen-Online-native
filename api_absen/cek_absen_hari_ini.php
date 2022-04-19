@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $id_karyawan = mysqli_fetch_assoc($exec_getId)['id_karyawan'];
 
-        $query_cek_absen = "SELECT tanggal, jam_masuk_pagi, jam_masuk_siang, jam_masuk_pulang, izin, cuti FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' AND tanggal >= '$hari_ini' ORDER BY tanggal DESC";
+        $query_cek_absen = "SELECT tanggal, jam_masuk_pagi, jam_masuk_siang, jam_masuk_pulang, izin, cuti, absen_siang_diperlukan FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' AND tanggal >= '$hari_ini' ORDER BY tanggal DESC";
         $exec_cek_absen = mysqli_query($_AUTH, $query_cek_absen);
 
         $query_cek_jumlah_absen = "SELECT COUNT(*) 'jumlah_absen' FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' AND tanggal >= '$hari_ini'";
@@ -65,11 +65,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $absen_yang_dibutuhkan = "pagi";
 
                 if (isset($row['jam_masuk_pagi'])) {
-                    $absen_yang_dibutuhkan = "siang";
-                    if (isset($row['jam_masuk_siang'])) {
-                        $absen_yang_dibutuhkan = "pulang";
+                    if ($row['absen_siang_diperlukan'] == "1") {
+                        $absen_yang_dibutuhkan = "pulang-siang-tidak-perlu";
                         if (isset($row['jam_masuk_pulang'])) {
                             $absen_yang_dibutuhkan = "selesai";
+                        }
+                    } else {
+                        $absen_yang_dibutuhkan = "siang";
+                        if (isset($row['jam_masuk_siang'])) {
+                            $absen_yang_dibutuhkan = "pulang";
+                            if (isset($row['jam_masuk_pulang'])) {
+                                $absen_yang_dibutuhkan = "selesai";
+                            }
                         }
                     }
                 }
