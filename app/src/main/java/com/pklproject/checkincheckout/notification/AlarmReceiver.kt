@@ -36,7 +36,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
         val builder = NotificationCompat.Builder(context!!, NotificationWorker.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-            .setContentTitle("Sudah melakukan $tipeAbsen?")
+            .setContentTitle("Sudah melakukan Absen $tipeAbsen?")
             .setContentText("Segera absen sebelum waktu habis")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
