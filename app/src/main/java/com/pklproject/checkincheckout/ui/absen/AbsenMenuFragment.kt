@@ -170,6 +170,11 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     binding.absen.isChecked = true
                     binding.izin.isChecked = false
                     binding.cuti.isChecked = false
+                    binding.pilihanAbsen.isVisible = false
+                    binding.layoutIzinTxt.isVisible = true
+                    binding.izindialog.isVisible = false
+                    binding.absensi.isVisible = false
+                    binding.divider.isVisible = false
                 } else {
                     Toast.makeText(requireContext(), response.body()?.message, Toast.LENGTH_SHORT)
                         .show()
