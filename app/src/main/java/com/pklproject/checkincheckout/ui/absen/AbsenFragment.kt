@@ -6,15 +6,16 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.R.style.*
 import com.google.android.material.snackbar.Snackbar
-import com.musfick.requestbodywithprogress.ReqBodyWithProgress
 import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
@@ -25,9 +26,7 @@ import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -36,6 +35,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
@@ -297,6 +297,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         latitude: Double,
         jamSekarang: String,
     ) {
+        Toast.makeText(requireContext(), "Mohon untuk tidak menutup tab ini agar absen anda terkirim", Toast.LENGTH_LONG).show()
         val tinyDB = TinyDB(requireContext())
         val api = ApiInterface.createApi()
         val photo = viewModel.getBitmapImage()
@@ -312,6 +313,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         val reqBodyJamSekarang = convertToRequstBody(jamSekarang)
         val idAbsensiReqBody = convertToRequstBody(tinyDB.getString(KEYIDABSEN))
         val reqBodyTanggalSekarang = convertToRequstBody(dateNow)
+        val settings = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java)
 
         if (tipeAbsen == "1") {
             Log.d("longitude", longitude.toString())
@@ -336,6 +338,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                         idAbsensiReqBody,
                         reqBodyTanggalSekarang
                     )
+                    retrieveTodayAbsen(ApiInterface.createApi(), username, password)
                     if (response.isSuccessful) {
                         Log.d("response", response.body().toString())
                         if (response.body()?.code == 200) {
@@ -414,9 +417,11 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                         reqBodyTanggalSekarang
                     )
                     Log.d("response", response.body().toString())
+                    retrieveTodayAbsen(ApiInterface.createApi(), username, password)
                     if (response.body()?.code == 200) {
                         binding.progressIndicator.isVisible = false
                         viewModel.setResultPicture(null)
+                        viewModel.setBitmapImage(null)
                         findNavController().navigateUp()
                         Snackbar.make(
                             requireActivity().findViewById(R.id.container),
@@ -477,5 +482,21 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
     companion object {
         const val ABSEN_TYPE = "ABSENTYPEKEY"
         const val KEYIDABSEN = "IDABSENKEY"
+    }
+
+    private fun retrieveTodayAbsen(api:ApiInterface, username:String, password:String) {
+        val todayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        lifecycleScope.launch {
+            try {
+                val response = api.cekAbsenHariIni(username, password, todayDate)
+                if (response.code == 200) {
+                    viewModel.setTodayAttendance(response.absenHariIni)
+                } else {
+                    viewModel.setTodayAttendance(null)
+                }
+            } catch (e:Exception) {
+                Log.d("Error", e.message.toString())
+            }
+        }
     }
 }

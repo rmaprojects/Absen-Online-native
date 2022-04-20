@@ -1,10 +1,17 @@
 package com.pklproject.checkincheckout
 
+import android.content.Context
+import android.content.Intent
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.Menu
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
+import androidx.core.location.LocationManagerCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -14,14 +21,20 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.*
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
+import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.api.models.Setting
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
 import com.pklproject.checkincheckout.notification.NotificationWorker
+import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
+import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
+import mumayank.com.airlocationlibrary.AirLocation
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -29,6 +42,29 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding: ActivityMainBinding by viewBinding()
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private val viewModel:ServiceViewModel by viewModels()
+    private lateinit var airLocation: AirLocation
+
+    override fun onStart() {
+        super.onStart()
+        if (isLocationEnabled(this)) {
+            airLocation.start()
+        } else {
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Aktifkan lokasi terlebih dahulu")
+                .setMessage("Aplikasi ini tidak akan berjalan jika anda menonaktifkan GPS")
+                .setPositiveButton("Aktifkan") { _, _ ->
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+                .setNegativeButton("Sudah aktif") { _, _ ->
+
+                }
+                .setNeutralButton("Batal") { _, _ ->
+                    finish()
+                }
+                .show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +74,32 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setSupportActionBar(binding.toolBar)
 
         val tinyDb = TinyDB(this)
+        val username = tinyDb.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
+        val password = tinyDb.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
         retrieveSettingsAbsen(tinyDb)
+        retrieveTodayAbsen(ApiInterface.createApi(), username.toString(), password.toString())
+
+        airLocation = AirLocation(this, object : AirLocation.Callback {
+            override fun onSuccess(locations: ArrayList<Location>) {
+                viewModel.setLatitude(locations[0].latitude)
+                viewModel.setLongitude(locations[0].longitude)
+            }
+
+            override fun onFailure(locationFailedEnum: AirLocation.LocationFailedEnum) {
+                viewModel.setLatitude(0.0)
+                viewModel.setLongitude(0.0)
+                Snackbar.make(
+                    binding.container,
+                    "Gagal mendapatkan lokasi",
+                    Snackbar.LENGTH_SHORT
+                )
+                    .show()
+                Log.d("Location", locationFailedEnum.toString())
+            }
+
+        }, true)
+
+        airLocation.start()
 
         notificationWorker()
 
@@ -75,6 +136,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     binding.toolBar.subtitle = null
                     showTitle = "Absen"
                     binding.fragmentContainer.setPadding(0, 0, 0, 128)
+                    retrieveTodayAbsen(ApiInterface.createApi(), username.toString(), password.toString())
                 }
                 R.id.navigation_history -> {
                     showBottomNav = true
@@ -185,6 +247,49 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             1 -> setDefaultNightMode(MODE_NIGHT_NO)
             2 -> setDefaultNightMode(MODE_NIGHT_YES)
         }
+    }
+
+    private fun retrieveTodayAbsen(api:ApiInterface, username:String, password:String) {
+        val todayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        lifecycleScope.launch {
+            try {
+                val response = api.cekAbsenHariIni(username, password, todayDate)
+                if (response.code == 200) {
+                    viewModel.setTodayAttendance(response.absenHariIni)
+                } else {
+                    viewModel.setTodayAttendance(null)
+                }
+            } catch (e:Exception) {
+                Log.d("Error", e.message.toString())
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        airLocation.onActivityResult(
+            requestCode,
+            resultCode,
+            data
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        airLocation.onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults
+        )
+    }
+
+    private fun isLocationEnabled(context: Context): Boolean {
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return LocationManagerCompat.isLocationEnabled(locationManager)
     }
 
     companion object {

@@ -18,8 +18,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
-        android:background="@color/material_on_background_emphasis_high_type"
-        android:backgroundTint="@color/material_on_background_emphasis_high_type"
+        android:background="?colorOnBackground"
         android:layout_height="wrap_content">
 
         <ImageView
@@ -33,7 +32,7 @@
             android:contentDescription="Ambil gambar"
             android:focusable="true"
             android:src="@drawable/ic_baseline_camera_24"
-            app:tint="@color/material_on_primary_emphasis_high_type" />
+            app:tint="?colorOnPrimary" />
 
         <ImageView
             android:id="@+id/switchCameraButton"
@@ -47,7 +46,7 @@
             android:layout_marginBottom="16dp"
             android:background="?selectableItemBackground"
             android:src="@drawable/ic_baseline_flip_camera_ios_24"
-            app:tint="@color/material_on_primary_emphasis_high_type" />
+            app:tint="?colorOnPrimary" />
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

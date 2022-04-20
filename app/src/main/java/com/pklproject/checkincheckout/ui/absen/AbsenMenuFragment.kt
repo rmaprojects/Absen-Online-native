@@ -1,16 +1,11 @@
 package com.pklproject.checkincheckout.ui.absen
 
 import android.content.Context
-import android.content.Intent
-import android.location.Location
-import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.location.LocationManagerCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -28,11 +23,9 @@ import com.pklproject.checkincheckout.api.models.Setting
 import com.pklproject.checkincheckout.databinding.FragmentMenuAbsenBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
-import com.pklproject.checkincheckout.ui.settings.SettingsFragment
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
-import mumayank.com.airlocationlibrary.AirLocation
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -42,85 +35,25 @@ import java.util.*
 class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
     private val binding: FragmentMenuAbsenBinding by viewBinding()
-    private lateinit var airLocation: AirLocation
     private val viewModel: ServiceViewModel by activityViewModels()
 
-    override fun onStart() {
-        super.onStart()
-        if (isLocationEnabled(requireContext())) {
-            airLocation.start()
-        } else {
-            Snackbar.make(binding.root, "Aktifkan lokasi terlebih dahulu", Snackbar.LENGTH_SHORT)
-                .show()
-        }
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        val tinyDB = TinyDB(requireContext())
+        val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
+        val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
+        val hariIni = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val settingsAbsen = tinyDB.getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java)
+        cekAbsenTodayApi(username.toString(), password.toString(), hariIni, settingsAbsen)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        airLocation = AirLocation(requireActivity(), object : AirLocation.Callback {
-            override fun onSuccess(locations: ArrayList<Location>) {
-                viewModel.setLatitude(locations[0].latitude)
-                viewModel.setLongitude(locations[0].longitude)
-                binding.kirim.isEnabled = true
-            }
-
-            override fun onFailure(locationFailedEnum: AirLocation.LocationFailedEnum) {
-                viewModel.setLatitude(0.0)
-                viewModel.setLongitude(0.0)
-                binding.kirim.isEnabled = false
-                Snackbar.make(binding.root, "Gagal mendapatkan lokasi", Snackbar.LENGTH_SHORT)
-                    .show()
-            }
-
-        }, true)
-
-        airLocation.start()
         val tinyDB = TinyDB(requireContext())
 
         initialisation(tinyDB)
         setTextAppearance(requireContext())
-    }
-
-    private fun setTextAppearance(context: Context) {
-        val appearanceSettings = Preferences(context).textSize
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            when (appearanceSettings) {
-                "kecil" -> {
-                    binding.txtAbsenPagi.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtAbsenSiang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtAbsenPulang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                }
-                "normal" -> {
-                    binding.txtAbsenPagi.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.txtAbsenSiang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.txtAbsenPulang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                }
-                "besar" -> {
-                    binding.txtAbsenPagi.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.txtAbsenSiang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.txtAbsenPulang.setTextAppearance(requireContext(),com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                }
-            }
-        } else {
-            when (appearanceSettings) {
-                "kecil" -> {
-                    binding.txtAbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtAbsenSiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                    binding.txtAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
-                }
-                "normal" -> {
-                    binding.txtAbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.txtAbsenSiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                    binding.txtAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
-                }
-                "besar" -> {
-                    binding.txtAbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.txtAbsenSiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                    binding.txtAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
-                }
-            }
-        }
     }
 
 
@@ -129,22 +62,20 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         binding.absensi.isVisible = true
         binding.izindialog.isVisible = false
 
-        val api = ApiInterface.createApi()
-        val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
-        val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
-        val hariIni = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        binding.kirim.isEnabled = !(viewModel.getLatitude() == 0.0 && viewModel.getLongitude() == 0.0)
+
         val settingsAbsen = tinyDB.getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java)
 
-        cekAbsenToday(api, username.toString(), password.toString(), hariIni, settingsAbsen)
+        cekAbsenToday(settingsAbsen)
 
         val keterangan = binding.keterangan.text
 
-        binding.pilihanAbsen.setOnCheckedChangeListener{ _, isChecked ->
-            when(isChecked) {
+        binding.pilihanAbsen.setOnCheckedChangeListener { _, isChecked ->
+            when (isChecked) {
                 R.id.absen -> {
                     binding.absensi.isVisible = true
                     binding.izindialog.isVisible = false
-                    cekAbsenToday(api, username.toString(), password.toString(), hariIni, settingsAbsen)
+                    cekAbsenToday(settingsAbsen)
                 }
                 R.id.izin -> {
                     binding.izindialog.isVisible = true
@@ -178,7 +109,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         }
     }
 
-    private fun kirimAbsen (tipeAbsen: String, tinyDB: TinyDB, keterangan:String) {
+    private fun kirimAbsen(tipeAbsen: String, tinyDB: TinyDB, keterangan: String) {
         var jenisAbsen = ""
 
         if (tipeAbsen == "4") {
@@ -188,10 +119,22 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         }
 
         val api = ApiInterface.createApi()
-        val username = convertToRequstBody(tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username.toString())
-        val password = convertToRequstBody(tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password.toString())
-        val hariIni = convertToRequstBody(SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()))
-        val jamSekarang = convertToRequstBody(SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date()))
+        val username = convertToRequstBody(
+            tinyDB.getObject(
+                LoginActivity.KEYSIGNIN,
+                LoginModel::class.java
+            ).username.toString()
+        )
+        val password = convertToRequstBody(
+            tinyDB.getObject(
+                LoginActivity.KEYSIGNIN,
+                LoginModel::class.java
+            ).password.toString()
+        )
+        val hariIni =
+            convertToRequstBody(SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()))
+        val jamSekarang =
+            convertToRequstBody(SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date()))
         val longitude = convertToRequstBody(viewModel.getLongitude().toString())
         val latitude = convertToRequstBody(viewModel.getLatitude().toString())
         val absenType = convertToRequstBody(tipeAbsen)
@@ -200,28 +143,348 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
         lifecycleScope.launch {
             try {
-                val response = api.kirimAbsen(username, password, absenType, longitude, latitude, null, catatan, jamSekarang, idAbsensi, hariIni)
+                val response = api.kirimAbsen(
+                    username,
+                    password,
+                    absenType,
+                    longitude,
+                    latitude,
+                    null,
+                    catatan,
+                    jamSekarang,
+                    idAbsensi,
+                    hariIni
+                )
                 if (response.body()?.status == true) {
-                    Snackbar.make(binding.root, "Berhasil mengajukan $jenisAbsen", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(
+                        binding.root,
+                        "Berhasil mengajukan $jenisAbsen",
+                        Snackbar.LENGTH_SHORT
+                    )
                         .setAction("Ok") {}
                         .show()
                     binding.kirim.isEnabled = false
                     binding.absenPagi.isClickable = false
                     binding.absenSiang.isClickable = false
                     binding.absenPulang.isClickable = false
+                    binding.absen.isChecked = true
+                    binding.izin.isChecked = false
+                    binding.cuti.isChecked = false
                 } else {
-                    Toast.makeText(requireContext(), response.body()?.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), response.body()?.message, Toast.LENGTH_SHORT)
+                        .show()
                 }
             } catch (e: Exception) {
                 Log.d("error", e.toString())
-                Snackbar.make(binding.root, "Gagal mengirim absen, coba lagi atau periksa internet anda", Snackbar.LENGTH_SHORT)
+                Snackbar.make(
+                    binding.root,
+                    "Gagal mengirim absen, coba lagi atau periksa internet anda",
+                    Snackbar.LENGTH_SHORT
+                )
                     .setAction("Ok") {}
                     .show()
             }
         }
     }
 
-    private fun cekAbsenToday(api: ApiInterface, username:String, password:String, hariIni:String, settingsAbsen:Setting) {
+    private fun cekAbsenToday(settingsAbsen: Setting) {
+
+        val listJamMasuk = viewModel.getTodayAttendance()?.get(0)
+        var txtJamAbsenPagi = ""
+        var txtJamAbsenSiang = ""
+        var txtJamAbsenPulang = ""
+        var txtStatusAbsenPagi = ""
+        var txtStatusAbsenSiang = ""
+        var txtStatusAbsenPulang = ""
+        val statusImageDay = binding.statusIconDay
+        val statusImageSiang = binding.statusIconNoon
+        val statusImagePulang = binding.statusIconPulang
+
+        val waktuAbsenPagi = settingsAbsen.absenPagiAwal
+        val splittedWaktuAbsenPagi = waktuAbsenPagi.split(":")
+        val jamAbsenPagi = Calendar.getInstance()
+        jamAbsenPagi.set(Calendar.HOUR_OF_DAY, splittedWaktuAbsenPagi[0].toInt())
+        jamAbsenPagi.set(Calendar.MINUTE, splittedWaktuAbsenPagi[1].toInt())
+        jamAbsenPagi.set(Calendar.SECOND, splittedWaktuAbsenPagi[2].toInt())
+
+        val waktuAbsenSiang = settingsAbsen.absenSiangAwal
+        val splittedWaktuAbsenSiang = waktuAbsenSiang.split(":")
+        val jamAbsenSiang = Calendar.getInstance()
+        jamAbsenSiang.set(Calendar.HOUR_OF_DAY, splittedWaktuAbsenSiang[0].toInt())
+        jamAbsenSiang.set(Calendar.MINUTE, splittedWaktuAbsenSiang[1].toInt())
+        jamAbsenSiang.set(Calendar.SECOND, splittedWaktuAbsenSiang[2].toInt())
+
+        val waktuAbsenPulang = settingsAbsen.absenPulangAwal
+        val splittedWaktuAbsenPulang = waktuAbsenPulang.split(":")
+        val jamAbsenPulang = Calendar.getInstance()
+        jamAbsenPulang.set(Calendar.HOUR_OF_DAY, splittedWaktuAbsenPulang[0].toInt())
+        jamAbsenPulang.set(Calendar.MINUTE, splittedWaktuAbsenPulang[1].toInt())
+        jamAbsenPulang.set(Calendar.SECOND, splittedWaktuAbsenPulang[2].toInt())
+
+        val timeNow = Calendar.getInstance()
+
+        Log.d("absen dibutuhkan", listJamMasuk?.absenYangDibutuhkan.toString())
+        when (listJamMasuk?.absenYangDibutuhkan) {
+            null -> {
+                binding.kirim.isEnabled = true
+
+                binding.cutiHariIniText.isVisible = false
+                binding.absensi.isVisible = true
+                binding.pilihanAbsen.isVisible = true
+
+                binding.layoutIzinTxt.isVisible = false
+
+                txtJamAbsenPagi = "--:--"
+                txtStatusAbsenPagi = if (checkIfAttendanceIsLate("pagi", settingsAbsen)) {
+                    statusImageDay.setImageResource(R.drawable.ic_telat)
+                    "Terlambat"
+                } else {
+                    statusImageDay.setImageResource(R.drawable.ic_baseline_not_available_24)
+                    "Belum Absen"
+                }
+                txtJamAbsenSiang = "--:--"
+                txtStatusAbsenSiang = "Belum Tersedia"
+                statusImageSiang.isVisible = false
+                txtJamAbsenPulang = "--:--"
+                txtStatusAbsenPulang = "Belum Tersedia"
+                statusImagePulang.isVisible = false
+
+                binding.absenPagi.setOnClickListener {
+                    if (timeNow.timeInMillis < jamAbsenPagi.timeInMillis) {
+                        Snackbar.make(
+                            binding.root,
+                            "Absen pagi belum tersedia, silahkan tunggu sampai jam ${settingsAbsen.absenPagiAwal}",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        goToAbsensi("1")
+                    }
+                }
+
+                binding.absenSiang.setOnClickListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "Anda masih belum bisa melakukan absen siang",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                binding.absenPulang.setOnClickListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "Anda masih belum bisa melakukan absen pulang",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            "siang" -> {
+                binding.kirim.isEnabled = true
+                binding.izin.isVisible = false
+                binding.cuti.isVisible = false
+
+                binding.layoutIzinTxt.isVisible = false
+
+                txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
+                txtJamAbsenSiang = "--:--"
+                txtJamAbsenPulang = "--:--"
+                txtStatusAbsenPagi = "Sudah Absen"
+                statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
+                if (checkIfAttendanceIsLate("siang", settingsAbsen)) {
+                    txtStatusAbsenSiang = "Terlambat"
+                    statusImageSiang.setImageResource(R.drawable.ic_telat)
+                } else {
+                    txtStatusAbsenSiang = "Belum Absen"
+                    statusImageSiang.setImageResource(R.drawable.ic_baseline_not_available_24)
+                }
+                txtStatusAbsenPulang = "Belum Tersedia"
+                statusImagePulang.isVisible = false
+
+                binding.absenPagi.setOnClickListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "Anda sudah absen pagi, silahkan absen siang",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                binding.absenSiang.setOnClickListener {
+                    if (timeNow.timeInMillis < jamAbsenSiang.timeInMillis) {
+                        Snackbar.make(
+                            binding.root,
+                            "Absen siang belum tersedia, silahkan tunggu sampai jam ${settingsAbsen.absenSiangAwal}",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        goToAbsensi("2")
+                    }
+                }
+
+                binding.absenPulang.setOnClickListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "Anda belum bisa melakukan absen pulang",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            "pulang-siang-tidak-perlu" -> {
+                binding.kirim.isEnabled = true
+                binding.izin.isVisible = false
+                binding.cuti.isVisible = false
+
+                binding.layoutIzinTxt.isVisible = false
+
+                txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
+                txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
+                binding.absenSiang.isVisible = false
+                txtJamAbsenPulang = "--:--"
+                txtStatusAbsenPagi = "Sudah Absen"
+                statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
+                if (checkIfAttendanceIsLate("pulang", settingsAbsen)) {
+                    txtStatusAbsenPulang = "Terlambat"
+                    statusImagePulang.setImageResource(R.drawable.ic_telat)
+                } else {
+                    txtStatusAbsenPulang = "Belum Absen"
+                    statusImagePulang.setImageResource(R.drawable.ic_baseline_not_available_24)
+                }
+
+                binding.absenPagi.setOnClickListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "Anda sudah melakukan absen pagi",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                binding.absenPulang.setOnClickListener {
+                    if (timeNow.timeInMillis < jamAbsenPulang.timeInMillis) {
+                        Snackbar.make(
+                            binding.root,
+                            "Absen pulang belum tersedia, silahkan tunggu sampai jam ${settingsAbsen.absenPulangAwal}",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        goToAbsensi("3")
+                    }
+                }
+            }
+            "pulang" -> {
+                binding.kirim.isEnabled = true
+                binding.izin.isVisible = false
+                binding.cuti.isVisible = false
+
+                binding.layoutIzinTxt.isVisible = false
+
+                txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
+                txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
+                txtJamAbsenPulang = "--:--"
+                txtStatusAbsenPagi = "Sudah Absen"
+                statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
+                txtStatusAbsenSiang = "Sudah Absen"
+                statusImageSiang.setImageResource(R.drawable.ic_sudah_absen)
+                if (checkIfAttendanceIsLate("pulang", settingsAbsen)) {
+                    txtStatusAbsenPulang = "Terlambat"
+                    statusImagePulang.setImageResource(R.drawable.ic_telat)
+                } else {
+                    txtStatusAbsenPulang = "Belum Absen"
+                    statusImagePulang.setImageResource(R.drawable.ic_baseline_not_available_24)
+                }
+
+                binding.absenPagi.setOnClickListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "Anda sudah melakukan absen pagi",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                binding.absenPulang.setOnClickListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "Anda sudah melakukan absen siang",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                binding.absenPulang.setOnClickListener {
+                    if (timeNow.timeInMillis < jamAbsenPulang.timeInMillis) {
+                        Snackbar.make(
+                            binding.root,
+                            "Absen pulang belum tersedia, silahkan tunggu sampai jam ${settingsAbsen.absenPulangAwal}",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        goToAbsensi("3")
+                    }
+                }
+            }
+            "selesai" -> {
+                binding.kirim.isEnabled = false
+                binding.cuti.isVisible = false
+                binding.izin.isVisible = false
+
+                binding.absenSiang.isVisible = listJamMasuk.absenSiangDiperlukan != "0"
+                binding.layoutIzinTxt.isVisible = false
+
+                txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
+                txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
+                txtJamAbsenPulang = viewModel.getTodayAttendance()?.get(0)?.jamMasukPulang ?: "--:--"
+                txtStatusAbsenPagi = "Sudah Absen"
+                statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
+                txtStatusAbsenSiang = "Sudah Absen"
+                statusImageSiang.setImageResource(R.drawable.ic_sudah_absen)
+                txtStatusAbsenPulang = "Sudah Absen"
+                statusImagePulang.setImageResource(R.drawable.ic_sudah_absen)
+
+                binding.absenPagi.setOnClickListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "Anda sudah melakukan absen pagi",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                binding.absenSiang.setOnClickListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "Anda sudah melakukan absen siang",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                binding.absenPulang.setOnClickListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "Anda sudah melakukan absen pulang",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            "selesai-cuti-atau-izin" -> {
+                binding.pilihanAbsen.isVisible = false
+                binding.layoutIzinTxt.isVisible = true
+                binding.izindialog.isVisible = false
+            }
+            else -> {
+                binding.absenPagi.isClickable = false
+                binding.absenSiang.isClickable = false
+                binding.absenPulang.isClickable = false
+                binding.kirim.isEnabled = false
+
+                binding.cutiHariIniText.isVisible = false
+            }
+        }
+
+        binding.txtJamAbsenDay.text = txtJamAbsenPagi
+        binding.txtJamAbsenNoon.text = txtJamAbsenSiang
+        binding.txtJamAbsenPulang.text = txtJamAbsenPulang
+        binding.txtStatusDay.text = txtStatusAbsenPagi
+        binding.txtStatusNoon.text = txtStatusAbsenSiang
+        binding.txtStatusPulang.text = txtStatusAbsenPulang
+    }
+
+    private fun cekAbsenTodayApi(username:String, password:String, hariIni:String, settingsAbsen: Setting) {
+        val api = ApiInterface.createApi()
         lifecycleScope.launch {
             try {
                 val responseCatch = api.cekAbsenHariIni(username, password, hariIni)
@@ -259,15 +522,18 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
                 val timeNow = Calendar.getInstance()
 
-                if (responseCatch.code == 200) {
-                    viewModel.setTodayAttendance(responseCatch.absenHariIni)
-                } else {
-                    viewModel.setTodayAttendance(null)
-                }
                 Log.d("absen dibutuhkan", listJamMasuk?.absenYangDibutuhkan.toString())
+
                 when (listJamMasuk?.absenYangDibutuhkan) {
                     null -> {
                         binding.kirim.isEnabled = true
+
+                        binding.cutiHariIniText.isVisible = false
+                        binding.absensi.isVisible = true
+                        binding.pilihanAbsen.isVisible = true
+
+                        binding.layoutIzinTxt.isVisible = false
+
                         txtJamAbsenPagi = "--:--"
                         txtStatusAbsenPagi = if (checkIfAttendanceIsLate("pagi", settingsAbsen)) {
                             statusImageDay.setImageResource(R.drawable.ic_telat)
@@ -296,15 +562,28 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         }
 
                         binding.absenSiang.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda masih belum bisa melakukan absen siang", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Anda masih belum bisa melakukan absen siang",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         binding.absenPulang.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda masih belum bisa melakukan absen pulang", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Anda masih belum bisa melakukan absen pulang",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                     "siang" -> {
                         binding.kirim.isEnabled = true
+                        binding.izin.isVisible = false
+                        binding.cuti.isVisible = false
+
+                        binding.layoutIzinTxt.isVisible = false
+
                         txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
                         txtJamAbsenSiang = "--:--"
                         txtJamAbsenPulang = "--:--"
@@ -321,7 +600,11 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         statusImagePulang.isVisible = false
 
                         binding.absenPagi.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah absen pagi, silahkan absen siang", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Anda sudah absen pagi, silahkan absen siang",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         binding.absenSiang.setOnClickListener {
@@ -337,11 +620,20 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         }
 
                         binding.absenPulang.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda belum bisa melakukan absen pulang", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Anda belum bisa melakukan absen pulang",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                     "pulang-siang-tidak-perlu" -> {
                         binding.kirim.isEnabled = true
+                        binding.izin.isVisible = false
+                        binding.cuti.isVisible = false
+
+                        binding.layoutIzinTxt.isVisible = false
+
                         txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
                         txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
                         binding.absenSiang.isVisible = false
@@ -357,7 +649,11 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         }
 
                         binding.absenPagi.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah melakukan absen pagi", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Anda sudah melakukan absen pagi",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         binding.absenPulang.setOnClickListener {
@@ -374,6 +670,11 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     }
                     "pulang" -> {
                         binding.kirim.isEnabled = true
+                        binding.izin.isVisible = false
+                        binding.cuti.isVisible = false
+
+                        binding.layoutIzinTxt.isVisible = false
+
                         txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
                         txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
                         txtJamAbsenPulang = "--:--"
@@ -390,11 +691,19 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         }
 
                         binding.absenPagi.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah melakukan absen pagi", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Anda sudah melakukan absen pagi",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         binding.absenPulang.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah melakukan absen siang", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Anda sudah melakukan absen siang",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         binding.absenPulang.setOnClickListener {
@@ -411,6 +720,12 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     }
                     "selesai" -> {
                         binding.kirim.isEnabled = false
+                        binding.cuti.isVisible = false
+                        binding.izin.isVisible = false
+
+                        binding.absenSiang.isVisible = listJamMasuk.absenSiangDiperlukan != "0"
+                        binding.layoutIzinTxt.isVisible = false
+
                         txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
                         txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
                         txtJamAbsenPulang = viewModel.getTodayAttendance()?.get(0)?.jamMasukPulang ?: "--:--"
@@ -422,22 +737,41 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         statusImagePulang.setImageResource(R.drawable.ic_sudah_absen)
 
                         binding.absenPagi.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah melakukan absen pagi", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Anda sudah melakukan absen pagi",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         binding.absenSiang.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah melakukan absen siang", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Anda sudah melakukan absen siang",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         binding.absenPulang.setOnClickListener {
-                            Toast.makeText(requireContext(), "Anda sudah melakukan absen pulang", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Anda sudah melakukan absen pulang",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
+                    }
+                    "selesai-cuti-atau-izin" -> {
+                        binding.pilihanAbsen.isVisible = false
+                        binding.layoutIzinTxt.isVisible = true
+                        binding.izindialog.isVisible = false
                     }
                     else -> {
                         binding.absenPagi.isClickable = false
                         binding.absenSiang.isClickable = false
                         binding.absenPulang.isClickable = false
                         binding.kirim.isEnabled = false
+
+                        binding.cutiHariIniText.isVisible = false
                     }
                 }
 
@@ -447,28 +781,18 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 binding.txtStatusDay.text = txtStatusAbsenPagi
                 binding.txtStatusNoon.text = txtStatusAbsenSiang
                 binding.txtStatusPulang.text = txtStatusAbsenPulang
+            } catch (e:Exception) {
 
-            } catch (e: Exception) {
-                Log.d("ERROR", e.toString())
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("Terjadi Kesalahan")
-                    .setMessage("Gagal mengambil data, aktifkan internet anda, atau cobalah untuk membuka ulang aplikasi")
-                    .setPositiveButton("Ok") { _, _ -> }
-                    .create().show()
-                binding.absenPagi.isClickable = false
-                binding.absenSiang.isClickable = false
-                binding.absenPulang.isClickable = false
-                binding.kirim.isEnabled = false
             }
         }
     }
 
-    private fun goToAbsensi(tipeAbsen:String) {
+    private fun goToAbsensi(tipeAbsen: String) {
         val bundle = bundleOf(AbsenFragment.ABSEN_TYPE to tipeAbsen)
         findNavController().navigate(R.id.action_navigation_absen_to_absenFragment, bundle)
     }
 
-    private fun checkIfAttendanceIsLate(eventType:String, absenSetings:Setting) : Boolean {
+    private fun checkIfAttendanceIsLate(eventType: String, absenSetings: Setting): Boolean {
         val sdf = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         val waktuPagiAkhir = sdf.parse(absenSetings.absenPagiAkhir)
         val waktuSiangAkhir = sdf.parse(absenSetings.absenSiangAkhir)
@@ -491,36 +815,75 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        airLocation.onActivityResult(
-            requestCode,
-            resultCode,
-            data
-        )
+    private fun convertToRequstBody(value: String): RequestBody {
+        return value.toRequestBody("multipart/form-data".toMediaTypeOrNull())
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        airLocation.onRequestPermissionsResult(
-            requestCode,
-            permissions,
-            grantResults
-        )
-    }
-
-    private fun isLocationEnabled(context: Context): Boolean {
-        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return LocationManagerCompat.isLocationEnabled(locationManager)
-    }
-
-    private fun convertToRequstBody(value:String) : RequestBody {
-        return  value.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
+    private fun setTextAppearance(context: Context) {
+        val appearanceSettings = Preferences(context).textSize
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            when (appearanceSettings) {
+                "kecil" -> {
+                    binding.txtAbsenPagi.setTextAppearance(
+                        requireContext(),
+                        com.google.android.material.R.style.TextAppearance_AppCompat_Body1
+                    )
+                    binding.txtAbsenSiang.setTextAppearance(
+                        requireContext(),
+                        com.google.android.material.R.style.TextAppearance_AppCompat_Body1
+                    )
+                    binding.txtAbsenPulang.setTextAppearance(
+                        requireContext(),
+                        com.google.android.material.R.style.TextAppearance_AppCompat_Body1
+                    )
+                }
+                "normal" -> {
+                    binding.txtAbsenPagi.setTextAppearance(
+                        requireContext(),
+                        com.google.android.material.R.style.TextAppearance_AppCompat_Large
+                    )
+                    binding.txtAbsenSiang.setTextAppearance(
+                        requireContext(),
+                        com.google.android.material.R.style.TextAppearance_AppCompat_Large
+                    )
+                    binding.txtAbsenPulang.setTextAppearance(
+                        requireContext(),
+                        com.google.android.material.R.style.TextAppearance_AppCompat_Large
+                    )
+                }
+                "besar" -> {
+                    binding.txtAbsenPagi.setTextAppearance(
+                        requireContext(),
+                        com.google.android.material.R.style.TextAppearance_AppCompat_Display1
+                    )
+                    binding.txtAbsenSiang.setTextAppearance(
+                        requireContext(),
+                        com.google.android.material.R.style.TextAppearance_AppCompat_Display1
+                    )
+                    binding.txtAbsenPulang.setTextAppearance(
+                        requireContext(),
+                        com.google.android.material.R.style.TextAppearance_AppCompat_Display1
+                    )
+                }
+            }
+        } else {
+            when (appearanceSettings) {
+                "kecil" -> {
+                    binding.txtAbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtAbsenSiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                    binding.txtAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Body1)
+                }
+                "normal" -> {
+                    binding.txtAbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.txtAbsenSiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                    binding.txtAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Large)
+                }
+                "besar" -> {
+                    binding.txtAbsenPagi.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.txtAbsenSiang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                    binding.txtAbsenPulang.setTextAppearance(com.google.android.material.R.style.TextAppearance_AppCompat_Display1)
+                }
+            }
+        }
     }
 }

@@ -307,6 +307,7 @@
             android:id="@+id/kirim"
             style="@style/Widget.Material3.Button"
             android:layout_width="120dp"
+            android:enabled="false"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_margin="16dp"
@@ -314,4 +315,19 @@
             android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
             app:cornerRadius="20dp" />
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/layoutIzinTxt"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_margin="16dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/cutiHariIniText"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:text="Anda Sudah Izin/Cuti hari ini"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 </LinearLayout>

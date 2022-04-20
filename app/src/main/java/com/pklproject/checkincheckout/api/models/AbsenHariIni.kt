@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class AbsenHariIni(
     @SerializedName("absen_yang_dibutuhkan")
     val absenYangDibutuhkan: String?,
+    @SerializedName("absen_siang_diperlukan")
+    val absenSiangDiperlukan:String?,
     @SerializedName("cuti")
     val cuti: String?,
     @SerializedName("izin")
