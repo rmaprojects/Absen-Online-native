@@ -40,7 +40,7 @@
         <entry key="app/src/main/res/layout/fragment_history.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_izin.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_menu_absen.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_menu_absen.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22" />

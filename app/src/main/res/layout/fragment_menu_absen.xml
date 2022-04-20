@@ -37,6 +37,7 @@
 
 
     <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_margin="8dp" />
@@ -326,8 +327,10 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_centerInParent="true"
+            android:textColor="?colorPrimary"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
             android:layout_width="match_parent"
-            android:text="Anda Sudah Izin/Cuti hari ini"
+            android:text="Anda Sudah Izin/Cuti hari ini, tidak perlu absen lagi"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
 </LinearLayout>

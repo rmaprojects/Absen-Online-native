@@ -764,6 +764,8 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.pilihanAbsen.isVisible = false
                         binding.layoutIzinTxt.isVisible = true
                         binding.izindialog.isVisible = false
+                        binding.absensi.isVisible = false
+                        binding.divider.isVisible = false
                     }
                     else -> {
                         binding.absenPagi.isClickable = false
