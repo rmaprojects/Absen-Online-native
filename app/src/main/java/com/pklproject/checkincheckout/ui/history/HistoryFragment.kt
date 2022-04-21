@@ -11,17 +11,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.chibatching.kotpref.Kotpref
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
-import com.pklproject.checkincheckout.api.models.LoginModel
 import com.pklproject.checkincheckout.databinding.FragmentHistoryBinding
-import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.history.item.HistoryItem
 import com.pklproject.checkincheckout.ui.settings.Preferences
-import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import com.google.android.material.R.style.*
+import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferences
 import kotlinx.coroutines.launch
 
 class HistoryFragment : Fragment(R.layout.fragment_history) {
@@ -33,15 +32,16 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.setLayoutManager(LinearLayoutManager(requireContext()))
-        retrieveHistory(TinyDB(requireContext()))
+        retrieveHistory()
         setTextAppearance(requireContext())
+        Kotpref.init(requireContext())
 
         binding.selectMonthButton.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_history_to_datePickerDialog)
         }
 
         viewModel.listener = {
-            retrieveHistory(TinyDB(requireContext()))
+            retrieveHistory()
             binding.selectMonthButton.text = "${getProperMonth(viewModel.getMonth())} ${viewModel.getYear()}"
         }
 
@@ -86,15 +86,15 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         }
     }
 
-    private fun retrieveHistory(tinyDB: TinyDB) {
-        val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
-        val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
+    private fun retrieveHistory() {
+        val username = LoginPreferences.username
+        val password = LoginPreferences.password
         val currentYear = viewModel.getYear()
         val currentMonth = viewModel.getMonth()
         val api = ApiInterface.createApi()
         lifecycleScope.launch {
             try {
-                val response = api.history(username.toString(), password.toString(), currentYear.toString(), currentMonth.toString())
+                val response = api.history(username, password, currentYear.toString(), currentMonth.toString())
                 if (response.isSuccessful) {
                     Log.d("History", response.body()?.history.toString())
                     viewModel.setHistoryData(response.body()!!)

@@ -13,15 +13,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.chibatching.kotpref.Kotpref
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
-import com.pklproject.checkincheckout.api.models.LoginModel
-import com.pklproject.checkincheckout.api.models.Setting
+import com.pklproject.checkincheckout.api.models.preferencesmodel.AbsenSettingsPreferences
+import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferences
 import com.pklproject.checkincheckout.databinding.FragmentMenuAbsenBinding
-import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
@@ -39,12 +38,12 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        val tinyDB = TinyDB(requireContext())
-        val username = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
-        val password = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
+        Kotpref.init(requireContext())
+        val username = LoginPreferences.username
+        val password = LoginPreferences.password
         val hariIni = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        val settingsAbsen = tinyDB.getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java)
-        cekAbsenTodayApi(username.toString(), password.toString(), hariIni, settingsAbsen)
+        val settingsAbsen = AbsenSettingsPreferences
+        cekAbsenTodayApi(username, password, hariIni, settingsAbsen)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,7 +63,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
         binding.kirim.isEnabled = !(viewModel.getLatitude() == 0.0 && viewModel.getLongitude() == 0.0)
 
-        val settingsAbsen = tinyDB.getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java)
+        val settingsAbsen = AbsenSettingsPreferences
 
         cekAbsenToday(settingsAbsen)
 
@@ -120,16 +119,10 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
         val api = ApiInterface.createApi()
         val username = convertToRequstBody(
-            tinyDB.getObject(
-                LoginActivity.KEYSIGNIN,
-                LoginModel::class.java
-            ).username.toString()
+            LoginPreferences.username
         )
         val password = convertToRequstBody(
-            tinyDB.getObject(
-                LoginActivity.KEYSIGNIN,
-                LoginModel::class.java
-            ).password.toString()
+            LoginPreferences.password
         )
         val hariIni =
             convertToRequstBody(SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()))
@@ -170,11 +163,11 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     binding.absen.isChecked = true
                     binding.izin.isChecked = false
                     binding.cuti.isChecked = false
-                    binding.pilihanAbsen.isVisible = false
+                    binding.izin.isVisible = false
+                    binding.cuti.isVisible = false
+                    binding.absensi.isVisible = false
                     binding.layoutIzinTxt.isVisible = true
                     binding.izindialog.isVisible = false
-                    binding.absensi.isVisible = false
-                    binding.divider.isVisible = false
                 } else {
                     Toast.makeText(requireContext(), response.body()?.message, Toast.LENGTH_SHORT)
                         .show()
@@ -192,7 +185,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         }
     }
 
-    private fun cekAbsenToday(settingsAbsen: Setting) {
+    private fun cekAbsenToday(settingsAbsen: AbsenSettingsPreferences) {
 
         val listJamMasuk = viewModel.getTodayAttendance()?.get(0)
         var txtJamAbsenPagi = ""
@@ -229,6 +222,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val timeNow = Calendar.getInstance()
 
         Log.d("absen dibutuhkan", listJamMasuk?.absenYangDibutuhkan.toString())
+        Log.d("absen siang diperlukan", listJamMasuk?.absenSiangDiperlukan.toString())
         when (listJamMasuk?.absenYangDibutuhkan) {
             null -> {
                 binding.kirim.isEnabled = true
@@ -236,6 +230,12 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 binding.cutiHariIniText.isVisible = false
                 binding.absensi.isVisible = true
                 binding.pilihanAbsen.isVisible = true
+
+                if (listJamMasuk?.absenSiangDiperlukan == "1") {
+                    binding.absenSiang.isVisible = true
+                } else if (listJamMasuk?.absenSiangDiperlukan == "0") {
+                    binding.absenSiang.isVisible = false
+                }
 
                 binding.layoutIzinTxt.isVisible = false
 
@@ -428,7 +428,11 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 binding.cuti.isVisible = false
                 binding.izin.isVisible = false
 
-                binding.absenSiang.isVisible = listJamMasuk.absenSiangDiperlukan != "0"
+                if (listJamMasuk.absenSiangDiperlukan == "1") {
+                    binding.absenSiang.isVisible = true
+                } else if (listJamMasuk.absenSiangDiperlukan == "0") {
+                    binding.absenSiang.isVisible = false
+                }
                 binding.layoutIzinTxt.isVisible = false
 
                 txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
@@ -466,7 +470,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 }
             }
             "selesai-cuti-atau-izin" -> {
-                binding.pilihanAbsen.isVisible = false
+                binding.izin.isVisible = false
+                binding.cuti.isVisible = false
+                binding.absensi.isVisible = false
                 binding.layoutIzinTxt.isVisible = true
                 binding.izindialog.isVisible = false
             }
@@ -488,7 +494,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         binding.txtStatusPulang.text = txtStatusAbsenPulang
     }
 
-    private fun cekAbsenTodayApi(username:String, password:String, hariIni:String, settingsAbsen: Setting) {
+    private fun cekAbsenTodayApi(username:String, password:String, hariIni:String, settingsAbsen: AbsenSettingsPreferences) {
         val api = ApiInterface.createApi()
         lifecycleScope.launch {
             try {
@@ -527,7 +533,8 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
                 val timeNow = Calendar.getInstance()
 
-                Log.d("absen dibutuhkan", listJamMasuk?.absenYangDibutuhkan.toString())
+                Log.d("absen dibutuhkan API", listJamMasuk?.absenYangDibutuhkan.toString())
+                Log.d("siangdiperlukanAPI", listJamMasuk?.absenSiangDiperlukan.toString())
 
                 when (listJamMasuk?.absenYangDibutuhkan) {
                     null -> {
@@ -536,6 +543,12 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.cutiHariIniText.isVisible = false
                         binding.absensi.isVisible = true
                         binding.pilihanAbsen.isVisible = true
+
+                        if (listJamMasuk?.absenSiangDiperlukan == "1") {
+                            binding.absenSiang.isVisible = true
+                        } else if (listJamMasuk?.absenSiangDiperlukan == "0") {
+                            binding.absenSiang.isVisible = false
+                        }
 
                         binding.layoutIzinTxt.isVisible = false
 
@@ -728,7 +741,11 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.cuti.isVisible = false
                         binding.izin.isVisible = false
 
-                        binding.absenSiang.isVisible = listJamMasuk.absenSiangDiperlukan != "0"
+                        if (listJamMasuk.absenSiangDiperlukan == "1") {
+                            binding.absenSiang.isVisible = true
+                        } else if (listJamMasuk.absenSiangDiperlukan == "0") {
+                            binding.absenSiang.isVisible = false
+                        }
                         binding.layoutIzinTxt.isVisible = false
 
                         txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
@@ -766,11 +783,11 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         }
                     }
                     "selesai-cuti-atau-izin" -> {
-                        binding.pilihanAbsen.isVisible = false
+                        binding.izin.isVisible = false
+                        binding.cuti.isVisible = false
+                        binding.absensi.isVisible = false
                         binding.layoutIzinTxt.isVisible = true
                         binding.izindialog.isVisible = false
-                        binding.absensi.isVisible = false
-                        binding.divider.isVisible = false
                     }
                     else -> {
                         binding.absenPagi.isClickable = false
@@ -799,7 +816,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         findNavController().navigate(R.id.action_navigation_absen_to_absenFragment, bundle)
     }
 
-    private fun checkIfAttendanceIsLate(eventType: String, absenSetings: Setting): Boolean {
+    private fun checkIfAttendanceIsLate(eventType: String, absenSetings: AbsenSettingsPreferences): Boolean {
         val sdf = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         val waktuPagiAkhir = sdf.parse(absenSetings.absenPagiAkhir)
         val waktuSiangAkhir = sdf.parse(absenSetings.absenSiangAkhir)

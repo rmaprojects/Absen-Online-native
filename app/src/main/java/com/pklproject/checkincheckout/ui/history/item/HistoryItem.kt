@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.l4digital.fastscroll.FastScroller
 import com.pklproject.checkincheckout.R
-import com.pklproject.checkincheckout.api.models.History
-import com.pklproject.checkincheckout.api.models.HistoryAbsenModel
+import com.pklproject.checkincheckout.api.models.apimodel.History
+import com.pklproject.checkincheckout.api.models.apimodel.HistoryAbsenModel
 import com.pklproject.checkincheckout.databinding.ItemHistoryBinding
 import com.pklproject.checkincheckout.ui.history.item.HistoryItem.HistoryItemViewHolder
 
@@ -46,11 +46,6 @@ class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<History
             } else {
                 binding.cardViewData.isVisible = true
                 binding.noDataCardView.isVisible = false
-                if (history?.absenSiangDiperlukan == "1") {
-                    binding.jamSiang.isVisible
-                } else {
-                    !binding.jamSiang.isVisible
-                }
                 if (history?.izin == "1" || history?.cuti == "1") {
                     binding.cardViewData.isVisible = false
                     binding.noDataCardView.isVisible = false
@@ -74,18 +69,28 @@ class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<History
                         }
                     }
 
-                    when {
-                        history?.statusKeterlambatanSiang == "Terlambat" -> {
-                            binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_telat, 0, 0, 0)
-                            binding.jamSiang.text = history.jamMasukSiang
+                    when (history?.absenSiangDiperlukan) {
+                        "1" -> {
+                            binding.jamSiang.isVisible = true
+                            binding.statusIconNoon.isVisible = true
+                            when (history?.statusKeterlambatanSiang) {
+                                "Terlambat" -> {
+                                    binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_telat, 0, 0, 0)
+                                    binding.jamSiang.text = history.jamMasukSiang
+                                }
+                                "Hadir" -> {
+                                    binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sudah_absen, 0, 0, 0)
+                                    binding.jamSiang.text = history.jamMasukSiang
+                                }
+                                else -> {
+                                    binding.jamSiang.text = "--/--"
+                                    binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_not_available_24, 0, 0, 0)
+                                }
+                            }
                         }
-                        history?.statusKeterlambatanSiang == "Hadir" -> {
-                            binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sudah_absen, 0, 0, 0)
-                            binding.jamSiang.text = history.jamMasukSiang
-                        }
-                        history?.jamMasukSiang == null -> {
-                            binding.jamSiang.text = "--/--"
-                            binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_not_available_24, 0, 0, 0)
+                        "0" -> {
+                            binding.jamSiang.isVisible = false
+                            binding.statusIconNoon.isVisible = false
                         }
                     }
 

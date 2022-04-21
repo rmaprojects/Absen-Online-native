@@ -12,7 +12,7 @@ import com.google.android.material.R.style.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pklproject.checkincheckout.BuildConfig
 import com.pklproject.checkincheckout.R
-import com.pklproject.checkincheckout.api.models.LoginModel
+import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferences
 import com.pklproject.checkincheckout.databinding.FragmentProfileBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
@@ -28,10 +28,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val tinyDB = TinyDB(requireContext())
         setTextAppearance(requireContext())
 
-        binding.name.text = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).namaKaryawan
-        binding.jabatan.text = tinyDB.getObject(LoginActivity.KEYSIGNIN,LoginModel::class.java).jabatan
-        binding.departemen.text = tinyDB.getObject(LoginActivity.KEYSIGNIN,LoginModel::class.java).departement
-        binding.unit.text = tinyDB.getObject(LoginActivity.KEYSIGNIN,LoginModel::class.java).businessUnit
+        binding.name.text = LoginPreferences.namaKaryawan
+        binding.jabatan.text = LoginPreferences.jabatan
+        binding.departemen.text = LoginPreferences.departement
+        binding.unit.text = LoginPreferences.businessUnit
         binding.nomorVersi.text = "Version: ${BuildConfig.VERSION_NAME}"
 
         binding.keluar.setOnClickListener {
@@ -40,6 +40,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 .setMessage("Apakah anda yakin ingin keluar?")
                 .setPositiveButton("Ya"){ _, _ ->
                     tinyDB.clear()
+                    LoginPreferences.clear()
                     Preferences(requireContext()).isLoggedIn = false
                     requireActivity().startActivity(Intent(requireContext(), LoginActivity::class.java))
                     requireActivity().finish()

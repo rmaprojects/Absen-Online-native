@@ -4,8 +4,8 @@ import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.otaliastudios.cameraview.PictureResult
-import com.pklproject.checkincheckout.api.models.AbsenHariIni
-import com.pklproject.checkincheckout.api.models.HistoryAbsenModel
+import com.pklproject.checkincheckout.api.models.apimodel.AbsenHariIni
+import com.pklproject.checkincheckout.api.models.apimodel.HistoryAbsenModel
 import java.text.SimpleDateFormat
 import java.util.*
 

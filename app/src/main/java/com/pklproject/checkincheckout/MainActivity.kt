@@ -19,16 +19,19 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.*
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.chibatching.kotpref.Kotpref
+import com.chibatching.kotpref.bulk
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
-import com.pklproject.checkincheckout.api.models.LoginModel
-import com.pklproject.checkincheckout.api.models.Setting
+import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferences
+import com.pklproject.checkincheckout.api.models.preferencesmodel.AbsenSettingsPreferences
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
 import com.pklproject.checkincheckout.notification.NotificationWorker
-import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
@@ -73,11 +76,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
-        val tinyDb = TinyDB(this)
-        val username = tinyDb.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
-        val password = tinyDb.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
-        retrieveSettingsAbsen(tinyDb)
-        retrieveTodayAbsen(ApiInterface.createApi(), username.toString(), password.toString())
+        Kotpref.init(this)
+
+        val username = LoginPreferences.username
+        val password = LoginPreferences.password
+        retrieveSettingsAbsen()
+        retrieveTodayAbsen(ApiInterface.createApi(), username, password)
 
         airLocation = AirLocation(this, object : AirLocation.Callback {
             override fun onSuccess(locations: ArrayList<Location>) {
@@ -136,7 +140,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     binding.toolBar.subtitle = null
                     showTitle = "Absen"
                     binding.fragmentContainer.setPadding(0, 0, 0, 128)
-                    retrieveTodayAbsen(ApiInterface.createApi(), username.toString(), password.toString())
+                    retrieveTodayAbsen(ApiInterface.createApi(), username, password)
                 }
                 R.id.navigation_history -> {
                     showBottomNav = true
@@ -180,11 +184,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun notificationWorker() {
 
-        val waktuAkhirAbsenPagi = TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPagiAkhir
+        val waktuAkhirAbsenPagi = AbsenSettingsPreferences.absenPagiAkhir
         Log.d("waktuAkhirAbsenPagi", waktuAkhirAbsenPagi)
-        val waktuAkhirAbsenSiang = TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenSiangAkhir
+        val waktuAkhirAbsenSiang = AbsenSettingsPreferences.absenSiangAkhir
         Log.d("waktuAkhirAbsenSiang", waktuAkhirAbsenSiang)
-        val waktuAkhirAbsenPulang = TinyDB(this).getObject(PENGATURANABSENKEY, Setting::class.java).absenPulangAkhir
+        val waktuAkhirAbsenPulang = AbsenSettingsPreferences.absenPulangAkhir
         Log.d("waktuAkhirAbsenPulang", waktuAkhirAbsenPulang)
 
         val workerPagi = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
@@ -225,13 +229,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         return true
     }
 
-    fun retrieveSettingsAbsen(tinyDB: TinyDB) {
+    fun retrieveSettingsAbsen() {
         val api = ApiInterface.createApi()
         lifecycleScope.launch {
             try {
                 val response = api.getAbsenSettings()
                 if (response.status) {
-                    tinyDB.putObject(PENGATURANABSENKEY, response.setting)
+                    AbsenSettingsPreferences.bulk {
+                        this.absenPagiAkhir = response.setting.absenPagiAkhir
+                        this.absenPagiAwal = response.setting.absenPagiAwal
+                        this.absenSiangAkhir = response.setting.absenSiangAkhir
+                        this.absenSiangAwal = response.setting.absenSiangAwal
+                        this.absenPulangAkhir = response.setting.absenPulangAkhir
+                        this.absenPulangAwal = response.setting.absenPulangAwal
+                        this.absenSiangDiperlukan = response.setting.absenSiangDiperlukan
+                    }
                 } else {
                     Snackbar.make(binding.root, response.message, Snackbar.LENGTH_LONG).show()
                 }
@@ -243,10 +255,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun checkTheme() {
         when (Preferences(this).changeTheme) {
-            0 -> setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
-            1 -> setDefaultNightMode(MODE_NIGHT_NO)
-            2 -> setDefaultNightMode(MODE_NIGHT_YES)
+            0 -> setDefaultNightMode(MODE_NIGHT_NO)
+            1 -> setDefaultNightMode(MODE_NIGHT_YES)
+            else -> setDefaultNightMode(MODE_NIGHT_NO)
         }
+        Log.d("Theme:", Preferences(this).changeTheme.toString())
     }
 
     private fun retrieveTodayAbsen(api:ApiInterface, username:String, password:String) {

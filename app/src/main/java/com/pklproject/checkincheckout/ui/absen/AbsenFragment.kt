@@ -9,20 +9,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.chibatching.kotpref.Kotpref
 import com.google.android.material.R.style.*
 import com.google.android.material.snackbar.Snackbar
-import com.pklproject.checkincheckout.MainActivity
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
-import com.pklproject.checkincheckout.api.models.LoginModel
-import com.pklproject.checkincheckout.api.models.Setting
+import com.pklproject.checkincheckout.api.models.preferencesmodel.AbsenSettingsPreferences
+import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferences
 import com.pklproject.checkincheckout.databinding.FragmentAbsenBinding
-import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
@@ -46,31 +44,21 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         super.onViewCreated(view, savedInstanceState)
 
         val absen = arguments?.getString(ABSEN_TYPE)
-        val tinyDB = TinyDB(requireContext())
 
         when (absen) {
             "1" -> {
                 binding.batasWaktuText.text = "Segera absen sebelum ${
-                    tinyDB.getObject(
-                        MainActivity.PENGATURANABSENKEY,
-                        Setting::class.java
-                    ).absenPagiAkhir
+                    AbsenSettingsPreferences.absenPagiAkhir
                 }"
             }
             "2" -> {
                 binding.batasWaktuText.text = "Segera absen sebelum ${
-                    tinyDB.getObject(
-                        MainActivity.PENGATURANABSENKEY,
-                        Setting::class.java
-                    ).absenSiangAkhir
+                    AbsenSettingsPreferences.absenSiangAkhir
                 }"
             }
             "3" -> {
                 binding.batasWaktuText.text = "Segera absen sebelum ${
-                    tinyDB.getObject(
-                        MainActivity.PENGATURANABSENKEY,
-                        Setting::class.java
-                    ).absenPulangAkhir
+                    AbsenSettingsPreferences.absenPulangAkhir
                 }"
             }
         }
@@ -90,79 +78,12 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             }
         }
         setTextAppearance(requireContext())
-        initialisation(tinyDB, absen.toString())
+        initialisation(absen.toString())
     }
 
-    private fun setTextAppearance(context: Context) {
-        val appearanceSettings = Preferences(context).textSize
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            when (appearanceSettings) {
-                "kecil" -> {
-                    binding.batasWaktuText.setTextAppearance(
-                        requireContext(),
-                        TextAppearance_AppCompat_Body1
-                    )
-                    binding.waktutTersisaTxt.setTextAppearance(
-                        requireContext(),
-                        TextAppearance_AppCompat_Body2
-                    )
-                    binding.previewTxt.setTextAppearance(
-                        requireContext(),
-                        TextAppearance_AppCompat_Body1
-                    )
-                }
-                "normal" -> {
-                    binding.batasWaktuText.setTextAppearance(
-                        requireContext(),
-                        TextAppearance_AppCompat_Large
-                    )
-                    binding.waktutTersisaTxt.setTextAppearance(
-                        requireContext(),
-                        TextAppearance_AppCompat_Medium
-                    )
-                    binding.previewTxt.setTextAppearance(
-                        requireContext(),
-                        TextAppearance_AppCompat_Large
-                    )
-                }
-                "besar" -> {
-                    binding.batasWaktuText.setTextAppearance(
-                        requireContext(),
-                        TextAppearance_AppCompat_Display1
-                    )
-                    binding.waktutTersisaTxt.setTextAppearance(
-                        requireContext(),
-                        TextAppearance_AppCompat_Large
-                    )
-                    binding.previewTxt.setTextAppearance(
-                        requireContext(),
-                        TextAppearance_AppCompat_Display1
-                    )
-                }
-            }
-        } else {
-            when (appearanceSettings) {
-                "kecil" -> {
-                    binding.batasWaktuText.setTextAppearance(TextAppearance_AppCompat_Body1)
-                    binding.waktutTersisaTxt.setTextAppearance(TextAppearance_AppCompat_Body2)
-                    binding.previewTxt.setTextAppearance(TextAppearance_AppCompat_Body1)
-                }
-                "normal" -> {
-                    binding.batasWaktuText.setTextAppearance(TextAppearance_AppCompat_Large)
-                    binding.waktutTersisaTxt.setTextAppearance(TextAppearance_AppCompat_Medium)
-                    binding.previewTxt.setTextAppearance(TextAppearance_AppCompat_Large)
-                }
-                "besar" -> {
-                    binding.batasWaktuText.setTextAppearance(TextAppearance_AppCompat_Display1)
-                    binding.waktutTersisaTxt.setTextAppearance(TextAppearance_AppCompat_Large)
-                    binding.previewTxt.setTextAppearance(TextAppearance_AppCompat_Display1)
-                }
-            }
-        }
-    }
-
-    private fun initialisation(tinyDB: TinyDB, absen: String) {
+    private fun initialisation(absen: String) {
         countDelayWaktuTersisa(absen)
+        Kotpref.init(requireContext())
         if (viewModel.getResultPicture() != null && viewModel.getLatitude() != null) {
             binding.kirimabsen.isEnabled = true
             binding.txtSendError.isVisible = false
@@ -171,10 +92,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 findNavController().navigate(R.id.action_absenFragment_to_cameraView)
             }
 
-            val username =
-                tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).username
-            val password =
-                tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).password
+            val username = LoginPreferences.username
+            val password = LoginPreferences.password
             val keterangan = binding.keterangan.text
 
             binding.kirimabsen.setOnClickListener {
@@ -182,8 +101,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 val latitude = viewModel.getLatitude() ?: 0.0
                 val jamSekarang = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
                 kirimAbsen(
-                    username!!,
-                    password!!,
+                    username,
+                    password,
                     absen,
                     keterangan.toString(),
                     longitude,
@@ -207,8 +126,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
     }
 
     private fun countDelayWaktuTersisa(tipeAbsen: String) {
-        val waktuSekarang =
-            SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date()).split(":")
+        val waktuSekarang = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date()).split(":")
         val jam = waktuSekarang[0].toInt()
         val menit = waktuSekarang[1].toInt()
         val detik = waktuSekarang[2].toInt()
@@ -220,10 +138,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
         when (tipeAbsen) {
             "1" -> {
-                val waktuAkhirAbsenPagi = TinyDB(requireContext()).getObject(
-                    MainActivity.PENGATURANABSENKEY,
-                    Setting::class.java
-                ).absenPagiAkhir.split(":")
+                val waktuAkhirAbsenPagi = AbsenSettingsPreferences.absenPagiAkhir.split(":")
                 val jamAbsenTerakhir = waktuAkhirAbsenPagi[0].toInt()
                 val menitAbsenTerakhir = waktuAkhirAbsenPagi[1].toInt()
                 val detikAbsenTerakhir = waktuAkhirAbsenPagi[2].toInt()
@@ -242,10 +157,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 }
             }
             "2" -> {
-                val waktuAkhirAbsenSiang = TinyDB(requireContext()).getObject(
-                    MainActivity.PENGATURANABSENKEY,
-                    Setting::class.java
-                ).absenSiangAkhir.split(":")
+                val waktuAkhirAbsenSiang = AbsenSettingsPreferences.absenSiangAkhir.split(":")
                 val jamAbsenTerakhir = waktuAkhirAbsenSiang[0].toInt()
                 val menitAbsenTerakhir = waktuAkhirAbsenSiang[1].toInt()
                 val detikAbsenTerakhir = waktuAkhirAbsenSiang[2].toInt()
@@ -264,10 +176,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 }
             }
             "3" -> {
-                val waktuAkhirAbsenPulang = TinyDB(requireContext()).getObject(
-                    MainActivity.PENGATURANABSENKEY,
-                    Setting::class.java
-                ).absenPulangAkhir.split(":")
+                val waktuAkhirAbsenPulang = AbsenSettingsPreferences.absenPulangAkhir.split(":")
                 val jamAbsenTerakhir = waktuAkhirAbsenPulang[0].toInt()
                 val menitAbsenTerakhir = waktuAkhirAbsenPulang[1].toInt()
                 val detikAbsenTerakhir = waktuAkhirAbsenPulang[2].toInt()
@@ -302,7 +211,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         val api = ApiInterface.createApi()
         val photo = viewModel.getBitmapImage()
         val dateNow = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        val namaUser = tinyDB.getObject(LoginActivity.KEYSIGNIN, LoginModel::class.java).namaKaryawan
+        val namaUser = LoginPreferences.namaKaryawan
         val imageBodyPart = buildImageBodyPart("$namaUser-$tipeAbsen-$dateNow", photo!!)
         val reqBodyUsername = convertToRequstBody(username)
         val reqBodyPassword = convertToRequstBody(password)
@@ -313,7 +222,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         val reqBodyJamSekarang = convertToRequstBody(jamSekarang)
         val idAbsensiReqBody = convertToRequstBody(tinyDB.getString(KEYIDABSEN))
         val reqBodyTanggalSekarang = convertToRequstBody(dateNow)
-        val settings = TinyDB(requireContext()).getObject(MainActivity.PENGATURANABSENKEY, Setting::class.java)
 
         if (tipeAbsen == "1") {
             Log.d("longitude", longitude.toString())
@@ -496,6 +404,74 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 }
             } catch (e:Exception) {
                 Log.d("Error", e.message.toString())
+            }
+        }
+    }
+
+    private fun setTextAppearance(context: Context) {
+        val appearanceSettings = Preferences(context).textSize
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            when (appearanceSettings) {
+                "kecil" -> {
+                    binding.batasWaktuText.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Body1
+                    )
+                    binding.waktutTersisaTxt.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Body2
+                    )
+                    binding.previewTxt.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Body1
+                    )
+                }
+                "normal" -> {
+                    binding.batasWaktuText.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Large
+                    )
+                    binding.waktutTersisaTxt.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Medium
+                    )
+                    binding.previewTxt.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Large
+                    )
+                }
+                "besar" -> {
+                    binding.batasWaktuText.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Display1
+                    )
+                    binding.waktutTersisaTxt.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Large
+                    )
+                    binding.previewTxt.setTextAppearance(
+                        requireContext(),
+                        TextAppearance_AppCompat_Display1
+                    )
+                }
+            }
+        } else {
+            when (appearanceSettings) {
+                "kecil" -> {
+                    binding.batasWaktuText.setTextAppearance(TextAppearance_AppCompat_Body1)
+                    binding.waktutTersisaTxt.setTextAppearance(TextAppearance_AppCompat_Body2)
+                    binding.previewTxt.setTextAppearance(TextAppearance_AppCompat_Body1)
+                }
+                "normal" -> {
+                    binding.batasWaktuText.setTextAppearance(TextAppearance_AppCompat_Large)
+                    binding.waktutTersisaTxt.setTextAppearance(TextAppearance_AppCompat_Medium)
+                    binding.previewTxt.setTextAppearance(TextAppearance_AppCompat_Large)
+                }
+                "besar" -> {
+                    binding.batasWaktuText.setTextAppearance(TextAppearance_AppCompat_Display1)
+                    binding.waktutTersisaTxt.setTextAppearance(TextAppearance_AppCompat_Large)
+                    binding.previewTxt.setTextAppearance(TextAppearance_AppCompat_Display1)
+                }
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.pklproject.checkincheckout.api.`interface`
 
 import com.google.gson.GsonBuilder
-import com.pklproject.checkincheckout.api.models.*
+import com.pklproject.checkincheckout.api.models.apimodel.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -51,10 +51,10 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST("cek_absen_hari_ini.php")
     suspend fun cekAbsenHariIni(
-        @Field ("username") username: String,
-        @Field ("password") password: String,
+        @Field ("username") username: String?,
+        @Field ("password") password: String?,
         @Field ("tanggal_sekarang") today:String
-    ):TodayAttendanceModel
+    ): TodayAttendanceModel
 
     @FormUrlEncoded
     @POST("update_absen_settings.php")
@@ -62,7 +62,7 @@ interface ApiInterface {
         @Field("tipe_absen") tipeAbsen: String,
         @Field ("absen_awal") absenAwal :String?,
         @Field ("absen_akhir") AbsenAkhir :String?
-    ):UpdateSettingsAbsenModel
+    ): UpdateSettingsAbsenModel
 
     companion object {
         private const val BASE_URL: String = "https://absen-dev.omgindo.com/"
