@@ -22,6 +22,7 @@ import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferences
 import com.pklproject.checkincheckout.api.models.preferencesmodel.AbsenSettingsPreferences
+import com.pklproject.checkincheckout.api.models.preferencesmodel.ThemePreferences
 import com.pklproject.checkincheckout.databinding.FragmentSettingsBinding
 import kotlinx.coroutines.launch
 
@@ -91,7 +92,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
         }
 
-        when (Preferences(requireContext()).changeTheme) {
+        when (ThemePreferences.theme) {
             0 -> binding.currentThemeTxt.text = "Tema Sekarang: Light"
             1 -> binding.currentThemeTxt.text = "Tema Sekarang: Dark"
             else -> binding.currentThemeTxt.text = "Tema Sekarang: Light"
@@ -213,7 +214,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                         binding.currentThemeTxt.text = "Tema Sekarang: Light"
                     }
                 }
-                Preferences(requireContext()).changeTheme = i
+                ThemePreferences.theme = i
             }
             .setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
@@ -221,7 +222,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             .setNeutralButton("Reset") { dialog, _ ->
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 dialog.dismiss()
-                Preferences(requireContext()).changeTheme = 0
+                ThemePreferences.theme = 0
             }
             .create()
             .show()

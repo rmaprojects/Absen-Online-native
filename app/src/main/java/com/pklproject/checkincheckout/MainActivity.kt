@@ -28,12 +28,12 @@ import com.chibatching.kotpref.bulk
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
-import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferences
 import com.pklproject.checkincheckout.api.models.preferencesmodel.AbsenSettingsPreferences
+import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferences
+import com.pklproject.checkincheckout.api.models.preferencesmodel.ThemePreferences
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
 import com.pklproject.checkincheckout.notification.NotificationWorker
 import com.pklproject.checkincheckout.ui.settings.Preferences
-import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
 import mumayank.com.airlocationlibrary.AirLocation
@@ -254,12 +254,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun checkTheme() {
-        when (Preferences(this).changeTheme) {
+        when (ThemePreferences.theme) {
             0 -> setDefaultNightMode(MODE_NIGHT_NO)
             1 -> setDefaultNightMode(MODE_NIGHT_YES)
             else -> setDefaultNightMode(MODE_NIGHT_NO)
         }
-        Log.d("Theme:", Preferences(this).changeTheme.toString())
     }
 
     private fun retrieveTodayAbsen(api:ApiInterface, username:String, password:String) {

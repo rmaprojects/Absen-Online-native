@@ -14,6 +14,7 @@ import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
 import com.pklproject.checkincheckout.api.models.apimodel.LoginModel
 import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferences
+import com.pklproject.checkincheckout.api.models.preferencesmodel.ThemePreferences
 import com.pklproject.checkincheckout.databinding.ActivityLoginBinding
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.ui.settings.TinyDB
@@ -84,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkTheme() {
-        when (Preferences(this).changeTheme) {
+        when (ThemePreferences.theme) {
             0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
