@@ -71,12 +71,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Kotpref.init(this)
         checkTheme()
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
-
-        Kotpref.init(this)
 
         val username = LoginPreferences.username
         val password = LoginPreferences.password

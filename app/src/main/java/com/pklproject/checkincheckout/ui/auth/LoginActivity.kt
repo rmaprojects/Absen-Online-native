@@ -17,16 +17,15 @@ import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferenc
 import com.pklproject.checkincheckout.api.models.preferencesmodel.ThemePreferences
 import com.pklproject.checkincheckout.databinding.ActivityLoginBinding
 import com.pklproject.checkincheckout.ui.settings.Preferences
-import com.pklproject.checkincheckout.ui.settings.TinyDB
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private val binding: ActivityLoginBinding by viewBinding()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Kotpref.init(this)
         checkTheme()
         setContentView(R.layout.activity_login)
-        Kotpref.init(this)
 
         val api = ApiInterface.createApi()
 
