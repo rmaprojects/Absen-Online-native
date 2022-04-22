@@ -22,7 +22,6 @@ import com.pklproject.checkincheckout.api.models.preferencesmodel.AbsenSettingsP
 import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferences
 import com.pklproject.checkincheckout.databinding.FragmentMenuAbsenBinding
 import com.pklproject.checkincheckout.ui.settings.Preferences
-import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -49,14 +48,11 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tinyDB = TinyDB(requireContext())
-
-        initialisation(tinyDB)
+        initialisation()
         setTextAppearance(requireContext())
     }
 
-
-    private fun initialisation(tinyDB: TinyDB) {
+    private fun initialisation() {
         binding.pilihanAbsen.check(R.id.absen)
         binding.absensi.isVisible = true
         binding.izindialog.isVisible = false
@@ -85,7 +81,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                             .setMessage("Setelah anda klik 'Ya', maka anda tidak akan bisa absen lagi, lanjutkan?")
                             .setNegativeButton("Tidak") { _, _ -> }
                             .setPositiveButton("Ya") { _, _ ->
-                                kirimAbsen("5", tinyDB, keterangan.toString())
+                                kirimAbsen("5", keterangan.toString())
                             }
                             .show()
                     }
@@ -99,7 +95,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                             .setMessage("Setelah anda klik 'Ya', maka anda tidak akan bisa absen lagi, lanjutkan?")
                             .setNegativeButton("Tidak") { _, _ -> }
                             .setPositiveButton("Ya") { _, _ ->
-                                kirimAbsen("4", tinyDB, keterangan.toString())
+                                kirimAbsen("4", keterangan.toString())
                             }
                             .show()
                     }
@@ -108,7 +104,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         }
     }
 
-    private fun kirimAbsen(tipeAbsen: String, tinyDB: TinyDB, keterangan: String) {
+    private fun kirimAbsen(tipeAbsen: String, keterangan: String) {
         var jenisAbsen = ""
 
         if (tipeAbsen == "4") {
@@ -132,7 +128,6 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val latitude = convertToRequstBody(viewModel.getLatitude().toString())
         val absenType = convertToRequstBody(tipeAbsen)
         val catatan = convertToRequstBody(keterangan)
-        val idAbsensi = convertToRequstBody(tinyDB.getString(AbsenFragment.KEYIDABSEN))
 
         lifecycleScope.launch {
             try {
@@ -145,7 +140,6 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     null,
                     catatan,
                     jamSekarang,
-                    idAbsensi,
                     hariIni
                 )
                 if (response.body()?.status == true) {
@@ -237,6 +231,10 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     binding.absenSiang.isVisible = false
                 }
 
+                binding.absenPagi.isVisible = true
+                binding.absenSiang.isVisible = true
+                binding.absenPulang.isVisible = true
+
                 binding.layoutIzinTxt.isVisible = false
 
                 txtJamAbsenPagi = "--:--"
@@ -304,6 +302,10 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 txtStatusAbsenPulang = "Belum Tersedia"
                 statusImagePulang.isVisible = false
 
+                binding.absenPagi.isVisible = true
+                binding.absenSiang.isVisible = true
+                binding.absenPulang.isVisible = true
+
                 binding.absenPagi.setOnClickListener {
                     Toast.makeText(
                         requireContext(),
@@ -353,6 +355,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     statusImagePulang.setImageResource(R.drawable.ic_baseline_not_available_24)
                 }
 
+                binding.absenPagi.isVisible = true
+                binding.absenPulang.isVisible = true
+
                 binding.absenPagi.setOnClickListener {
                     Toast.makeText(
                         requireContext(),
@@ -395,6 +400,10 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     statusImagePulang.setImageResource(R.drawable.ic_baseline_not_available_24)
                 }
 
+                binding.absenPagi.isVisible = true
+                binding.absenSiang.isVisible = true
+                binding.absenPulang.isVisible = true
+
                 binding.absenPagi.setOnClickListener {
                     Toast.makeText(
                         requireContext(),
@@ -433,6 +442,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 } else if (listJamMasuk.absenSiangDiperlukan == "0") {
                     binding.absenSiang.isVisible = false
                 }
+
                 binding.layoutIzinTxt.isVisible = false
 
                 txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
@@ -444,6 +454,9 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 statusImageSiang.setImageResource(R.drawable.ic_sudah_absen)
                 txtStatusAbsenPulang = "Sudah Absen"
                 statusImagePulang.setImageResource(R.drawable.ic_sudah_absen)
+
+                binding.absenPagi.isVisible = true
+                binding.absenPulang.isVisible = true
 
                 binding.absenPagi.setOnClickListener {
                     Toast.makeText(
@@ -477,12 +490,13 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 binding.izindialog.isVisible = false
             }
             else -> {
-                binding.absenPagi.isClickable = false
-                binding.absenSiang.isClickable = false
-                binding.absenPulang.isClickable = false
-                binding.kirim.isEnabled = false
+                binding.izin.isVisible = false
+                binding.cuti.isVisible = false
+                binding.absensi.isVisible = false
+                binding.layoutIzinTxt.isVisible = true
+                binding.izindialog.isVisible = false
 
-                binding.cutiHariIniText.isVisible = false
+                binding.cutiHariIniText.text = "Event tidak ditemukan, silahkan tanyakan ke Staff IT tentang masalah ini"
             }
         }
 
@@ -607,6 +621,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         txtJamAbsenPulang = "--:--"
                         txtStatusAbsenPagi = "Sudah Absen"
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
+
                         if (checkIfAttendanceIsLate("siang", settingsAbsen)) {
                             txtStatusAbsenSiang = "Terlambat"
                             statusImageSiang.setImageResource(R.drawable.ic_telat)
@@ -658,6 +673,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         txtJamAbsenPulang = "--:--"
                         txtStatusAbsenPagi = "Sudah Absen"
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
+
                         if (checkIfAttendanceIsLate("pulang", settingsAbsen)) {
                             txtStatusAbsenPulang = "Terlambat"
                             statusImagePulang.setImageResource(R.drawable.ic_telat)
@@ -746,6 +762,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         } else if (listJamMasuk.absenSiangDiperlukan == "0") {
                             binding.absenSiang.isVisible = false
                         }
+
                         binding.layoutIzinTxt.isVisible = false
 
                         txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
@@ -805,6 +822,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 binding.txtStatusDay.text = txtStatusAbsenPagi
                 binding.txtStatusNoon.text = txtStatusAbsenSiang
                 binding.txtStatusPulang.text = txtStatusAbsenPulang
+
             } catch (e:Exception) {
 
             }

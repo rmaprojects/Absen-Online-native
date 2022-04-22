@@ -10,7 +10,6 @@
         $latitude = $_POST['latitude'];
         $keterangan = $_POST['keterangan'];
         $jam_masuk = $_POST['jam_masuk'];
-        $id_absensi = $_POST['id_absensi'];
         $tanggal = $_POST['tanggal_sekarang'];
 
         $queryCheckData = "SELECT COUNT(*) 'total' FROM tbl_karyawan WHERE username = '$username' AND password = '$password'";
@@ -68,16 +67,17 @@
 
                 $inputAbsen = mysqli_query($_AUTH, "INSERT INTO tbl_absensi (id_karyawan, jam_masuk_pagi, jam_awal_pagi, jam_akhir_pagi, longitude_pagi, latitude_pagi, photo_pagi, absen_siang_diperlukan) VALUES ('$id_karyawan', '$jam_masuk', '$waktu_absen_awal', '$waktu_absen_akhir', '$long', '$lat', '$photo', '$perlu_absen_siang');");
 
-                if ($inputAbsen && move_uploaded_file($_FILES['photo_absen']['tmp_name'],'images/' . $photo)) {
+                if (file_exists('images/'.$_FILES['photo_absen']['name'])) {
+                    chmod($_FILES['photo_absen']['name'],0755); //Change the file permissions if allowed
+                    unlink($_FILES['photo_absen']['name']); //remove the file
+                }
 
-                    $query_ambil_id = mysqli_query($_AUTH, "SELECT id_absensi FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' ORDER BY tanggal DESC LIMIT 1");
-                    $exec_get_id = mysqli_fetch_assoc($query_ambil_id);
+                if ($inputAbsen && move_uploaded_file($_FILES['photo_absen']['tmp_name'],'images/' . $photo)) {
 
                     $response['message'] = "Sukses menginput absensi!";
                     $response['code'] = 200;
                     $response['status'] = true;
                     $response['tipe_absen'] = "Absen Pagi";
-                    $response['id_absensi'] = $exec_get_id['id_absensi'];
 
                     echo json_encode($response);
                 } else {
@@ -119,7 +119,12 @@
                 $waktu_absen_akhir = $nilaiAkhir[0];
                 $perlu_absen_siang = $absen_siang_diperlukan[0];
 
-                $inputAbsen = mysqli_query($_AUTH, "UPDATE tbl_absensi SET jam_masuk_siang = '$jam_masuk', jam_awal_siang = '$waktu_absen_awal', jam_akhir_siang = '$waktu_absen_akhir', longitude_siang = '$long', latitude_siang = '$lat', photo_siang = '$photo', persentase = '66.6' WHERE id_absensi = '$id_absensi'");
+                $inputAbsen = mysqli_query($_AUTH, "UPDATE tbl_absensi SET jam_masuk_siang = '$jam_masuk', jam_awal_siang = '$waktu_absen_awal', jam_akhir_siang = '$waktu_absen_akhir', longitude_siang = '$long', latitude_siang = '$lat', photo_siang = '$photo', persentase = '66.6' WHERE tanggal >= '$tanggal' AND id_karyawan = $id_karyawan");
+
+                if (file_exists('images/'.$_FILES['photo_absen']['name'])) {
+                    chmod($_FILES['photo_absen']['name'],0755); //Change the file permissions if allowed
+                    unlink($_FILES['photo_absen']['name']); //remove the file
+                }
 
                 if ($inputAbsen && move_uploaded_file($_FILES['photo_absen']['tmp_name'],'images/' . $photo)) {
 
@@ -168,7 +173,12 @@
                 $waktu_absen_akhir = $nilaiAkhir[0];
                 $perlu_absen_siang = $absen_siang_diperlukan[0];
 
-                $inputAbsen = mysqli_query($_AUTH, "UPDATE tbl_absensi SET jam_masuk_pulang = '$jam_masuk', jam_awal_pulang = '$waktu_absen_awal', jam_akhir_pulang = '$waktu_absen_awal', longitude_pulang = '$long', latitude_pulang = '$lat', photo_pulang = '$photo', persentase = '100' WHERE id_absensi = '$id_absensi'");
+                $inputAbsen = mysqli_query($_AUTH, "UPDATE tbl_absensi SET jam_masuk_pulang = '$jam_masuk', jam_awal_pulang = '$waktu_absen_awal', absen_siang_diperlukan = '$perlu_absen_siang', jam_akhir_pulang = '$waktu_absen_awal', longitude_pulang = '$long', latitude_pulang = '$lat', photo_pulang = '$photo', persentase = '100' WHERE tanggal >= '$tanggal' AND id_karyawan = $id_karyawan");
+
+                if (file_exists('images/'.$_FILES['photo_absen']['name'])) {
+                    chmod($_FILES['photo_absen']['name'],0755); //Change the file permissions if allowed
+                    unlink($_FILES['photo_absen']['name']); //remove the file
+                }
 
                 if ($inputAbsen && move_uploaded_file($_FILES['photo_absen']['tmp_name'],'images/' . $photo)) {
 
@@ -189,7 +199,7 @@
             } else if ($absen_type == '4' || '5') {
                 $tipe_absen = "";
 
-                $query_check_if_exist = mysqli_query($_AUTH, "SELECT EXISTS(SELECT * from tbl_absensi WHERE tanggal = '$tanggal') as RESULT;");
+                $query_check_if_exist = mysqli_query($_AUTH, "SELECT EXISTS(SELECT * from tbl_absensi WHERE tanggal >= '$tanggal') as RESULT;");
                 $exec_checkIfExist = mysqli_fetch_assoc($query_check_if_exist);
 
                 if ($exec_checkIfExist['RESULT'] == 0) {
@@ -235,7 +245,7 @@
                 } else if ($exec_checkIfExist['RESULT'] == 1) {
                     if ($absen_type == '4') {
                         $tipe_absen = "Cuti";
-                        $inputAbsen = mysqli_query($_AUTH, "UPDATE tbl_absensi SET cuti = '1', izin = '0', keterangan = '$ket', longitude_izin_cuti = '$long', latitude_izin_cuti = '$lat', persentase = '100' WHERE id_absensi = '$id_absensi'");
+                        $inputAbsen = mysqli_query($_AUTH, "UPDATE tbl_absensi SET cuti = '1', izin = '0', keterangan = '$ket', longitude_izin_cuti = '$long', latitude_izin_cuti = '$lat', persentase = '100' WHERE tanggal >= '$tanggal' AND id_karyawan = $id_karyawan");
                         if ($inputAbsen) {
 
                             $response['message'] = "Sukses menginput absensi!";
@@ -254,7 +264,7 @@
                         }
                     } else if ($absen_type == '5') {
                         $tipe_absen = "Izin";
-                        $inputAbsen = mysqli_query($_AUTH, "UPDATE tbl_absensi SET cuti = '0', izin = '1', keterangan = '$ket', longitude_izin_cuti = '$long', latitude_izin_cuti = '$lat', persentase = '100' WHERE id_absensi = '$id_absensi'");
+                        $inputAbsen = mysqli_query($_AUTH, "UPDATE tbl_absensi SET cuti = '0', izin = '1', keterangan = '$ket', longitude_izin_cuti = '$long', latitude_izin_cuti = '$lat', persentase = '100' WHERE tanggal >= '$tanggal'");
                         if ($inputAbsen) {
 
                             $response['message'] = "Sukses menginput absensi!";
@@ -285,3 +295,4 @@
         echo json_encode($response);
     }
 //Code by Raka
+?>

@@ -33,17 +33,16 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tinyDB = TinyDB(requireContext())
         Kotpref.init(requireContext())
         val isAdmin = LoginPreferences.statusAdmin
 
-        initialisation(tinyDB)
+        initialisation()
         setTextAppearance(requireContext())
 
         binding.adminOnlyArea.isVisible = isAdmin == "1"
     }
 
-    private fun initialisation(tinyDB: TinyDB) {
+    private fun initialisation() {
 
         val listAbsenSettings = AbsenSettingsPreferences
 
@@ -70,7 +69,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     .setTitle("Konfirmasi")
                     .setMessage("Apakah anda yakin ingin mengubah pengaturan absen siang?")
                     .setPositiveButton("Ya") { _, _ ->
-                        changeIfAbsenSiangDiperlukan(tinyDB)
+                        changeIfAbsenSiangDiperlukan()
                     }
                     .setNegativeButton("Tidak") { _, _ ->
                         binding.switchAbsenSiangDiperlukan.isChecked = isAbsenSiangEnabled
@@ -82,7 +81,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     .setTitle("Konfirmasi")
                     .setMessage("Apakah anda yakin ingin mengubah pengaturan absen siang?")
                     .setPositiveButton("Ya") { _, _ ->
-                        changeIfAbsenSiangDiperlukan(tinyDB)
+                        changeIfAbsenSiangDiperlukan()
                     }
                     .setNegativeButton("Tidak") { _, _ ->
                         binding.switchAbsenSiangDiperlukan.isChecked = isAbsenSiangEnabled
@@ -164,7 +163,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         })
     }
 
-    private fun changeIfAbsenSiangDiperlukan(tinyDB: TinyDB) {
+    private fun changeIfAbsenSiangDiperlukan() {
         val api = ApiInterface.createApi()
         try {
             lifecycleScope.launch {

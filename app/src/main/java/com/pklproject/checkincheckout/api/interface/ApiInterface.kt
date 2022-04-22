@@ -31,7 +31,6 @@ interface ApiInterface {
         @Part photo_absen: MultipartBody.Part?,
         @Part("keterangan") keterangan: RequestBody?,
         @Part("jam_masuk") waktuMasuk: RequestBody,
-        @Part("id_absensi") idAbsensi: RequestBody?,
         @Part("tanggal_sekarang") tanggalSekarang: RequestBody?
     ): Response<KirimAbsenModel>
 

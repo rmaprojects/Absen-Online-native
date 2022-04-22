@@ -16,7 +16,6 @@ import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferenc
 import com.pklproject.checkincheckout.databinding.FragmentProfileBinding
 import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
-import com.pklproject.checkincheckout.ui.settings.TinyDB
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -25,7 +24,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tinyDB = TinyDB(requireContext())
         setTextAppearance(requireContext())
 
         binding.name.text = LoginPreferences.namaKaryawan
@@ -39,7 +37,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 .setTitle("Konfirmasi")
                 .setMessage("Apakah anda yakin ingin keluar?")
                 .setPositiveButton("Ya"){ _, _ ->
-                    tinyDB.clear()
                     LoginPreferences.clear()
                     Preferences(requireContext()).isLoggedIn = false
                     requireActivity().startActivity(Intent(requireContext(), LoginActivity::class.java))

@@ -22,7 +22,6 @@ import com.pklproject.checkincheckout.api.models.preferencesmodel.AbsenSettingsP
 import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferences
 import com.pklproject.checkincheckout.databinding.FragmentAbsenBinding
 import com.pklproject.checkincheckout.ui.settings.Preferences
-import com.pklproject.checkincheckout.ui.settings.TinyDB
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -207,7 +206,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         jamSekarang: String,
     ) {
         Toast.makeText(requireContext(), "Mohon untuk tidak menutup tab ini agar absen anda terkirim", Toast.LENGTH_LONG).show()
-        val tinyDB = TinyDB(requireContext())
         val api = ApiInterface.createApi()
         val photo = viewModel.getBitmapImage()
         val dateNow = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
@@ -220,7 +218,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         val reqBodyLongitude = convertToRequstBody(longitude.toString())
         val reqBodyLatitude = convertToRequstBody(latitude.toString())
         val reqBodyJamSekarang = convertToRequstBody(jamSekarang)
-        val idAbsensiReqBody = convertToRequstBody(tinyDB.getString(KEYIDABSEN))
         val reqBodyTanggalSekarang = convertToRequstBody(dateNow)
 
         if (tipeAbsen == "1") {
@@ -243,7 +240,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                         imageBodyPart,
                         reqBodyKeterangan,
                         reqBodyJamSekarang,
-                        idAbsensiReqBody,
                         reqBodyTanggalSekarang
                     )
                     retrieveTodayAbsen(ApiInterface.createApi(), username, password)
@@ -251,7 +247,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                         Log.d("response", response.body().toString())
                         if (response.body()?.code == 200) {
                             binding.progressIndicator.isVisible = false
-                            tinyDB.putString(KEYIDABSEN, response.body()?.idAbsensi)
                             viewModel.setResultPicture(null)
                             viewModel.setBitmapImage(null)
                             findNavController().navigateUp()
@@ -309,7 +304,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             } else if (tipeAbsen == "3") {
                 namaAbsen = "Pulang"
             }
-            Log.d("ID", tinyDB.getString(KEYIDABSEN))
             lifecycleScope.launch {
                 try {
                     val response = api.kirimAbsen(
@@ -321,7 +315,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                         imageBodyPart,
                         reqBodyKeterangan,
                         reqBodyJamSekarang,
-                        idAbsensiReqBody,
                         reqBodyTanggalSekarang
                     )
                     Log.d("response", response.body().toString())
