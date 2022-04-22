@@ -33,6 +33,7 @@ import com.pklproject.checkincheckout.api.models.preferencesmodel.LoginPreferenc
 import com.pklproject.checkincheckout.api.models.preferencesmodel.ThemePreferences
 import com.pklproject.checkincheckout.databinding.ActivityMainBinding
 import com.pklproject.checkincheckout.notification.NotificationWorker
+import com.pklproject.checkincheckout.ui.auth.LoginActivity
 import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
@@ -56,14 +57,25 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             MaterialAlertDialogBuilder(this)
                 .setTitle("Aktifkan lokasi terlebih dahulu")
                 .setMessage("Aplikasi ini tidak akan berjalan jika anda menonaktifkan GPS")
+                .setCancelable(false)
                 .setPositiveButton("Aktifkan") { _, _ ->
                     startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                 }
                 .setNegativeButton("Sudah aktif") { _, _ ->
-
                 }
                 .setNeutralButton("Batal") { _, _ ->
                     finish()
+                }
+                .setOnDismissListener { finish() }
+                .show()
+        }
+        if (LoginPreferences.username == null) {
+            MaterialAlertDialogBuilder(this)
+                .setCancelable(false)
+                .setTitle("Terjadi kesalahan")
+                .setMessage("Sesi login telah berakhir, silahkan login Ulang")
+                .setPositiveButton("Login Ulang") { _, _ ->
+                    startActivity(Intent(this, LoginActivity::class.java))
                 }
                 .show()
         }
