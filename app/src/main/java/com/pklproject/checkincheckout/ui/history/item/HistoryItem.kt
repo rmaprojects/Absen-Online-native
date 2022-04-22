@@ -37,16 +37,15 @@ class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<History
     class HistoryItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding:ItemHistoryBinding by viewBinding()
         fun bindView(history: History?) {
-            binding.jamSiang.text = history?.jamMasukSiang
-            binding.jamPulang.text = history?.jamMasukPulang
-            if (history?.tanggal == "Data Belum Ada") {
+
+            if (history?.tanggal == "Data Belum Ada" || history?.tanggal == null) {
                 binding.cardViewData.isVisible = false
                 binding.noDataCardView.isVisible = true
                 binding.izinCardView.isVisible = false
             } else {
                 binding.cardViewData.isVisible = true
                 binding.noDataCardView.isVisible = false
-                if (history?.izin == "1" || history?.cuti == "1") {
+                if (history.izin == "1" || history.cuti == "1") {
                     binding.cardViewData.isVisible = false
                     binding.noDataCardView.isVisible = false
                     binding.izinCardView.isVisible = true

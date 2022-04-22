@@ -54,7 +54,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
     private fun initialisation() {
         binding.pilihanAbsen.check(R.id.absen)
-        binding.absensi.isVisible = true
+        binding.absensi.isVisible = false
         binding.izindialog.isVisible = false
 
         binding.kirim.isEnabled = !(viewModel.getLatitude() == 0.0 && viewModel.getLongitude() == 0.0)
@@ -286,6 +286,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 binding.cuti.isVisible = false
 
                 binding.layoutIzinTxt.isVisible = false
+                binding.absensi.isVisible = true
 
                 txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
                 txtJamAbsenSiang = "--:--"
@@ -340,6 +341,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 binding.cuti.isVisible = false
 
                 binding.layoutIzinTxt.isVisible = false
+                binding.absensi.isVisible = true
 
                 txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
                 txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
@@ -384,6 +386,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 binding.cuti.isVisible = false
 
                 binding.layoutIzinTxt.isVisible = false
+                binding.absensi.isVisible = true
 
                 txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
                 txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
@@ -444,6 +447,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                 }
 
                 binding.layoutIzinTxt.isVisible = false
+                binding.absensi.isVisible = true
 
                 txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
                 txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
@@ -615,6 +619,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.cuti.isVisible = false
 
                         binding.layoutIzinTxt.isVisible = false
+                        binding.absensi.isVisible = true
 
                         txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
                         txtJamAbsenSiang = "--:--"
@@ -666,6 +671,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.cuti.isVisible = false
 
                         binding.layoutIzinTxt.isVisible = false
+                        binding.absensi.isVisible = true
 
                         txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
                         txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
@@ -708,6 +714,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.cuti.isVisible = false
 
                         binding.layoutIzinTxt.isVisible = false
+                        binding.absensi.isVisible = true
 
                         txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
                         txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
@@ -764,6 +771,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         }
 
                         binding.layoutIzinTxt.isVisible = false
+                        binding.absensi.isVisible = true
 
                         txtJamAbsenPagi = viewModel.getTodayAttendance()?.get(0)?.jamMasukPagi ?: "--:--"
                         txtJamAbsenSiang = viewModel.getTodayAttendance()?.get(0)?.jamMasukSiang ?: "--:--"
@@ -811,6 +819,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.absenSiang.isClickable = false
                         binding.absenPulang.isClickable = false
                         binding.kirim.isEnabled = false
+                        binding.absensi.isVisible = false
 
                         binding.cutiHariIniText.isVisible = false
                     }
