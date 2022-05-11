@@ -24,8 +24,26 @@ class ServiceViewModel : ViewModel() {
 
     private val historyData : MutableLiveData<HistoryAbsenModel> = MutableLiveData()
 
+    private val serverDate:MutableLiveData<String> = MutableLiveData()
+    private val serverClock:MutableLiveData<String> = MutableLiveData()
+
     var listener : (() -> Unit)? = null
-    var cekAbsenListener : (() -> Unit)? = null
+
+    fun getServerClock(): String? {
+        return serverClock.value
+    }
+
+    fun getServerDate(): String? {
+        return serverDate.value
+    }
+
+    fun setServerClock(clock: String?) {
+        serverClock.value = clock
+    }
+
+    fun setServerDate(date: String?) {
+        serverDate.value = date
+    }
 
     fun getHistoryData() : HistoryAbsenModel? {
         return historyData.value

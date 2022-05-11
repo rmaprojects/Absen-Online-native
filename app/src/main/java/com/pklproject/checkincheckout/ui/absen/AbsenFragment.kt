@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.chibatching.kotpref.Kotpref
 import com.google.android.material.R.style.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.`interface`.ApiInterface
@@ -41,6 +42,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        retrieveServerClock()
 
         val absen = arguments?.getString(ABSEN_TYPE)
 
@@ -83,7 +86,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
     private fun initialisation(absen: String) {
         countDelayWaktuTersisa(absen)
         Kotpref.init(requireContext())
-        if (viewModel.getResultPicture() != null && viewModel.getLatitude() != null) {
+        if (viewModel.getResultPicture() != null && viewModel.getLatitude() != null || viewModel.getServerClock() != null) {
             binding.kirimabsen.isEnabled = true
             binding.txtSendError.isVisible = false
 
@@ -98,7 +101,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             binding.kirimabsen.setOnClickListener {
                 val longitude = viewModel.getLongitude() ?: 0.0
                 val latitude = viewModel.getLatitude() ?: 0.0
-                val jamSekarang = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+//                val jamSekarang = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+                val jamSekarang = viewModel.getServerClock()
                 kirimAbsen(
                     username,
                     password,
@@ -106,7 +110,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                     keterangan.toString(),
                     longitude,
                     latitude,
-                    jamSekarang
+                    jamSekarang.toString()
                 )
                 binding.kirimabsen.isVisible = false
                 binding.progressIndicator.isVisible = true
@@ -117,23 +121,28 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             binding.ambilfoto.setOnClickListener {
                 findNavController().navigate(R.id.action_absenFragment_to_cameraView)
             }
-            binding.txtSendError.text =
-                "Lokasi anda belum ditemukan, atau foto belum diambil coba tutup aplikasi dan nyalakan GPS anda lalu coba lagi"
+            if (viewModel.getServerClock() == null) {
+                binding.txtSendError.text = "Jam server belum terambil, silahkan buka ulang aplikasi"
+            } else {
+                binding.txtSendError.text =
+                    "Lokasi anda belum ditemukan, atau foto belum diambil coba tutup aplikasi dan nyalakan GPS anda lalu coba lagi"
+            }
             binding.txtSendError.isVisible = true
             binding.progressIndicator.isVisible = false
         }
     }
 
     private fun countDelayWaktuTersisa(tipeAbsen: String) {
-        val waktuSekarang = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date()).split(":")
-        val jam = waktuSekarang[0].toInt()
-        val menit = waktuSekarang[1].toInt()
-        val detik = waktuSekarang[2].toInt()
+//        val waktuSekarang = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date()).split(":")
+        val waktuSekarang = viewModel.getServerClock()?.split(":")
+        val jam = waktuSekarang?.get(0)?.toInt()
+        val menit = waktuSekarang?.get(1)?.toInt()
+        val detik = waktuSekarang?.get(2)?.toInt()
 
         val jamSekarang = Calendar.getInstance()
-        jamSekarang.set(Calendar.HOUR_OF_DAY, jam)
-        jamSekarang.set(Calendar.MINUTE, menit)
-        jamSekarang.set(Calendar.SECOND, detik)
+        jamSekarang.set(Calendar.HOUR_OF_DAY, jam!!)
+        jamSekarang.set(Calendar.MINUTE, menit!!)
+        jamSekarang.set(Calendar.SECOND, detik!!)
 
         when (tipeAbsen) {
             "1" -> {
@@ -208,7 +217,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         Toast.makeText(requireContext(), "Mohon untuk tidak menutup tab ini agar absen anda terkirim", Toast.LENGTH_LONG).show()
         val api = ApiInterface.createApi()
         val photo = viewModel.getBitmapImage()
-        val dateNow = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+//        val dateNow = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val dateNow = viewModel.getServerDate()
         val namaUser = LoginPreferences.namaKaryawan
         val imageBodyPart = buildImageBodyPart("$namaUser-$tipeAbsen-$dateNow", photo!!)
         val reqBodyUsername = convertToRequstBody(username)
@@ -218,7 +228,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         val reqBodyLongitude = convertToRequstBody(longitude.toString())
         val reqBodyLatitude = convertToRequstBody(latitude.toString())
         val reqBodyJamSekarang = convertToRequstBody(jamSekarang)
-        val reqBodyTanggalSekarang = convertToRequstBody(dateNow)
+        val reqBodyTanggalSekarang = convertToRequstBody(dateNow.toString())
 
         if (tipeAbsen == "1") {
             Log.d("longitude", longitude.toString())
@@ -380,11 +390,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         return value.toRequestBody("multipart/form-data".toMediaTypeOrNull())
     }
 
-    companion object {
-        const val ABSEN_TYPE = "ABSENTYPEKEY"
-        const val KEYIDABSEN = "IDABSENKEY"
-    }
-
     private fun retrieveTodayAbsen(api:ApiInterface, username:String, password:String) {
         val todayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         lifecycleScope.launch {
@@ -467,5 +472,32 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 }
             }
         }
+    }
+
+    private fun retrieveServerClock() {
+        lifecycleScope.launch {
+            try {
+                val response = ApiInterface.createApi().getDateNow()
+                if (response.isSuccessful) {
+                    viewModel.setServerClock(response.body()!!.clock)
+                    viewModel.setServerDate(response.body()!!.date)
+                } else {
+                    viewModel.setServerClock(null)
+                    viewModel.setServerDate(null)
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Gagal mengambil jam server")
+                        .setMessage("Anda mungkin tidak bisa absen sampai jam server tersedia")
+                        .setPositiveButton("Ok") { _, _ ->
+
+                        }
+                }
+            } catch (e: Exception) {
+                Log.d("Error", e.message.toString())
+            }
+        }
+    }
+
+    companion object {
+        const val ABSEN_TYPE = "ABSENTYPEKEY"
     }
 }

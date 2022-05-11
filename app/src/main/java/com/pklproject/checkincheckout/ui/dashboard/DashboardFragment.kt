@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.R.color.design_default_color_error
 import com.pklproject.checkincheckout.R
@@ -13,15 +14,17 @@ import com.pklproject.checkincheckout.ui.settings.Preferences
 import java.text.SimpleDateFormat
 import java.util.*
 import com.google.android.material.R.style.*
+import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
     private val binding: FragmentDashboardBinding by viewBinding()
+    private val viewModel: ServiceViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val currentClock = SimpleDateFormat("hh:mm", Locale.getDefault()).format(Date())
+        val currentClock = viewModel.getServerClock()
         setTextAppearance(requireContext())
         binding.txtCurrentClock.text = currentClock
     }

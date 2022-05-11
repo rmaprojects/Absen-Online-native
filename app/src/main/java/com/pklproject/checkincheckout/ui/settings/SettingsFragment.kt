@@ -175,6 +175,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                         Snackbar.LENGTH_SHORT
                     ).setAction("Ok"){}.show()
                     MainActivity().retrieveSettingsAbsen()
+                    MainActivity().retrieveServerClock()
                 } else {
                     Snackbar.make(
                         requireView(),

@@ -42,6 +42,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding: ActivityMainBinding by viewBinding()
@@ -66,7 +67,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .setNeutralButton("Batal") { _, _ ->
                     finish()
                 }
-                .setOnDismissListener { finish() }
                 .show()
         }
         if (LoginPreferences.username == null) {
@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
                 .show()
         }
+        retrieveServerClock()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -190,6 +191,22 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavView.setupWithNavController(navController)
+
+        val thread: Thread = object : Thread() {
+            override fun run() {
+                try {
+                    while (!this.isInterrupted) {
+                        sleep(40000)
+                        runOnUiThread {
+                            retrieveServerClock()
+                        }
+                    }
+                } catch (e: InterruptedException) {
+                }
+            }
+        }
+
+        thread.start()
     }
 
     private fun notificationWorker() {
@@ -314,8 +331,26 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         return LocationManagerCompat.isLocationEnabled(locationManager)
     }
 
-    companion object {
-        const val PENGATURANABSENKEY = "ABSENSIKEYSETTINGVALUE"
-    }
+    fun retrieveServerClock() {
+        lifecycleScope.launch {
+            try {
+                val response = ApiInterface.createApi().getDateNow()
+                if (response.isSuccessful) {
+                    viewModel.setServerClock(response.body()!!.clock)
+                    viewModel.setServerDate(response.body()!!.date)
+                } else {
+                    viewModel.setServerClock(null)
+                    viewModel.setServerDate(null)
+                    MaterialAlertDialogBuilder(this@MainActivity)
+                        .setTitle("Gagal mengambil jam server")
+                        .setMessage("Anda mungkin tidak bisa absen sampai jam server tersedia")
+                        .setPositiveButton("Ok") { _, _ ->
 
+                        }
+                }
+            } catch (e: Exception) {
+                Log.d("Error", e.message.toString())
+            }
+        }
+    }
 }

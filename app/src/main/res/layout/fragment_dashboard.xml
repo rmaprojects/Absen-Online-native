@@ -50,6 +50,7 @@
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_filter"
                 style="@style/Widget.Material3.Button.OutlinedButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:text="80%"
+                    android:text="Loading..."
                     android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -126,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:text="20%"
+                    android:text="Loading..."
                     android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -209,14 +210,72 @@
                     android:textColor="#FFF" />
             </LinearLayout>
         </LinearLayout>
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/terlambat"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:textColor="?colorError"
-            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-            android:text="Anda 2x terlambat pekan ini"
-            android:layout_height="wrap_content"/>
+            android:layout_margin="16dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:text="Keterangan:"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="32dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:text="Full Hadir"
+                        android:layout_gravity="center"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="32dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:text="Full Hadir"
+                        android:layout_gravity="center"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="32dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:text="Full Hadir"
+                        android:layout_gravity="center"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="32dp">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:text="Full Hadir"
+                        android:layout_gravity="center"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

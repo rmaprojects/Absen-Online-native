@@ -65,39 +65,51 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
         val keterangan = binding.keterangan.text
 
+        val username = LoginPreferences.username
+        val password = LoginPreferences.password
+        val hariIni = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+
         binding.pilihanAbsen.setOnCheckedChangeListener { _, isChecked ->
             when (isChecked) {
                 R.id.absen -> {
                     binding.absensi.isVisible = true
                     binding.izindialog.isVisible = false
-                    cekAbsenToday(settingsAbsen)
+                    cekAbsenTodayApi(username, password, hariIni, settingsAbsen)
                 }
                 R.id.izin -> {
                     binding.izindialog.isVisible = true
                     binding.absensi.isVisible = false
                     binding.kirim.setOnClickListener {
-                        MaterialAlertDialogBuilder(requireContext())
-                            .setTitle("Yakin ingin izin?")
-                            .setMessage("Setelah anda klik 'Ya', maka anda tidak akan bisa absen lagi, lanjutkan?")
-                            .setNegativeButton("Tidak") { _, _ -> }
-                            .setPositiveButton("Ya") { _, _ ->
-                                kirimAbsen("5", keterangan.toString())
-                            }
-                            .show()
+                        if (viewModel.getServerClock() == null) {
+                            Snackbar.make(requireView(), "Jam server gagal terambil, silahakn buka ulang aplikasi", Snackbar.LENGTH_LONG).show()
+                        } else {
+                            MaterialAlertDialogBuilder(requireContext())
+                                .setTitle("Yakin ingin izin?")
+                                .setMessage("Setelah anda klik 'Ya', maka anda tidak akan bisa absen lagi, lanjutkan?")
+                                .setNegativeButton("Tidak") { _, _ -> }
+                                .setPositiveButton("Ya") { _, _ ->
+                                    kirimAbsen("5", keterangan.toString())
+                                }
+                                .show()
+                        }
                     }
                 }
                 R.id.cuti -> {
                     binding.izindialog.isVisible = true
                     binding.absensi.isVisible = false
                     binding.kirim.setOnClickListener {
-                        MaterialAlertDialogBuilder(requireContext())
-                            .setTitle("Yakin ingin cuti?")
-                            .setMessage("Setelah anda klik 'Ya', maka anda tidak akan bisa absen lagi, lanjutkan?")
-                            .setNegativeButton("Tidak") { _, _ -> }
-                            .setPositiveButton("Ya") { _, _ ->
-                                kirimAbsen("4", keterangan.toString())
-                            }
-                            .show()
+                        if (viewModel.getServerClock() == null) {
+                            Snackbar.make(requireView(), "Jam server gagal terambil, silahakn buka ulang aplikasi", Snackbar.LENGTH_LONG).show()
+                        } else {
+                            MaterialAlertDialogBuilder(requireContext())
+                                .setTitle("Yakin ingin cuti?")
+                                .setMessage("Setelah anda klik 'Ya', maka anda tidak akan bisa absen lagi, lanjutkan?")
+                                .setNegativeButton("Tidak") { _, _ -> }
+                                .setPositiveButton("Ya") { _, _ ->
+                                    kirimAbsen("4", keterangan.toString())
+                                }
+                                .show()
+                        }
                     }
                 }
             }
@@ -112,7 +124,6 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         } else if (tipeAbsen == "5") {
             jenisAbsen = "Izin"
         }
-
         val api = ApiInterface.createApi()
         val username = convertToRequstBody(
             LoginPreferences.username
@@ -131,40 +142,35 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
         lifecycleScope.launch {
             try {
-                val response = api.kirimAbsen(
-                    username,
-                    password,
-                    absenType,
-                    longitude,
-                    latitude,
-                    null,
-                    catatan,
-                    jamSekarang,
-                    hariIni
-                )
-                if (response.body()?.status == true) {
-                    Snackbar.make(
-                        binding.root,
-                        "Berhasil mengajukan $jenisAbsen",
-                        Snackbar.LENGTH_SHORT
-                    )
-                        .setAction("Ok") {}
-                        .show()
-                    binding.kirim.isEnabled = false
-                    binding.absenPagi.isClickable = false
-                    binding.absenSiang.isClickable = false
-                    binding.absenPulang.isClickable = false
-                    binding.absen.isChecked = true
-                    binding.izin.isChecked = false
-                    binding.cuti.isChecked = false
-                    binding.izin.isVisible = false
-                    binding.cuti.isVisible = false
-                    binding.absensi.isVisible = false
-                    binding.layoutIzinTxt.isVisible = true
-                    binding.izindialog.isVisible = false
+                val response = api.kirimAbsen(username, password, absenType, longitude, latitude, null, catatan, jamSekarang, hariIni)
+                if (response.isSuccessful) {
+                    Log.d("response", response.toString())
+                    if (response.body()?.status == true) {
+                        Snackbar.make(
+                            binding.root,
+                            "Berhasil mengajukan $jenisAbsen",
+                            Snackbar.LENGTH_SHORT
+                        )
+                            .setAction("Ok") {}
+                            .show()
+                        Log.d("kirimAbsen", response.body()!!.status.toString())
+                        Log.d("tipe absen", response.body()!!.tipeAbsen.toString())
+                        binding.izin.isVisible = false
+                        binding.cuti.isVisible = false
+                        binding.absensi.isVisible = false
+                        binding.layoutIzinTxt.isVisible = true
+                        binding.izindialog.isVisible = false
+                        binding.pilihanAbsen.isVisible = false
+                        binding.divider.isVisible = false
+                        cekAbsenTodayApi(username.toString(), password.toString(), SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()), AbsenSettingsPreferences)
+                    } else {
+                        Toast.makeText(requireContext(), response.body()?.message, Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 } else {
-                    Toast.makeText(requireContext(), response.body()?.message, Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), response.message(), Toast.LENGTH_SHORT)
                         .show()
+                    Log.d("response", response.toString())
                 }
             } catch (e: Exception) {
                 Log.d("error", e.toString())
@@ -813,6 +819,8 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.absensi.isVisible = false
                         binding.layoutIzinTxt.isVisible = true
                         binding.izindialog.isVisible = false
+                        binding.pilihanAbsen.isVisible = false
+                        binding.divider.isVisible = false
                     }
                     else -> {
                         binding.absenPagi.isClickable = false

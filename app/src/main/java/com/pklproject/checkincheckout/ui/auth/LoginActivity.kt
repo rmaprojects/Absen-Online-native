@@ -61,11 +61,13 @@ class LoginActivity : AppCompatActivity() {
                             } else {
                                 Snackbar.make(
                                     binding.rootLayout,
-                                    "Gagal mengambil data",
+                                    "Server sedang bermasalah",
                                     Snackbar.LENGTH_SHORT
                                 )
                                     .setAction("Ok") {}
                                     .show()
+                                Log.d("error", response.toString())
+                                Log.d("error", response.message().toString())
                             }
                         } catch (e: Exception) {
                             Snackbar.make(
@@ -117,10 +119,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
             finish()
         }
-    }
-
-    companion object {
-        const val KEYSIGNIN = "SIGNINKEY"
     }
 }
 

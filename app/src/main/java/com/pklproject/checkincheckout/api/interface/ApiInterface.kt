@@ -63,6 +63,19 @@ interface ApiInterface {
         @Field ("absen_akhir") AbsenAkhir :String?
     ): UpdateSettingsAbsenModel
 
+    @GET("date_now.php")
+    suspend fun getDateNow(): Response<ServerDateModel>
+
+    @FormUrlEncoded
+    @POST("persentase.php")
+    suspend fun getPersentaseKaryawan(
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("tanggal_awal") tanggalAwal: String,
+        @Field("tanggal_akhir") tanggalAkhir: String,
+        @Field("filter") filterPersentase: String
+    ) : Response<PercentageModel>
+
     companion object {
         private const val BASE_URL: String = "https://absen-dev.omgindo.com/"
 
