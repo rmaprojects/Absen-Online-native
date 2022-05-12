@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $password = $_POST['password'];
     $tanggal_awal = $_POST['tanggal_awal'];
     $tanggal_akhir = $_POST['tanggal_akhir'];
-    $filter = $_POST['filter'];
 
 
     $queryCheckData = "SELECT COUNT(*) 'total' FROM tbl_karyawan WHERE username = '$username' AND password = '$password'";
@@ -33,17 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $range_tanggal_akhir = $tanggal_akhir;
         $range_tanggal_awal = $tanggal_awal;
 
-        if ($filter == "bulan") {
-            $range_tanggal_akhir = $tanggal_akhir;
-            $range_tanggal_awal = $tanggal_awal;
-        } else if ($filter == "pekan") {
-
-            $range_tanggal_awal = $tanggal_awal;
-            $splitted_tanggal_akhir = explode("-", $tanggal_akhir);
-            $range_tanggal_akhir = $splitted_tanggal_akhir[0] . "-" . $splitted_tanggal_akhir[1] . "-" . (int)$splitted_tanggal_akhir[2] + 1;
-        }
-
-        $queryGetDataPersentase = mysqli_query($_AUTH, "SELECT dates.fulldate, id_karyawan, tbl_absensi.izin, tbl_absensi.cuti, tbl_absensi.hadir, tbl_absensi.telat, tbl_absensi.full_absen FROM `dates` LEFT OUTER JOIN  `tbl_absensi` ON dates.fulldate = tbl_absensi.tanggal WHERE id_karyawan = '$id_karyawan' AND tanggal < '$range_tanggal_akhir' AND tanggal >= '$range_tanggal_awal' UNION ALL SELECT dates.fulldate, id_karyawan, tbl_absensi.izin, tbl_absensi.cuti, tbl_absensi.hadir, tbl_absensi.telat, tbl_absensi.full_absen  FROM `tbl_absensi` RIGHT OUTER JOIN `dates` ON dates.fulldate = tbl_absensi.tanggal WHERE tbl_absensi.tanggal IS NULL AND weekend = 0 AND fulldate < '$range_tanggal_akhir' AND fulldate >= '$range_tanggal_awal' ORDER BY fulldate ASC;");
+        $queryGetDataPersentase = mysqli_query($_AUTH, "SELECT dates.fulldate, id_karyawan, tbl_absensi.izin, tbl_absensi.cuti, tbl_absensi.hadir, tbl_absensi.telat, tbl_absensi.full_absen FROM `dates` LEFT OUTER JOIN  `tbl_absensi` ON dates.fulldate = DATE(tbl_absensi.tanggal) WHERE id_karyawan = '$id_karyawan' AND tanggal <= '$range_tanggal_akhir' AND tanggal >= '$range_tanggal_awal' UNION ALL SELECT dates.fulldate, id_karyawan, tbl_absensi.izin, tbl_absensi.cuti, tbl_absensi.hadir, tbl_absensi.telat, tbl_absensi.full_absen  FROM `tbl_absensi` RIGHT OUTER JOIN `dates` ON dates.fulldate = DATE(tbl_absensi.tanggal) WHERE tbl_absensi.tanggal IS NULL AND weekend = 0 AND fulldate <= '$range_tanggal_akhir' AND fulldate >= '$range_tanggal_awal' ORDER BY fulldate ASC");
 
         $list_absensi = array();
 
