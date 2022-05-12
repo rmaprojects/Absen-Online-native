@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.otaliastudios:cameraview:2.7.2@aar">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/c809e71b4aeea1eb1ff139e5f909ecc7/transformed/cameraview-2.7.2/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/28762e53131ba173e2522a05f6700371/transformed/cameraview-2.7.2/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/c809e71b4aeea1eb1ff139e5f909ecc7/transformed/cameraview-2.7.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c809e71b4aeea1eb1ff139e5f909ecc7/transformed/cameraview-2.7.2/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c809e71b4aeea1eb1ff139e5f909ecc7/transformed/cameraview-2.7.2/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/28762e53131ba173e2522a05f6700371/transformed/cameraview-2.7.2/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/28762e53131ba173e2522a05f6700371/transformed/cameraview-2.7.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/28762e53131ba173e2522a05f6700371/transformed/cameraview-2.7.2/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.otaliastudios/cameraview/2.7.2/54bf071e2da7936715afe5cd5f459799a51da718/cameraview-2.7.2-javadoc.jar!/" />

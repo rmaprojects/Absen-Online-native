@@ -4,8 +4,8 @@ ADDED from /home/raka/Android-Studio-Projects/checkin-checkout/fastscroll/src/ma
 INJECTED from /home/raka/Android-Studio-Projects/checkin-checkout/fastscroll/src/main/AndroidManifest.xml:17:1-19:12
 INJECTED from /home/raka/Android-Studio-Projects/checkin-checkout/fastscroll/src/main/AndroidManifest.xml:17:1-19:12
 	package
-		ADDED from /home/raka/Android-Studio-Projects/checkin-checkout/fastscroll/src/main/AndroidManifest.xml:17:11-45
 		INJECTED from /home/raka/Android-Studio-Projects/checkin-checkout/fastscroll/src/main/AndroidManifest.xml
+		ADDED from /home/raka/Android-Studio-Projects/checkin-checkout/fastscroll/src/main/AndroidManifest.xml:17:1-19:12
 		INJECTED from /home/raka/Android-Studio-Projects/checkin-checkout/fastscroll/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /home/raka/Android-Studio-Projects/checkin-checkout/fastscroll/src/main/AndroidManifest.xml:17:1-19:12

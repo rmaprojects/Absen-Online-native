@@ -31,7 +31,8 @@ interface ApiInterface {
         @Part photo_absen: MultipartBody.Part?,
         @Part("keterangan") keterangan: RequestBody?,
         @Part("jam_masuk") waktuMasuk: RequestBody,
-        @Part("tanggal_sekarang") tanggalSekarang: RequestBody?
+        @Part("tanggal_sekarang") tanggalSekarang: RequestBody?,
+        @Part("isTelat") isTelat: RequestBody?,
     ): Response<KirimAbsenModel>
 
     @FormUrlEncoded
@@ -72,8 +73,7 @@ interface ApiInterface {
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("tanggal_awal") tanggalAwal: String,
-        @Field("tanggal_akhir") tanggalAkhir: String,
-        @Field("filter") filterPersentase: String
+        @Field("tanggal_akhir") tanggalAkhir: String
     ) : Response<PercentageModel>
 
     companion object {

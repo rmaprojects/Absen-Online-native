@@ -4,9 +4,21 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Checkin_Checkout.iml" filepath="$PROJECT_DIR$/.idea/modules/Checkin_Checkout.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/airlocation/Checkin_Checkout.airlocation.iml" filepath="$PROJECT_DIR$/.idea/modules/airlocation/Checkin_Checkout.airlocation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/airlocation/Checkin_Checkout.airlocation.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/airlocation/Checkin_Checkout.airlocation.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/airlocation/Checkin_Checkout.airlocation.main.iml" filepath="$PROJECT_DIR$/.idea/modules/airlocation/Checkin_Checkout.airlocation.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/airlocation/Checkin_Checkout.airlocation.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/airlocation/Checkin_Checkout.airlocation.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/airpermissions/Checkin_Checkout.airpermissions.iml" filepath="$PROJECT_DIR$/.idea/modules/airpermissions/Checkin_Checkout.airpermissions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/airpermissions/Checkin_Checkout.airpermissions.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/airpermissions/Checkin_Checkout.airpermissions.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/airpermissions/Checkin_Checkout.airpermissions.main.iml" filepath="$PROJECT_DIR$/.idea/modules/airpermissions/Checkin_Checkout.airpermissions.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/airpermissions/Checkin_Checkout.airpermissions.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/airpermissions/Checkin_Checkout.airpermissions.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Checkin_Checkout.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Checkin_Checkout.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Checkin_Checkout.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Checkin_Checkout.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Checkin_Checkout.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Checkin_Checkout.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Checkin_Checkout.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Checkin_Checkout.app.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/fastscroll/Checkin_Checkout.fastscroll.iml" filepath="$PROJECT_DIR$/.idea/modules/fastscroll/Checkin_Checkout.fastscroll.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fastscroll/Checkin_Checkout.fastscroll.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/fastscroll/Checkin_Checkout.fastscroll.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fastscroll/Checkin_Checkout.fastscroll.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fastscroll/Checkin_Checkout.fastscroll.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fastscroll/Checkin_Checkout.fastscroll.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/fastscroll/Checkin_Checkout.fastscroll.unitTest.iml" />
     </modules>
   </component>
 </project>

@@ -61,7 +61,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
         val settingsAbsen = AbsenSettingsPreferences
 
-        cekAbsenToday(settingsAbsen)
+//        cekAbsenToday(settingsAbsen)
 
         val keterangan = binding.keterangan.text
 
@@ -131,6 +131,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val password = convertToRequstBody(
             LoginPreferences.password
         )
+        val isTelat = convertToRequstBody("")
         val hariIni =
             convertToRequstBody(SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()))
         val jamSekarang =
@@ -142,7 +143,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
         lifecycleScope.launch {
             try {
-                val response = api.kirimAbsen(username, password, absenType, longitude, latitude, null, catatan, jamSekarang, hariIni)
+                val response = api.kirimAbsen(username, password, absenType, longitude, latitude, null, catatan, jamSekarang, hariIni, isTelat)
                 if (response.isSuccessful) {
                     Log.d("response", response.toString())
                     if (response.body()?.status == true) {
@@ -225,6 +226,13 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         Log.d("absen siang diperlukan", listJamMasuk?.absenSiangDiperlukan.toString())
         when (listJamMasuk?.absenYangDibutuhkan) {
             null -> {
+                binding.izin.isVisible = false
+                binding.cuti.isVisible = false
+                binding.absensi.isVisible = false
+                binding.layoutIzinTxt.isVisible = false
+                binding.izindialog.isVisible = false
+            }
+            "pagi" -> {
                 binding.kirim.isEnabled = true
 
                 binding.cutiHariIniText.isVisible = false
@@ -562,10 +570,17 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
 
                 when (listJamMasuk?.absenYangDibutuhkan) {
                     null -> {
+                        binding.izin.isVisible = false
+                        binding.cuti.isVisible = false
+                        binding.absensi.isVisible = false
+                        binding.layoutIzinTxt.isVisible = false
+                        binding.izindialog.isVisible = false
+                    }
+                    "pagi" -> {
                         binding.kirim.isEnabled = true
 
                         binding.cutiHariIniText.isVisible = false
-                        binding.absensi.isVisible = true
+                        binding.absensi.visibility = View.VISIBLE
                         binding.pilihanAbsen.isVisible = true
 
                         if (listJamMasuk?.absenSiangDiperlukan == "1") {
@@ -822,15 +837,15 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.pilihanAbsen.isVisible = false
                         binding.divider.isVisible = false
                     }
-                    else -> {
-                        binding.absenPagi.isClickable = false
-                        binding.absenSiang.isClickable = false
-                        binding.absenPulang.isClickable = false
-                        binding.kirim.isEnabled = false
-                        binding.absensi.isVisible = false
-
-                        binding.cutiHariIniText.isVisible = false
-                    }
+//                    else -> {
+//                        binding.absenPagi.isClickable = false
+//                        binding.absenSiang.isClickable = false
+//                        binding.absenPulang.isClickable = false
+//                        binding.kirim.isEnabled = false
+//                        binding.absensi.isVisible = false
+//
+//                        binding.cutiHariIniText.isVisible = false
+//                    }
                 }
 
                 binding.txtJamAbsenDay.text = txtJamAbsenPagi

@@ -1,9 +1,10 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.Musfick:retrofit-kotlin-upload-progress:0.1.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/1df5da9545904d9f9a92757f328448fe/transformed/retrofit-kotlin-upload-progress-0.1.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1df5da9545904d9f9a92757f328448fe/transformed/retrofit-kotlin-upload-progress-0.1.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1df5da9545904d9f9a92757f328448fe/transformed/retrofit-kotlin-upload-progress-0.1.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e5aef400fa5ace811c7753dcf60768eb/transformed/retrofit-kotlin-upload-progress-0.1.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/e5aef400fa5ace811c7753dcf60768eb/transformed/retrofit-kotlin-upload-progress-0.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e5aef400fa5ace811c7753dcf60768eb/transformed/retrofit-kotlin-upload-progress-0.1.0/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

@@ -37,6 +37,7 @@ android {
 
         consumerProguardFiles 'proguard-rules.pro'
     }
+    namespace 'com.l4digital.fastscroll'
 }
 
 dependencies {

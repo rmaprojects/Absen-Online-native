@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="6dp"
-                android:text="09:00"
+                android:text="Loading..."
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
         </LinearLayout>
 
@@ -61,13 +61,13 @@
         </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/Pekan"
+            android:id="@+id/rangeTanggal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="52dp"
             android:gravity="center"
-            android:text="Pekan 2 Maret"
+            android:text="Loading..."
             android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
 
         <LinearLayout
@@ -138,6 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="28dp"
+            android:visibility="gone"
             android:layout_marginHorizontal="12dp"
             android:orientation="horizontal"
             android:weightSum="100">
@@ -211,7 +212,9 @@
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/keteranganPersentase"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_margin="16dp"
             android:orientation="vertical"
             android:layout_height="match_parent">
@@ -221,17 +224,20 @@
                 android:text="Keterangan:"
                 android:layout_height="wrap_content"/>
             <LinearLayout
-                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    style="@style/Widget.Material3.CardView.Elevated"
+                    android:backgroundTint="#00A86B"
                     android:layout_height="32dp">
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:text="Full Hadir"
+                        android:textColor="#FFF"
                         android:layout_gravity="center"
                         android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_height="wrap_content"/>
@@ -239,27 +245,35 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFD300"
+                    style="@style/Widget.Material3.CardView.Elevated"
+                    android:layout_margin="8dp"
                     android:layout_height="32dp">
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
-                        android:text="Full Hadir"
+                        android:gravity="center"
+                        android:text="Telat/tidak lengkap"
                         android:layout_gravity="center"
+                        android:textColor="#000"
                         android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_height="wrap_content"/>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_weight="1"
+                    style="@style/Widget.Material3.CardView.Elevated"
+                    android:backgroundTint="#003152"
+                    android:layout_margin="8dp"
                     android:layout_height="32dp">
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
-                        android:text="Full Hadir"
+                        android:text="Izin atau Cuti"
+                        android:textColor="#FFF"
                         android:layout_gravity="center"
                         android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_height="wrap_content"/>
@@ -267,11 +281,15 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_weight="1"
+                    android:backgroundTint="#8D021F"
+                    style="@style/Widget.Material3.CardView.Elevated"
+                    android:layout_margin="8dp"
                     android:layout_height="32dp">
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
-                        android:text="Full Hadir"
+                        android:text="Tidak/Belum hadir"
                         android:layout_gravity="center"
+                        android:textColor="#FFF"
                         android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                         android:layout_height="wrap_content"/>
                 </com.google.android.material.card.MaterialCardView>

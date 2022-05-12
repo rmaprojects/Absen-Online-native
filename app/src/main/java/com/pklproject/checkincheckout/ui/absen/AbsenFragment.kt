@@ -39,6 +39,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
     private val binding: FragmentAbsenBinding by viewBinding()
     private val viewModel: ServiceViewModel by activityViewModels()
+    private lateinit var isTelat:String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -160,8 +161,10 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
                 if (delay < 6000) {
                     binding.waktutTersisaTxt.text = "Anda terlambat"
+                    isTelat = "1"
                 } else {
                     binding.waktutTersisaTxt.text = "Waktu tersisa: ${delay / 1000 / 60} menit"
+                    isTelat = "0"
                 }
             }
             "2" -> {
@@ -217,7 +220,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         Toast.makeText(requireContext(), "Mohon untuk tidak menutup tab ini agar absen anda terkirim", Toast.LENGTH_LONG).show()
         val api = ApiInterface.createApi()
         val photo = viewModel.getBitmapImage()
-//        val dateNow = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         val dateNow = viewModel.getServerDate()
         val namaUser = LoginPreferences.namaKaryawan
         val imageBodyPart = buildImageBodyPart("$namaUser-$tipeAbsen-$dateNow", photo!!)
@@ -229,6 +231,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         val reqBodyLatitude = convertToRequstBody(latitude.toString())
         val reqBodyJamSekarang = convertToRequstBody(jamSekarang)
         val reqBodyTanggalSekarang = convertToRequstBody(dateNow.toString())
+        val reqBodyIsTelat = convertToRequstBody(isTelat)
 
         if (tipeAbsen == "1") {
             Log.d("longitude", longitude.toString())
@@ -239,6 +242,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             Log.d("keterangan", keterangan)
             Log.d("jamSekarang", jamSekarang)
             Log.d("gambar", imageBodyPart.toString())
+            Log.d("telat?", isTelat)
             lifecycleScope.launch {
                 try {
                     val response = api.kirimAbsen(
@@ -250,7 +254,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                         imageBodyPart,
                         reqBodyKeterangan,
                         reqBodyJamSekarang,
-                        reqBodyTanggalSekarang
+                        reqBodyTanggalSekarang,
+                        reqBodyIsTelat
                     )
                     retrieveTodayAbsen(ApiInterface.createApi(), username, password)
                     if (response.isSuccessful) {
@@ -325,7 +330,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                         imageBodyPart,
                         reqBodyKeterangan,
                         reqBodyJamSekarang,
-                        reqBodyTanggalSekarang
+                        reqBodyTanggalSekarang,
+                        reqBodyIsTelat
                     )
                     Log.d("response", response.body().toString())
                     retrieveTodayAbsen(ApiInterface.createApi(), username, password)

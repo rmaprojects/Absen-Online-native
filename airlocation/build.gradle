@@ -8,6 +8,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 32
     }
+    namespace 'mumayank.com.airlocationlibrary'
 }
 
 dependencies {

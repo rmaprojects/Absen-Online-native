@@ -61,7 +61,6 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/absenPagi"
                     android:layout_width="wrap_content"
-                    android:visibility="gone"
                     style="@style/Widget.Material3.CardView.Outlined"
                     android:backgroundTint="?containerColor"
                     android:layout_height="108dp"
@@ -131,7 +130,6 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/absenSiang"
-                    android:visibility="gone"
                     style="@style/Widget.Material3.CardView.Outlined"
                     android:backgroundTint="?containerColor"
                     android:layout_width="wrap_content"
@@ -206,7 +204,6 @@
                     android:backgroundTint="?containerColor"
                     android:layout_width="wrap_content"
                     android:layout_height="108dp"
-                    android:visibility="gone"
                     android:layout_marginHorizontal="8dp"
                     android:layout_marginVertical="16dp"
                     android:background="?selectableItemBackground"

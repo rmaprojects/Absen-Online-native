@@ -4,8 +4,7 @@ import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.otaliastudios.cameraview.PictureResult
-import com.pklproject.checkincheckout.api.models.apimodel.AbsenHariIni
-import com.pklproject.checkincheckout.api.models.apimodel.HistoryAbsenModel
+import com.pklproject.checkincheckout.api.models.apimodel.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,7 +26,37 @@ class ServiceViewModel : ViewModel() {
     private val serverDate:MutableLiveData<String> = MutableLiveData()
     private val serverClock:MutableLiveData<String> = MutableLiveData()
 
+    private val percentageData:MutableLiveData<Persentase> = MutableLiveData()
+
+    private val percentageResult: MutableLiveData<Hasil> = MutableLiveData()
+
+    private val dateRangeResult : MutableLiveData<String> = MutableLiveData()
+
     var listener : (() -> Unit)? = null
+
+    fun setDateRangeResult(dateRangeResult: String) {
+        this.dateRangeResult.value = dateRangeResult
+    }
+
+    fun getDateRangeResult():String? {
+        return dateRangeResult.value
+    }
+
+    fun setPercentageData(data: Persentase?){
+        percentageData.value = data!!
+    }
+
+    fun getPercentageData(): Persentase? {
+        return percentageData.value
+    }
+
+    fun setPercentageResult(data: Hasil?){
+        percentageResult.value = data!!
+    }
+
+    fun getPercentageResult(): Hasil? {
+        return percentageResult.value
+    }
 
     fun getServerClock(): String? {
         return serverClock.value
@@ -38,11 +67,11 @@ class ServiceViewModel : ViewModel() {
     }
 
     fun setServerClock(clock: String?) {
-        serverClock.value = clock
+        serverClock.value = clock!!
     }
 
     fun setServerDate(date: String?) {
-        serverDate.value = date
+        serverDate.value = date!!
     }
 
     fun getHistoryData() : HistoryAbsenModel? {

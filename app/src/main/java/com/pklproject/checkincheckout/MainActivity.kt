@@ -38,6 +38,8 @@ import com.pklproject.checkincheckout.ui.settings.Preferences
 import com.pklproject.checkincheckout.viewmodel.ServiceViewModel
 import kotlinx.coroutines.launch
 import mumayank.com.airlocationlibrary.AirLocation
+import org.joda.time.DateTimeConstants
+import org.joda.time.LocalDate
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -79,7 +81,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
                 .show()
         }
-        retrieveServerClock()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,6 +118,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         airLocation.start()
 
         notificationWorker()
+
+        retrieveServerClock()
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
@@ -191,22 +194,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNavView.setupWithNavController(navController)
-
-        val thread: Thread = object : Thread() {
-            override fun run() {
-                try {
-                    while (!this.isInterrupted) {
-                        sleep(40000)
-                        runOnUiThread {
-                            retrieveServerClock()
-                        }
-                    }
-                } catch (e: InterruptedException) {
-                }
-            }
-        }
-
-        thread.start()
     }
 
     private fun notificationWorker() {
@@ -338,15 +325,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 if (response.isSuccessful) {
                     viewModel.setServerClock(response.body()!!.clock)
                     viewModel.setServerDate(response.body()!!.date)
+                    Log.d("clock", response.body()!!.clock)
                 } else {
                     viewModel.setServerClock(null)
                     viewModel.setServerDate(null)
-                    MaterialAlertDialogBuilder(this@MainActivity)
-                        .setTitle("Gagal mengambil jam server")
-                        .setMessage("Anda mungkin tidak bisa absen sampai jam server tersedia")
-                        .setPositiveButton("Ok") { _, _ ->
-
-                        }
+                    Log.d("Error", response.body().toString())
                 }
             } catch (e: Exception) {
                 Log.d("Error", e.message.toString())
