@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $bulan_ini = "{$tahun}-0{$bulan}-01"; // 2022-04-01
     $bulan_setelah_ini = "{$tahun}-0{$int_bulanP1}-01"; // 2022-05-01
 
-    $query_ambil_id = mysqli_query($_AUTH, "SELECT id_karyawan FROM tbl_karyawan WHERE username = '$username'");
+    $query_ambil_id = mysqli_query($_AUTH, "SELECT id_karyawan FROM v_tbl_karyawan WHERE username = '$username'");
 
     if ($tahun == "" && $bulan == "") {
 
@@ -24,11 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode($response);
     } else {
 
-        $queryCheckData = "SELECT COUNT(*) 'total' FROM tbl_karyawan WHERE username = '$username'";
+        $queryCheckData = "SELECT COUNT(*) 'total' FROM v_tbl_karyawan WHERE username = '$username'";
         $exec_queryCheckData = mysqli_fetch_assoc(mysqli_query($_AUTH, $queryCheckData));
 
-        if ($exec_queryCheckData == 0) {
-            $response['message'] = "User tidak ditemukan, pastikan username atau password sudah benar";
+        if ($exec_queryCheckData['total'] == 0) {
+
+            $response['message'] = "User tidak ditemukan, pastikan password dan penamaan username sudah benar, lalu coba lagi!";
             $response['code'] = 404;
             $response['status'] = false;
 
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $next_month = $bulan_setelah_ini; // 2022-03-01
 
             $query_ambil_history = mysqli_query($_AUTH, "SELECT tanggal, jam_masuk_pagi, jam_akhir_pagi, jam_masuk_siang, jam_akhir_siang, jam_masuk_pulang, jam_akhir_pulang, cuti, izin, absen_siang_diperlukan FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' AND tanggal >= '$this_month' AND tanggal < '$next_month' ORDER BY tanggal DESC");
-            $query_ambil_nama_karyawan = mysqli_query($_AUTH, "SELECT nama_karyawan FROM tbl_karyawan WHERE id_karyawan = '$id_karyawan'");
+            $query_ambil_nama_karyawan = mysqli_query($_AUTH, "SELECT nama_karyawan FROM v_tbl_karyawan WHERE id_karyawan = '$id_karyawan'");
             $exec_ambil_nama_karyawan = mysqli_fetch_assoc($query_ambil_nama_karyawan);
 
             $checkIfTableIsExist = mysqli_query($_AUTH, "SELECT COUNT(*) 'total' FROM tbl_absensi WHERE id_karyawan = '$id_karyawan' AND tanggal >= '$this_month' AND tanggal < '$next_month'");

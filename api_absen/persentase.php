@@ -1,5 +1,8 @@
 <?php
 
+ini_set('display_errors', 1);
+error_reporting(~0);
+
 include 'connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -8,19 +11,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $tanggal_awal = $_POST['tanggal_awal'];
     $tanggal_akhir = $_POST['tanggal_akhir'];
 
-
-    $queryCheckData = "SELECT COUNT(*) 'total' FROM tbl_karyawan WHERE username = '$username'";
+    $queryCheckData = "SELECT COUNT(*) 'total' FROM v_tbl_karyawan WHERE username = '$username'";
     $exec_queryCheckData = mysqli_fetch_assoc(mysqli_query($_AUTH, $queryCheckData));
 
     if ($exec_queryCheckData['total'] == 0) {
-        $response['message'] = "User tidak ditemukan, pastikan username atau password sudah benar";
+
+        $response['message'] = "User tidak ditemukan, pastikan password dan penamaan username sudah benar, lalu coba lagi!";
         $response['code'] = 404;
         $response['status'] = false;
 
         echo json_encode($response);
     } else {
 
-        $queryGetData = "SELECT id_karyawan FROM tbl_karyawan WHERE username = '$username'";
+        $queryGetData = "SELECT id_karyawan FROM v_tbl_karyawan WHERE username = '$username'";
         $exec_queryGetData = mysqli_fetch_array(mysqli_query($_AUTH, $queryGetData));
 
         $id_karyawan = $exec_queryGetData['id_karyawan'];
@@ -86,16 +89,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         $result = new PersentaseAbsensi();
 
-        $result->persentase_hadir = (int)$persentaseKehadiran;
-        $result->persentase_tidak_full_absen = (int)$persentaseTidakFullAbsen;
-        $result->persentase_izin_atau_cuti = (int)$persentaseIzinAtauCuti;
-        $result->persentase_telat = (int)$persentaseTelat;
-        $result->persentase_tidak_hadir = 100 - ($persentaseKehadiran + $persentaseTidakFullAbsen + $persentaseIzinAtauCuti + $persentaseTelat);
+        $result->persentase_hadir = round((int)$persentaseKehadiran);
+        $result->persentase_tidak_full_absen = round((int)$persentaseTidakFullAbsen);
+        $result->persentase_izin_atau_cuti = round((int)$persentaseIzinAtauCuti);
+        $result->persentase_telat = round((int)$persentaseTelat);
+        $result->persentase_tidak_hadir = round(100 - ($persentaseKehadiran + $persentaseTidakFullAbsen + $persentaseIzinAtauCuti + $persentaseTelat));
 
         $persentase = new Persentase();
 
-        $persentase->persentase_kehadiran = (int)$persentaseKehadiran + $persentaseTidakFullAbsen;
-        $persentase->persentase_ketidakhadiran = 100 - (int)$persentaseKehadiran - $persentaseTidakFullAbsen;
+        $persentase->persentase_kehadiran = round((int)$persentaseKehadiran + $persentaseTidakFullAbsen);
+        $persentase->persentase_ketidakhadiran = round(100 - (int)$persentaseKehadiran - $persentaseTidakFullAbsen);
 
         $response['message'] = "Data persentase absensi berhasil diambil";
         $response['code'] = 200;

@@ -39,7 +39,6 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
 
     private val binding: FragmentAbsenBinding by viewBinding()
     private val viewModel: ServiceViewModel by activityViewModels()
-    private lateinit var isTelat:String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -99,6 +98,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
             val password = LoginPreferences.password
             val keterangan = binding.keterangan.text
 
+            val isTelat = countDelayWaktuTersisa("1")
+
             binding.kirimabsen.setOnClickListener {
                 val longitude = viewModel.getLongitude() ?: 0.0
                 val latitude = viewModel.getLatitude() ?: 0.0
@@ -111,7 +112,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                     keterangan.toString(),
                     longitude,
                     latitude,
-                    jamSekarang.toString()
+                    jamSekarang.toString(),
+                    isTelat
                 )
                 binding.kirimabsen.isVisible = false
                 binding.progressIndicator.isVisible = true
@@ -133,7 +135,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         }
     }
 
-    private fun countDelayWaktuTersisa(tipeAbsen: String) {
+    private fun countDelayWaktuTersisa(tipeAbsen: String) : String {
 //        val waktuSekarang = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date()).split(":")
         val waktuSekarang = viewModel.getServerClock()?.split(":")
         val jam = waktuSekarang?.get(0)?.toInt()
@@ -144,6 +146,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         jamSekarang.set(Calendar.HOUR_OF_DAY, jam!!)
         jamSekarang.set(Calendar.MINUTE, menit!!)
         jamSekarang.set(Calendar.SECOND, detik!!)
+
+        var isTelat = ""
 
         when (tipeAbsen) {
             "1" -> {
@@ -206,6 +210,8 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
                 }
             }
         }
+
+        return isTelat
     }
 
     private fun kirimAbsen(
@@ -216,6 +222,7 @@ class AbsenFragment : Fragment(R.layout.fragment_absen) {
         longitude: Double,
         latitude: Double,
         jamSekarang: String,
+        isTelat:String
     ) {
         Toast.makeText(requireContext(), "Mohon untuk tidak menutup tab ini agar absen anda terkirim", Toast.LENGTH_LONG).show()
         val api = ApiInterface.createApi()

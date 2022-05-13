@@ -31,7 +31,7 @@
         android:id="@+id/navigation_settings"
         tools:layout="@layout/fragment_settings"
         android:name="com.pklproject.checkincheckout.ui.settings.SettingsFragment"
-        android:label="Settings" >
+        android:label="Setelan" >
         <action
             android:id="@+id/action_settingsFragment_to_settingAbsenBottomSheet"
             app:destination="@id/bottomsheet_jadwal_absen" />

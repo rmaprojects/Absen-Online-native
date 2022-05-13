@@ -47,7 +47,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         binding.cuti.isVisible = false
         binding.absensi.isVisible = false
         binding.layoutIzinTxt.isVisible = true
-        binding.cutiHariIniText.text = "Tidak ada jaringan."
+        binding.cutiHariIniText.text = "Loading..."
         binding.izindialog.isVisible = false
         cekAbsenTodayApi(username, password, hariIni, settingsAbsen)
     }
