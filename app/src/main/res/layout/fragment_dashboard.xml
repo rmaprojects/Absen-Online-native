@@ -136,20 +136,20 @@
         <LinearLayout
             android:id="@+id/attendance_percentage"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:visibility="gone"
             android:layout_marginHorizontal="12dp"
             android:orientation="horizontal"
-            android:weightSum="100">
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:id="@+id/attended_percentage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="50"
                 android:background="#00A86B"
                 android:gravity="center"
+                android:layout_weight="20"
                 android:orientation="horizontal">
 
                 <TextView
@@ -162,11 +162,11 @@
 
             <LinearLayout
                 android:id="@+id/late_percentage"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="30"
                 android:background="#FFD300"
                 android:gravity="center"
+                android:layout_weight="20"
                 android:orientation="horizontal">
 
                 <TextView
@@ -179,10 +179,10 @@
 
             <LinearLayout
                 android:id="@+id/permission_percentage"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="10"
                 android:background="#003152"
+                android:layout_weight="20"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -196,11 +196,11 @@
 
             <LinearLayout
                 android:id="@+id/absent_percentage"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="10"
                 android:background="#8D021F"
                 android:gravity="center"
+                android:layout_weight="20"
                 android:orientation="horizontal">
 
                 <TextView
@@ -252,7 +252,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:gravity="center"
-                        android:text="Telat/tidak lengkap"
+                        android:text="Telat/Tidak full"
                         android:layout_gravity="center"
                         android:textColor="#000"
                         android:textAppearance="@style/TextAppearance.Material3.LabelLarge"

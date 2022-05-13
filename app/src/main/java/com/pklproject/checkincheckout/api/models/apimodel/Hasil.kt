@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName
 
 data class Hasil(
     @SerializedName("persentase_hadir")
-    val persentaseHadir: Int?,
+    val persentaseHadir: Float?,
     @SerializedName("persentase_izin_atau_cuti")
-    val persentaseIzinAtauCuti: Int?,
+    val persentaseIzinAtauCuti: Float?,
     @SerializedName("persentase_telat")
-    val persentaseTelat: Int?,
+    val persentaseTelat: Float?,
     @SerializedName("persentase_tidak_full_absen")
-    val persentaseTidakFullAbsen: Int?,
+    val persentaseTidakFullAbsen: Float?,
     @SerializedName("persentase_tidak_hadir")
-    val persentaseTidakHadir: Int?,
+    val persentaseTidakHadir: Float?,
     @SerializedName("total_hari")
-    val totalHari: Int?
+    val totalHari: Float?
 )

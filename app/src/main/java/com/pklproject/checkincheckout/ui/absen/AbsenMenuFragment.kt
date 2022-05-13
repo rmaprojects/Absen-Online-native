@@ -131,7 +131,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
         val password = convertToRequstBody(
             LoginPreferences.password
         )
-        val isTelat = convertToRequstBody("")
+        val isTelat = convertToRequstBody("0")
         val hariIni =
             convertToRequstBody(SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()))
         val jamSekarang =

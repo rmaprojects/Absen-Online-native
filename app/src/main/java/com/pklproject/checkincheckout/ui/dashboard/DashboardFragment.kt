@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -68,8 +69,13 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
         val dateRangePicker = MaterialDatePicker.Builder.dateRangePicker()
             .setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
+            .setTheme(ThemeOverlay_Material3_MaterialCalendar)
             .setTitleText("Pilih range tanggal")
             .build()
+
+        dateRangePicker.addOnPositiveButtonClickListener { selection ->
+            applyFilterCustom(selection.first!!, selection.second!!)
+        }
 
         binding.btnFilter.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
@@ -84,9 +90,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                         }
                         2 -> {
                             dateRangePicker.show(requireActivity().supportFragmentManager, "DATE_RANGE_PICKER")
-                            dateRangePicker.addOnPositiveButtonClickListener { selection ->
-                                applyFilterCustom(selection.first!!, selection.second!!)
-                            }
                             dateRangePicker.addOnNegativeButtonClickListener { dialog.dismiss() }
                         }
                     }
@@ -120,7 +123,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 }
             } catch (e:Exception) {
                 Log.d("Error", e.message.toString())
-                Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data persentase", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data persentase, silahkan hubungi tim IT", Snackbar.LENGTH_SHORT).show()
             }
         }
     }
@@ -177,7 +180,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 }
             } catch (e:Exception) {
                 Log.d("Error", e.message.toString())
-                Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data persentase", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data persentase, silahkan hubungi tim IT", Snackbar.LENGTH_SHORT).show()
             }
         }
     }
@@ -193,42 +196,68 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
             binding.btnFilter.text = tipeFilter
 
-            binding.rangeTanggal.text = "Menampilkan data untuk tanggal" + " " + response.rangeTanggal
+            val splitRangeTanggal = response.rangeTanggal.split(" - ")
 
-            binding.persenKetidakhadiran.text = viewModel.getPercentageData()?.persentaseKetidakhadiran.toString()
-            binding.persenkehadiran.text = viewModel.getPercentageData()?.persentaseKehadiran.toString()
+            binding.rangeTanggal.text = "Persentase tanggal" + "\n" + getProperNameOfDate(splitRangeTanggal[0]) + " " + "s/d" + " " + getProperNameOfDate(splitRangeTanggal[1])
 
-            val keterlambatan = response.hasil.persentaseTelat
-            val absenNotFull = response.hasil.persentaseTidakFullAbsen
-            val absenFull = response.hasil.persentaseHadir
-            val tidakHadir = response.hasil.persentaseTidakHadir
-            val cutiAtauIzin = response.hasil.persentaseIzinAtauCuti
+            binding.persenKetidakhadiran.text = viewModel.getPercentageData()?.persentaseKetidakhadiran?.toInt().toString() + "%"
+            binding.persenkehadiran.text = viewModel.getPercentageData()?.persentaseKehadiran?.toInt().toString() + "%"
+
+            val keterlambatan = response.hasil.persentaseTelat?.toInt()
+            val absenNotFull = response.hasil.persentaseTidakFullAbsen?.toInt()
+            val absenFull = response.hasil.persentaseHadir?.toInt()
+            val tidakHadir = response.hasil.persentaseTidakHadir?.toInt()
+            val cutiAtauIzin = response.hasil.persentaseIzinAtauCuti?.toInt()
             val warnaKuning = keterlambatan!! + absenNotFull!!
+
+            Log.d("AbsenFull", absenFull.toString())
+            Log.d("TidakHadir", tidakHadir.toString())
+            Log.d("CutiAtauIzin", cutiAtauIzin.toString())
+            Log.d("WarnaKuning", warnaKuning.toString())
 
             binding.txtAttended.text = absenFull.toString() + "%"
             binding.txtLate.text = "$warnaKuning%"
             binding.txtPermission.text = cutiAtauIzin.toString() + "%"
             binding.absentTxt.text = tidakHadir.toString() + "%"
 
-            binding.attendedPercentage.layoutParams = givePercentage(absenFull?.toFloat())
-            binding.latePercentage.layoutParams = givePercentage(warnaKuning.toFloat())
-            binding.permissionPercentage.layoutParams = givePercentage(cutiAtauIzin?.toFloat())
-            binding.absentPercentage.layoutParams = givePercentage(tidakHadir?.toFloat())
+            binding.attendedPercentage.isVisible = absenFull != 0
+            binding.latePercentage.isVisible = warnaKuning != 0
+            binding.permissionPercentage.isVisible = cutiAtauIzin != 0
+            binding.absentPercentage.isVisible = tidakHadir != 0
         }
-    }
-
-    private fun givePercentage(percentage: Float?): LinearLayout.LayoutParams {
-        return LinearLayout.LayoutParams(
-            MATCH_PARENT,
-            MATCH_PARENT,
-            percentage!!
-        )
     }
 
     private fun convertToDate(timeInMilis: Long) : String {
         val date = Date(timeInMilis)
-        val format = SimpleDateFormat("yyyy-mm-dd", Locale.getDefault())
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return format.format(date)
+    }
+
+    private fun getProperNameOfDate(date:String) : String {
+        val splittedDate = date.split("-")
+        val month = splittedDate[1]
+        val year = splittedDate[0]
+        val day = splittedDate[2]
+
+        return day + " " + getMonthName(month) + " " + year
+    }
+
+    private fun getMonthName(month : String) : String {
+        return when(month) {
+            "01" -> "Januari"
+            "02" -> "Februari"
+            "03" -> "Maret"
+            "04" -> "April"
+            "05" -> "Mei"
+            "06" -> "Juni"
+            "07" -> "Juli"
+            "08" -> "Agustus"
+            "09" -> "September"
+            "10" -> "Oktober"
+            "11" -> "November"
+            "12" -> "Desember"
+            else -> "-"
+        }
     }
 
     private fun retrieveServerClock() {
@@ -271,7 +300,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     binding.persenkehadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
                     binding.ketidakhadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleSmall)
                     binding.persenKetidakhadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
-                    binding.rangeTanggal.setTextAppearance(requireContext(), TextAppearance_Material3_TitleSmall)
+                    binding.rangeTanggal.setTextAppearance(requireContext(), TextAppearance_Material3_BodyMedium)
                 }
                 "normal" -> {
                     binding.jamSekarang.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
@@ -281,7 +310,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     binding.persenkehadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
                     binding.ketidakhadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
                     binding.persenKetidakhadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
-                    binding.rangeTanggal.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
+                    binding.rangeTanggal.setTextAppearance(requireContext(), TextAppearance_Material3_LabelLarge)
                 }
                 "besar" -> {
                     binding.jamSekarang.setTextAppearance(requireContext(), TextAppearance_Material3_HeadlineLarge)
@@ -291,7 +320,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     binding.persenkehadiran.setTextAppearance(requireContext(), TextAppearance_Material3_HeadlineLarge)
                     binding.ketidakhadiran.setTextAppearance(requireContext(), TextAppearance_Material3_HeadlineSmall)
                     binding.persenKetidakhadiran.setTextAppearance(requireContext(), TextAppearance_Material3_HeadlineSmall)
-                    binding.rangeTanggal.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
+                    binding.rangeTanggal.setTextAppearance(requireContext(), TextAppearance_Material3_BodySmall)
                 }
             }
         } else {
