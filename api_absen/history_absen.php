@@ -1,14 +1,10 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(~0);
-
 include 'connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $username = $_POST['username'];
-    $password = $_POST['password'];
     $tahun = $_POST['tahun'];
     $bulan = $_POST['bulan'];
 
@@ -19,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $query_ambil_id = mysqli_query($_AUTH, "SELECT id_karyawan FROM tbl_karyawan WHERE username = '$username'");
 
-    if ($tahun && $bulan == "") {
+    if ($tahun == "" && $bulan == "") {
 
         $response['message'] = "Tahun dan bulan harus diisi";
         $response['code'] = 400;
@@ -28,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode($response);
     } else {
 
-        $queryCheckData = "SELECT COUNT(*) 'total' FROM tbl_karyawan WHERE username = '$username' AND password = '$password'";
+        $queryCheckData = "SELECT COUNT(*) 'total' FROM tbl_karyawan WHERE username = '$username'";
         $exec_queryCheckData = mysqli_fetch_assoc(mysqli_query($_AUTH, $queryCheckData));
 
         if ($exec_queryCheckData == 0) {

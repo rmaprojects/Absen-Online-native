@@ -8,10 +8,9 @@ include 'connection.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $username = $_POST['username'];
-    $password = $_POST['password'];
     $hari_ini = $_POST['tanggal_sekarang'];
 
-    $queryCheckData = "SELECT COUNT(*) 'total' FROM tbl_karyawan WHERE username = '$username' AND password = '$password'";
+    $queryCheckData = "SELECT COUNT(*) 'total' FROM tbl_karyawan WHERE username = '$username'";
     $exec_queryCheckData = mysqli_fetch_assoc(mysqli_query($_AUTH, $queryCheckData));
 
     if ($exec_queryCheckData['total'] == 0) {
@@ -23,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode($response);
     } else {
 
-        $queryGetId = "SELECT id_karyawan FROM tbl_karyawan WHERE username = '$username' AND password = '$password'";
+        $queryGetId = "SELECT id_karyawan FROM tbl_karyawan WHERE username = '$username'";
         $exec_getId = mysqli_query($_AUTH, $queryGetId);
 
         $id_karyawan = mysqli_fetch_assoc($exec_getId)['id_karyawan'];

@@ -1,19 +1,15 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(~0);
-
 include 'connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $username = $_POST['username'];
-    $password = $_POST['password'];
     $tanggal_awal = $_POST['tanggal_awal'];
     $tanggal_akhir = $_POST['tanggal_akhir'];
 
 
-    $queryCheckData = "SELECT COUNT(*) 'total' FROM tbl_karyawan WHERE username = '$username' AND password = '$password'";
+    $queryCheckData = "SELECT COUNT(*) 'total' FROM tbl_karyawan WHERE username = '$username'";
     $exec_queryCheckData = mysqli_fetch_assoc(mysqli_query($_AUTH, $queryCheckData));
 
     if ($exec_queryCheckData['total'] == 0) {
@@ -24,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         echo json_encode($response);
     } else {
 
-        $queryGetData = "SELECT id_karyawan FROM tbl_karyawan WHERE username = '$username' AND password = '$password'";
+        $queryGetData = "SELECT id_karyawan FROM tbl_karyawan WHERE username = '$username'";
         $exec_queryGetData = mysqli_fetch_array(mysqli_query($_AUTH, $queryGetData));
 
         $id_karyawan = $exec_queryGetData['id_karyawan'];

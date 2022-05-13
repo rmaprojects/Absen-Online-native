@@ -18,7 +18,7 @@ $_AUTH = mysqli_connect($_SERVER_DB, $_USERNAME, $_PASSWORD, $_DATABASE);
 //     echo json_encode(array(
 //         "message:" => "Unsuccessful connect to" . $_DATABASE,
 //         "code:" => 401,
-//         "status:" => false 
+//         "status:" => false
 //         )
 //     );
 // }
