@@ -12,4 +12,4 @@ Aplikasi Absen online ini adalah Aplikasi Absen yang diperuntukkan untuk [PT OMG
 
 Aplikasi ini sudah selesai dan sudah masuk tahap produksi, meskipun dikerjakan dalam waktu 3 bulan, aplikasi ini tidaklah sempurna.
 
-Copyright ©2022 RMA Projects
+Copyright ©2022 [RMA Projects](https://www.github.com/RMA-17)
