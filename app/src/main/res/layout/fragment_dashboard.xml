@@ -18,14 +18,6 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/jamSekarang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Jam Sekarang:"
-                android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
-
-            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txt_current_clock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -236,7 +228,7 @@
                     android:layout_height="32dp">
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
-                        android:text="Full Hadir"
+                        android:text="On Time"
                         android:textColor="#FFF"
                         android:layout_gravity="center"
                         android:textAppearance="@style/TextAppearance.Material3.LabelLarge"

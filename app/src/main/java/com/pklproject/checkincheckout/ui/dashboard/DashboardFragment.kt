@@ -293,7 +293,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             when (appearanceSettings) {
                 "kecil" -> {
-                    binding.jamSekarang.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
                     binding.txtCurrentClock.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
                     binding.filter.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
                     binding.kehadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleSmall)
@@ -303,7 +302,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     binding.rangeTanggal.setTextAppearance(requireContext(), TextAppearance_Material3_BodyMedium)
                 }
                 "normal" -> {
-                    binding.jamSekarang.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
                     binding.txtCurrentClock.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
                     binding.filter.setTextAppearance(requireContext(), TextAppearance_Material3_TitleLarge)
                     binding.kehadiran.setTextAppearance(requireContext(), TextAppearance_Material3_TitleMedium)
@@ -313,7 +311,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     binding.rangeTanggal.setTextAppearance(requireContext(), TextAppearance_Material3_LabelLarge)
                 }
                 "besar" -> {
-                    binding.jamSekarang.setTextAppearance(requireContext(), TextAppearance_Material3_HeadlineLarge)
                     binding.txtCurrentClock.setTextAppearance(requireContext(), TextAppearance_Material3_HeadlineLarge)
                     binding.filter.setTextAppearance(requireContext(), TextAppearance_Material3_HeadlineLarge)
                     binding.kehadiran.setTextAppearance(requireContext(), TextAppearance_Material3_HeadlineSmall)
@@ -326,7 +323,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         } else {
             when (appearanceSettings) {
                 "kecil" -> {
-                    binding.jamSekarang.setTextAppearance(TextAppearance_Material3_TitleMedium)
                     binding.txtCurrentClock.setTextAppearance(TextAppearance_Material3_TitleMedium)
                     binding.filter.setTextAppearance(TextAppearance_Material3_TitleMedium)
                     binding.kehadiran.setTextAppearance(TextAppearance_Material3_TitleSmall)
@@ -335,7 +331,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     binding.persenKetidakhadiran.setTextAppearance(TextAppearance_Material3_TitleMedium)
                 }
                 "normal" -> {
-                    binding.jamSekarang.setTextAppearance(TextAppearance_Material3_TitleLarge)
                     binding.txtCurrentClock.setTextAppearance(TextAppearance_Material3_TitleLarge)
                     binding.filter.setTextAppearance(TextAppearance_Material3_TitleLarge)
                     binding.kehadiran.setTextAppearance(TextAppearance_Material3_TitleMedium)
@@ -344,7 +339,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     binding.persenKetidakhadiran.setTextAppearance(TextAppearance_Material3_TitleLarge)
                 }
                 "besar" -> {
-                    binding.jamSekarang.setTextAppearance(TextAppearance_Material3_HeadlineLarge)
                     binding.txtCurrentClock.setTextAppearance(TextAppearance_Material3_HeadlineLarge)
                     binding.filter.setTextAppearance(TextAppearance_Material3_HeadlineLarge)
                     binding.kehadiran.setTextAppearance(TextAppearance_Material3_HeadlineSmall)
