@@ -288,5 +288,14 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </LinearLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/noDataText"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_margin="16dp"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+            android:gravity="center"
+            android:text="Tidak ada data"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </ScrollView>

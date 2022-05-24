@@ -40,7 +40,7 @@
         tools:layout="@layout/fragment_history"
         android:id="@+id/navigation_history"
         android:name="com.pklproject.checkincheckout.ui.history.HistoryFragment"
-        android:label="History" >
+        android:label="Riwayat" >
         <action
             android:id="@+id/action_navigation_history_to_datePickerDialog"
             app:destination="@id/datePickerDialog" />

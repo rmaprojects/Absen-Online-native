@@ -187,6 +187,12 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         if (response.persentase.persentaseKehadiran == null || response.persentase.persentaseKetidakhadiran == null) {
             binding.persenkehadiran.text = "-%"
             binding.persenKetidakhadiran.text = "-%"
+        } else if (response.persentase.persentaseKehadiran == 0f && response.persentase.persentaseKetidakhadiran == 0f) {
+            binding.attendancePercentage.isVisible = false
+            binding.keteranganPersentase.isVisible = false
+            binding.noDataText.isVisible = true
+            binding.persenkehadiran.text = "0%"
+            binding.persenKetidakhadiran.text = "0%"
         } else {
             binding.attendancePercentage.isVisible = true
             binding.keteranganPersentase.isVisible = true

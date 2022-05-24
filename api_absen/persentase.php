@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
 
             //On Time
-            if ($value['hadir'] == "1" && $value['full_absen'] == "1") {
+            if ($value['hadir'] == "1" && $value['full_absen'] == "1" && $value['telat'] == "0" ) {
                 $onTime++;
             }
 
