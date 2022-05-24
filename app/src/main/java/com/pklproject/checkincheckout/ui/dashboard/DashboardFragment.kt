@@ -9,9 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -34,7 +31,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.pklproject.checkincheckout.R
 import com.pklproject.checkincheckout.api.models.apimodel.PercentageModel
-
 
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
@@ -105,7 +101,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         val password = LoginPreferences.password
         val now = LocalDate()
         val dateRangeFirst = now.withDayOfMonth(1).toString("yyyy-MM-dd")
-        val dateRangeEnd = now.withDayOfMonth(1).plusMonths(1).minusDays(1).toString("yyyy-MM-dd")
+        val dateRangeEnd = now.toString("yyyy-MM-dd", Locale.getDefault())
         Log.d("DateRange", "$dateRangeFirst")
         Log.d("DateRange", "$dateRangeEnd")
         lifecycleScope.launch {
@@ -122,7 +118,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data persentase", Snackbar.LENGTH_SHORT).show()
                 }
             } catch (e:Exception) {
-                Log.d("Error", e.message.toString())
+                Log.d("Error", e.toString())
                 Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data persentase, silahkan hubungi tim IT", Snackbar.LENGTH_SHORT).show()
             }
         }
@@ -133,7 +129,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         val password = LoginPreferences.password
         val now = LocalDate()
         val dateRangeFirst = now.withDayOfWeek(DateTimeConstants.MONDAY)
-        val dateRangeEnd = now.withDayOfWeek(DateTimeConstants.SUNDAY)
+        val dateRangeEnd = now.toString("yyyy-MM-dd", Locale.getDefault())
         Log.d("DateRange", "$dateRangeFirst")
         Log.d("DateRange", "$dateRangeEnd")
         lifecycleScope.launch {
@@ -146,11 +142,11 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                         applyFilter("Pekan", response.body()!!)
                     }
                 } else {
-                    Log.d("Error", response.message())
+                    Log.d("Error response", response.message())
                     Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data persentase", Snackbar.LENGTH_SHORT).show()
                 }
             } catch (e:Exception) {
-                Log.d("Error", e.message.toString())
+                Log.d("Error message", e.toString())
                 Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data persentase", Snackbar.LENGTH_SHORT).show()
             }
         }
@@ -173,13 +169,14 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                         viewModel.setPercentageData(response.body()!!.persentase)
                         viewModel.setPercentageResult(response.body()!!.hasil)
                         applyFilter("Custom", response.body()!!)
+
                     }
                 } else {
                     Log.d("Error", response.message())
                     Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data persentase", Snackbar.LENGTH_SHORT).show()
                 }
             } catch (e:Exception) {
-                Log.d("Error", e.message.toString())
+                Log.d("Error", e.toString())
                 Snackbar.make(requireActivity().findViewById(R.id.container), "Gagal mengambil data persentase, silahkan hubungi tim IT", Snackbar.LENGTH_SHORT).show()
             }
         }
@@ -205,22 +202,22 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
             val keterlambatan = response.hasil.persentaseTelat?.toInt()
             val absenNotFull = response.hasil.persentaseTidakFullAbsen?.toInt()
-            val absenFull = response.hasil.persentaseHadir?.toInt()
+            val onTime = response.hasil.persentaseOnTime?.toInt()
             val tidakHadir = response.hasil.persentaseTidakHadir?.toInt()
             val cutiAtauIzin = response.hasil.persentaseIzinAtauCuti?.toInt()
             val warnaKuning = keterlambatan!! + absenNotFull!!
 
-            Log.d("AbsenFull", absenFull.toString())
+            Log.d("AbsenFull", onTime.toString())
             Log.d("TidakHadir", tidakHadir.toString())
             Log.d("CutiAtauIzin", cutiAtauIzin.toString())
             Log.d("WarnaKuning", warnaKuning.toString())
 
-            binding.txtAttended.text = absenFull.toString() + "%"
+            binding.txtAttended.text = onTime.toString() + "%"
             binding.txtLate.text = "$warnaKuning%"
             binding.txtPermission.text = cutiAtauIzin.toString() + "%"
             binding.absentTxt.text = tidakHadir.toString() + "%"
 
-            binding.attendedPercentage.isVisible = absenFull != 0
+            binding.attendedPercentage.isVisible = onTime != 0
             binding.latePercentage.isVisible = warnaKuning != 0
             binding.permissionPercentage.isVisible = cutiAtauIzin != 0
             binding.absentPercentage.isVisible = tidakHadir != 0

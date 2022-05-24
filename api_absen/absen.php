@@ -213,7 +213,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         echo json_encode($response);
                     } else {
-
                         $response['message'] = "Gagal menginput absensi, silahkan coba lagi!";
                         $response['code'] = 400;
                         $response['status'] = false;

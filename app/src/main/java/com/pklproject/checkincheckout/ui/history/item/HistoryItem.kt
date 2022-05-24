@@ -54,25 +54,25 @@ class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<History
                     binding.cardViewData.isVisible = true
                     binding.noDataCardView.isVisible = false
                     when {
-                        history?.statusKeterlambatanPagi == "Terlambat" -> {
+                        history.statusKeterlambatanPagi == "Terlambat" -> {
                             binding.statusIconDay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_telat, 0, 0, 0)
                             binding.jamPagi.text = history.jamMasukPagi
                         }
-                        history?.statusKeterlambatanPagi == "Hadir" -> {
+                        history.statusKeterlambatanPagi == "Hadir" -> {
                             binding.statusIconDay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sudah_absen, 0, 0, 0)
                             binding.jamPagi.text = history.jamMasukPagi
                         }
-                        history?.jamMasukPagi == null -> {
+                        history.jamMasukPagi == null -> {
                             binding.jamPagi.text = "--/--"
                             binding.statusIconDay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_not_available_24, 0, 0, 0)
                         }
                     }
 
-                    when (history?.absenSiangDiperlukan) {
+                    when (history.absenSiangDiperlukan) {
                         "1" -> {
                             binding.jamSiang.isVisible = true
                             binding.statusIconNoon.isVisible = true
-                            when (history?.statusKeterlambatanSiang) {
+                            when (history.statusKeterlambatanSiang) {
                                 "Terlambat" -> {
                                     binding.statusIconNoon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_telat, 0, 0, 0)
                                     binding.jamSiang.text = history.jamMasukSiang
@@ -94,15 +94,15 @@ class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<History
                     }
 
                     when {
-                        history?.statusKeterlambatanPulang == "Terlambat" -> {
+                        history.statusKeterlambatanPulang == "Terlambat" -> {
                             binding.statusIconHome.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_telat, 0, 0, 0)
                             binding.jamPulang.text = history.jamMasukPulang
                         }
-                        history?.statusKeterlambatanPulang == "Hadir" -> {
+                        history.statusKeterlambatanPulang == "Hadir" -> {
                             binding.statusIconHome.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sudah_absen, 0, 0, 0)
                             binding.jamPulang.text = history.jamMasukPulang
                         }
-                        history?.jamMasukPulang == null -> {
+                        history.jamMasukPulang == null -> {
                             binding.jamPulang.text = "--/--"
                             binding.statusIconHome.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_not_available_24, 0, 0, 0)
                         }

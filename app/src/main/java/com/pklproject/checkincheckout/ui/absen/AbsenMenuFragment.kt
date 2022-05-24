@@ -240,14 +240,16 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     }
                     "pagi" -> {
                         binding.kirim.isEnabled = true
+                        binding.izin.isVisible = true
+                        binding.cuti.isVisible = true
 
                         binding.cutiHariIniText.isVisible = false
                         binding.absensi.visibility = View.VISIBLE
                         binding.pilihanAbsen.isVisible = true
 
-                        if (listJamMasuk?.absenSiangDiperlukan == "1") {
+                        if (listJamMasuk.absenSiangDiperlukan == "1") {
                             binding.absenSiang.isVisible = true
-                        } else if (listJamMasuk?.absenSiangDiperlukan == "0") {
+                        } else if (listJamMasuk.absenSiangDiperlukan == "0") {
                             binding.absenSiang.isVisible = false
                         }
 
@@ -495,6 +497,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.cuti.isVisible = false
                         binding.absensi.isVisible = false
                         binding.layoutIzinTxt.isVisible = true
+                        binding.cutiHariIniText.text = "Anda sudah izin/absen hari ini, tidak perlu absen lagi"
                         binding.izindialog.isVisible = false
                         binding.pilihanAbsen.isVisible = false
                         binding.divider.isVisible = false

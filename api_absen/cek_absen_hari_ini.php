@@ -41,6 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $response['status'] = true;
             $response['absen_hari_ini'] = array();
 
+            $absen_yang_dibutuhkan = "";
+
             $data = array();
 
             $data['tanggal'] = null;
