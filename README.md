@@ -8,8 +8,8 @@ Aplikasi Absen online ini adalah Aplikasi Absen yang diperuntukkan untuk [PT OMG
 > - [X] 3. Mengatur jadwal absen untuk user admin
 > - [X] 4. Mengirim bukti absen menggunakan kamera, dan disimpan di server
 > - [X] 5. Selain Absen, aplikasi ini memungkinkan karyawan untuk mengajukan izin beserta keterangan / alasannya
-> - [x] 6. Notifikasi peringatan absen (masih bug)
+> - [ ] 6. Notifikasi peringatan absen (masih bug)
 
 Aplikasi ini sudah selesai dan sudah masuk tahap produksi, meskipun dikerjakan dalam waktu 3 bulan, aplikasi ini tidaklah sempurna.
 
-Copyright ©2022 [RMA Projects](https://www.github.com/RMA-17)
+©Copyright 2022 [RMA Projects](https://www.github.com/RMA-17)
