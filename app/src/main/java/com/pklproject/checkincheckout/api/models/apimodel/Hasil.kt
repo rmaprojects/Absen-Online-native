@@ -8,10 +8,8 @@ data class Hasil(
     val persentaseIzinAtauCuti: Float?,
     @SerializedName("persentase_on_time")
     val persentaseOnTime: Float?,
-    @SerializedName("persentase_telat")
-    val persentaseTelat: Float?,
-    @SerializedName("persentase_tidak_full_absen")
-    val persentaseTidakFullAbsen: Float?,
+    @SerializedName("persentase_telat_atau_tidak_absen")
+    val persentaseTelatAtauTidakAbsen: Float?,
     @SerializedName("persentase_tidak_hadir")
     val persentaseTidakHadir: Float?
 )

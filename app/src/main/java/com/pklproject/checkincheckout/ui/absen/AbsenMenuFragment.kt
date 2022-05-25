@@ -258,7 +258,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         txtJamAbsenPagi = "--:--"
                         txtStatusAbsenPagi = if (checkIfAttendanceIsLate("pagi", settingsAbsen)) {
                             statusImageDay.setImageResource(R.drawable.ic_telat)
-                            "Terlambat"
+                            "Belum Absen"
                         } else {
                             statusImageDay.setImageResource(R.drawable.ic_baseline_not_available_24)
                             "Belum Absen"
@@ -313,7 +313,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
 
                         if (checkIfAttendanceIsLate("siang", settingsAbsen)) {
-                            txtStatusAbsenSiang = "Terlambat"
+                            txtStatusAbsenSiang = "Belum Absen"
                             statusImageSiang.setImageResource(R.drawable.ic_telat)
                         } else {
                             txtStatusAbsenSiang = "Belum Absen"
@@ -366,7 +366,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         statusImageDay.setImageResource(R.drawable.ic_sudah_absen)
 
                         if (checkIfAttendanceIsLate("pulang", settingsAbsen)) {
-                            txtStatusAbsenPulang = "Terlambat"
+                            txtStatusAbsenPulang = "Belum Absen"
                             statusImagePulang.setImageResource(R.drawable.ic_telat)
                         } else {
                             txtStatusAbsenPulang = "Belum Absen"
@@ -409,7 +409,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         txtStatusAbsenSiang = "Sudah Absen"
                         statusImageSiang.setImageResource(R.drawable.ic_sudah_absen)
                         if (checkIfAttendanceIsLate("pulang", settingsAbsen)) {
-                            txtStatusAbsenPulang = "Terlambat"
+                            txtStatusAbsenPulang = "Belum Absen"
                             statusImagePulang.setImageResource(R.drawable.ic_telat)
                         } else {
                             txtStatusAbsenPulang = "Belum Absen"

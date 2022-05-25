@@ -3,8 +3,9 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2e7c9a36fb88d2d0f16e1356bb619743/transformed/gson-support-2.13.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/944dda7c2f6a55a402fd367819392eeb/transformed/gson-support-2.13.1/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/944dda7c2f6a55a402fd367819392eeb/transformed/gson-support-2.13.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/944dda7c2f6a55a402fd367819392eeb/transformed/gson-support-2.13.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6436d9922342b5f6a11a482a4ffb9290/transformed/gson-support-2.13.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6436d9922342b5f6a11a482a4ffb9290/transformed/gson-support-2.13.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6436d9922342b5f6a11a482a4ffb9290/transformed/gson-support-2.13.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.chibatching.kotpref/gson-support/2.13.1/805d0b24fb6be85471e65b285d80fbd355b1ab7b/gson-support-2.13.1-javadoc.jar!/" />

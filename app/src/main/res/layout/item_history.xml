@@ -138,12 +138,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-                android:text="Data tidak ada"
+                android:text="Data tidak ditemukan"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:layout_width="match_parent"
                 android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                android:text="Mungkin kamu belum pernah absen sebelumnya atau kamu belum mengisi absen"
+                android:text="Tidak ada riwayat Absen pada bulan ini."
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

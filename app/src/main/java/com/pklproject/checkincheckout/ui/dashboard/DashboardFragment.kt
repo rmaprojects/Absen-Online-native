@@ -193,6 +193,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             binding.noDataText.isVisible = true
             binding.persenkehadiran.text = "0%"
             binding.persenKetidakhadiran.text = "0%"
+            binding.rangeTanggal.text = "Absen Online"
         } else {
             binding.attendancePercentage.isVisible = true
             binding.keteranganPersentase.isVisible = true
@@ -201,30 +202,33 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
             val splitRangeTanggal = response.rangeTanggal.split(" - ")
 
-            binding.rangeTanggal.text = "Persentase tanggal" + "\n" + getProperNameOfDate(splitRangeTanggal[0]) + " " + "s/d" + " " + getProperNameOfDate(splitRangeTanggal[1])
+            binding.rangeTanggal.text =
+                "Persentase tanggal" + "\n" + getProperNameOfDate(splitRangeTanggal[0]) + " " + "s/d" + " " + getProperNameOfDate(
+                    splitRangeTanggal[1]
+                )
 
-            binding.persenKetidakhadiran.text = viewModel.getPercentageData()?.persentaseKetidakhadiran?.toInt().toString() + "%"
-            binding.persenkehadiran.text = viewModel.getPercentageData()?.persentaseKehadiran?.toInt().toString() + "%"
+            binding.persenKetidakhadiran.text =
+                viewModel.getPercentageData()?.persentaseKetidakhadiran?.toInt().toString() + "%"
+            binding.persenkehadiran.text =
+                viewModel.getPercentageData()?.persentaseKehadiran?.toInt().toString() + "%"
 
-            val keterlambatan = response.hasil.persentaseTelat?.toInt()
-            val absenNotFull = response.hasil.persentaseTidakFullAbsen?.toInt()
+            val terlambatAtauTidakFull = response.hasil.persentaseTelatAtauTidakAbsen?.toInt()
             val onTime = response.hasil.persentaseOnTime?.toInt()
             val tidakHadir = response.hasil.persentaseTidakHadir?.toInt()
             val cutiAtauIzin = response.hasil.persentaseIzinAtauCuti?.toInt()
-            val warnaKuning = keterlambatan!! + absenNotFull!!
 
             Log.d("AbsenFull", onTime.toString())
             Log.d("TidakHadir", tidakHadir.toString())
             Log.d("CutiAtauIzin", cutiAtauIzin.toString())
-            Log.d("WarnaKuning", warnaKuning.toString())
+            Log.d("WarnaKuning", terlambatAtauTidakFull.toString())
 
             binding.txtAttended.text = onTime.toString() + "%"
-            binding.txtLate.text = "$warnaKuning%"
+            binding.txtLate.text = "$terlambatAtauTidakFull%"
             binding.txtPermission.text = cutiAtauIzin.toString() + "%"
             binding.absentTxt.text = tidakHadir.toString() + "%"
 
             binding.attendedPercentage.isVisible = onTime != 0
-            binding.latePercentage.isVisible = warnaKuning != 0
+            binding.latePercentage.isVisible = terlambatAtauTidakFull != 0
             binding.permissionPercentage.isVisible = cutiAtauIzin != 0
             binding.absentPercentage.isVisible = tidakHadir != 0
         }

@@ -2,9 +2,10 @@
   <library name="Gradle: com.github.kirich1409:viewbindingpropertydelegate:1.5.3@aar">
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/49139361924f8014a169bae2f1096758/transformed/viewbindingpropertydelegate-1.5.3/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6326833f18f9ecb988eca17c5f15e276/transformed/viewbindingpropertydelegate-1.5.3/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6326833f18f9ecb988eca17c5f15e276/transformed/viewbindingpropertydelegate-1.5.3/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6326833f18f9ecb988eca17c5f15e276/transformed/viewbindingpropertydelegate-1.5.3/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/62d9907c824b843bbf917fb759b089c5/transformed/viewbindingpropertydelegate-1.5.3/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/62d9907c824b843bbf917fb759b089c5/transformed/viewbindingpropertydelegate-1.5.3/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/62d9907c824b843bbf917fb759b089c5/transformed/viewbindingpropertydelegate-1.5.3/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
