@@ -46,17 +46,28 @@ class LoginActivity : AppCompatActivity() {
                         val response = api.login(username.toString(), password.toString())
                         try {
                             if (response.isSuccessful) {
-                                val code = response.body()!!.code
-                                if (code == 200) {
-                                    loginKeDashBoard(response.body()!!)
-                                } else if (code == 404) {
-                                    Snackbar.make(
-                                        binding.rootLayout,
-                                        "Password atau Username salah, coba lagi",
-                                        Snackbar.LENGTH_SHORT
-                                    )
-                                        .setAction("Ok") {}
-                                        .show()
+                                when (response.body()!!.code) {
+                                    200 -> {
+                                        loginKeDashBoard(response.body()!!)
+                                    }
+                                    404 -> {
+                                        Snackbar.make(
+                                            binding.rootLayout,
+                                            "Username salah atau tidak ditemukan, coba lagi",
+                                            Snackbar.LENGTH_SHORT
+                                        )
+                                            .setAction("Ok") {}
+                                            .show()
+                                    }
+                                    403 -> {
+                                        Snackbar.make(
+                                            binding.rootLayout,
+                                            "Password yang dimasukkan salah, silahkan coba lagi",
+                                            Snackbar.LENGTH_SHORT
+                                        )
+                                            .setAction("Ok") {}
+                                            .show()
+                                    }
                                 }
                             } else {
                                 Snackbar.make(
