@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $totalTidakHadir = 0;
         $totalTidakHadirKecil = 0;
         $tidakFullAbsen = 0;
+        $totalTelatAtauTidakFullAbsen = 0;
 
         $jumlah_hari_keseluruhan = count($list_absensi);
         $list_tanggal = array();
@@ -71,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $cutiAtauIzin++;
             }
 
-            if ($value['hadir'] == 0 || $value['hadir'] == null) {
+            if ($value['hadir'] == "0" || $value['hadir'] == null) {
                 $totalTidakHadir++;
             }
 
@@ -81,16 +82,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
 
             //Telat
-            if ($value['hadir'] == "1" && $value['telat'] == "1") {
-                $totalTelat++;
-            }
-
-            if ($value['hadir'] == "1" && $value['full_absen'] == "0") {
-                $tidakFullAbsen++;
+            if ($value['hadir'] == "1" && $value['telat'] == "1" || $value['full_absen'] == "0" || $value['full_absen'] == null) {
+                $totalTelatAtauTidakFullAbsen++;
             }
 
             //Tidak Hadir
-            if ($value['hadir'] == "0" || $value['hadir'] == null) {
+            if ($value['hadir'] == null && $value['hadir'] != "1" && $value['izin'] != "1") {
                 $totalTidakHadirKecil++;
             }
 
@@ -105,6 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $persentaseTidakHadir = 0;
         $persentaseTidakHadirKecil = 0;
         $persentaseTidakFullAbsen = 0;
+        $persentaseTelatAtauTidakAbsen = 0;
 
         if ($totalHadir == 0) {
             $persentaseKehadiran = 0;
@@ -116,12 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $persentaseIzinAtauCuti = 0;
         } else {
             $persentaseIzinAtauCuti = (int)$cutiAtauIzin / (int)$jumlah_hari_keseluruhan * 100;
-        }
-
-        if ($totalTelat == 0) {
-            $persentaseTelat = 0;
-        } else {
-            $persentaseTelat = (int)$totalTelat / (int)$jumlah_hari_keseluruhan * 100;
         }
 
         if ($onTime == 0) {
@@ -142,17 +134,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $persentaseTidakHadirKecil = (int)$totalTidakHadirKecil / (int)$jumlah_hari_keseluruhan * 100;
         }
 
-        if ($tidakFullAbsen == 0) {
-            $persentaseTidakFullAbsen = 0;
+        if ($totalTelatAtauTidakFullAbsen == 0) {
+            $persentaseTelatAtauTidakAbsen = 0;
         } else {
-            $persentaseTidakFullAbsen = (int)$tidakFullAbsen / (int)$jumlah_hari_keseluruhan * 100;
+            $persentaseTelatAtauTidakAbsen = (int)$totalTelatAtauTidakFullAbsen / (int)$jumlah_hari_keseluruhan * 100;
         }
 
         $result = new PersentaseAbsensi();
 
         $result->persentase_on_time = round((int)$persentaseOnTime);
-        $result->persentase_tidak_full_absen = round((int)$persentaseTidakFullAbsen);
-        $result->persentase_telat = round((int)$persentaseTelat);
+        $result->persentase_telat_atau_tidak_absen = round((int)$persentaseTelatAtauTidakAbsen);
         $result->persentase_izin_atau_cuti = round((int)$persentaseIzinAtauCuti);
         $result->persentase_tidak_hadir = round((int)$persentaseTidakHadirKecil);
 
@@ -183,8 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 class PersentaseAbsensi
 {
     public $persentase_on_time;
-    public $persentase_tidak_full_absen;
-    public $persentase_telat;
+    public $persentase_telat_atau_tidak_absen;
     public $persentase_tidak_hadir;
     public $persentase_izin_atau_cuti;
 }
