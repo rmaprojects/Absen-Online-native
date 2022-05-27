@@ -150,7 +150,7 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                     Log.d("response", response.toString())
                     if (response.body()?.status == true) {
                         Snackbar.make(
-                            binding.root,
+                            requireActivity().findViewById(R.id.container),
                             "Berhasil mengajukan $jenisAbsen",
                             Snackbar.LENGTH_SHORT
                         )
@@ -162,10 +162,10 @@ class AbsenMenuFragment : Fragment(R.layout.fragment_menu_absen) {
                         binding.cuti.isVisible = false
                         binding.absensi.isVisible = false
                         binding.layoutIzinTxt.isVisible = true
+                        binding.cutiHariIniText.text = "Anda sudah izin/absen hari ini, tidak perlu absen lagi"
                         binding.izindialog.isVisible = false
                         binding.pilihanAbsen.isVisible = false
                         binding.divider.isVisible = false
-                        cekAbsenTodayApi(username.toString(), password.toString(), SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()), AbsenSettingsPreferences)
                     } else {
                         Toast.makeText(requireContext(), response.body()?.message, Toast.LENGTH_SHORT)
                             .show()
