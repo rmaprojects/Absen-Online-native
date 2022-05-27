@@ -77,14 +77,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
 
             //On Time
-            if ($value['hadir'] == "1" && $value['full_absen'] == "1" && $value['telat'] == "0" ) {
-                $onTime++;
+            if ($value['hadir'] == "1") {
+                if ($value['full_absen'] == "1" && $value['telat'] == "0") {
+                    $onTime++;
+                } else if ($value['full_absen'] == "0" || $value['telat'] == "1"){
+                    $totalTelatAtauTidakFullAbsen++;
+                }
             }
 
             //Telat
-            if ($value['hadir'] == "1" && $value['telat'] == "1" || $value['full_absen'] == "0" || $value['full_absen'] == null) {
-                $totalTelatAtauTidakFullAbsen++;
-            }
+            // if ($value['hadir'] == "1") {
+            //     if ($value['telat'] == "1") {
+            //         $totalTelatAtauTidakFullAbsen++;
+            //     }
+            //     if ($value['full_absen'] == "0" || $value['full_absen'] == null) {
+            //         $totalTelatAtauTidakFullAbsen++;
+            //     }
+            // }
 
             //Tidak Hadir
             if ($value['hadir'] == null && $value['hadir'] != "1" && $value['izin'] != "1") {
