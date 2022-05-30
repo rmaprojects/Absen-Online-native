@@ -49,6 +49,11 @@ class HistoryItem(private val historyModel: HistoryAbsenModel?): Adapter<History
                     binding.cardViewData.isVisible = false
                     binding.noDataCardView.isVisible = false
                     binding.izinCardView.isVisible = true
+                    if (history.izin == "1") {
+                        binding.txtCutiOrIzin.text = "Kamu izin di hari ini"
+                    } else if (history.cuti == "1") {
+                        binding.txtCutiOrIzin.text = "Kamu cuti di hari ini"
+                    }
                 } else {
                     binding.izinCardView.isVisible = false
                     binding.cardViewData.isVisible = true

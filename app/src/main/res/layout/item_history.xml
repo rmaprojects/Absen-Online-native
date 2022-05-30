@@ -168,10 +168,11 @@
                 android:text="Loading..."
                 android:layout_height="wrap_content"/>
             <TextView
+                android:id="@+id/txt_cuti_or_izin"
                 android:layout_width="match_parent"
                 android:textColor="?colorIzinOrCutiText"
                 android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                android:text="Kamu izin/cuti di hari ini"
+                android:text="Kamu loading... di hari ini"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
